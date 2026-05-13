@@ -6,6 +6,30 @@ Course materials for CIS 133JS (Introduction to JavaScript) at Central Oregon Co
 
 See `course-outline.md` for the full outline.
 
+## Course Catalog Description
+
+This outline must fulfill the following information [published in the COCC catalog](https://catalog.cocc.edu/course-outlines/cis-133js/)
+
+### Course Description
+Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add interactivity and custom behaviors to web applications by employing front-end JavaScript techniques combined with HTML and CSS.
+
+### Outcomes
+1. Implement scripts that rely on knowledge of Document Object Model (DOM) architecture and includes methods for manipulating DOM objects.
+2. Construct functions that effectively utilize variables, conditionals, loops, and arrays.
+3. Generate scripts that process user input and provide meaningful output.
+4. Plan and create scripts utilizing events and event handlers that respond to user inputs.
+
+### Content outline
+- The Document Object Model (DOM)
+- Events and event handling
+- Variables and scope
+- Conditionals
+- Functions
+- Strings and numbers
+- Arrays
+- Loops
+- Objects
+
 ## Key Decisions
 
 ### Pedagogical Approach

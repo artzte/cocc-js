@@ -20,8 +20,12 @@ This course teaches JavaScript fundamentals using *You Don't Know JS Yet* (YDKJS
 | **Vitest** | Unit testing (Jest-compatible API, runs in the same Vite pipeline) |
 | **jsdom** | Lets Vitest test DOM-touching code |
 | **Node.js / npm** | Package management and running scripts |
+| **Git + GitHub** | Version control and project submission; all work submitted as GitHub repo links |
+| **GitHub Pages** | Free static hosting for deployed projects (built-in Vite support) |
 | **Browser DevTools** | Primary debugging environment |
 | **MDN Web Docs** | Reference for all DOM/HTML5 APIs |
+
+Students who don't already have a GitHub account should sign up at [github.com](https://github.com) and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free access to additional tools.
 
 ### Starter Kit
 
@@ -94,14 +98,18 @@ Both books are available free online and are included in the course repo under `
 
 Students build a complete, deployable browser application using vanilla JS, ES modules, and the course starter kit. No UI frameworks (React, Vue, etc.).
 
+### Submission
+
+All project work is submitted via GitHub. Each milestone is submitted by posting your GitHub repo link (and a deployed URL where applicable) to the course LMS. Grading happens from the repo directly.
+
 ### Milestones
 
-| # | Week Due | Deliverable |
-|---|---|---|
-| 1 | Week 4 | **Proposal** — 1-page description: app idea, target user, 3–5 core features, chosen public API |
-| 2 | Week 7 | **Design Document** — wireframes or sketches, data model, planned module structure, API endpoints |
-| 3 | Week 9 | **Initial Structure** — repo with all modules stubbed, placeholder implementations, at least one passing Vitest test per module |
-| 4 | Week 12 | **Final Submission** — complete, working, deployed application |
+| # | Week Due | Deliverable | Submit |
+|---|---|---|---|
+| 1 | Week 4 | **Proposal** — app idea, target user, 3–5 core features, chosen public API | `PROPOSAL.md` committed to your project repo |
+| 2 | Week 7 | **Design Document** — wireframes/sketches, data model, module plan, API endpoints | `DESIGN.md` + image files committed to your project repo |
+| 3 | Week 9 | **Initial Structure** — all modules stubbed, placeholder implementations, ≥1 passing test per module | GitHub repo link |
+| 4 | Week 12 | **Final Submission** — complete, working, deployed application | GitHub repo link + deployed URL |
 
 ### Requirements (Final Submission)
 
@@ -131,9 +139,12 @@ Students build a complete, deployable browser application using vanilla JS, ES m
 - The JS development environment: DevTools console, Sources panel, debugger
 
 **Lab (setup focus — no challenge this week)**:
-- Clone and run the course starter kit: `npm install`, `npm run dev`, `npm run test`
+- Create a GitHub account if you don't have one; claim the GitHub Student Developer Pack
+- Fork the course starter kit repo to your own GitHub account; clone it locally
+- Run `npm install`, `npm run dev`, `npm run test` — verify all three work
 - Explore the browser console: `console.log`, `document`, basic DOM inspection
 - Write and run the first Vitest test
+- Create your **assignments repo** (fork of starter kit) and your **project repo** (fork of starter kit) on GitHub — both will be used throughout the course
 
 **Quiz 1**: What is an engine vs. a runtime? What does strict mode change? What is the ECMAScript spec and who writes it?
 
@@ -145,6 +156,8 @@ Students build a complete, deployable browser application using vanilla JS, ES m
 
 **Topics**:
 - Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `bigint`, `symbol`
+- Strings in depth: template literals, common methods (`slice`, `includes`, `split`, `trim`)
+- Numbers in depth: `parseInt`, `parseFloat`, `Number`, `Math` object, `NaN` and `isNaN`
 - Objects and arrays as containers (introduction)
 - `let`, `const`, `var` — behavioral differences, when to use each
 - `typeof` operator; type coercion basics
@@ -373,16 +386,28 @@ async function loadData(url) {
 
 ## Topic Coverage Map
 
-| COCC Course Outcome | Weeks |
+### COCC Course Outcomes
+
+| Outcome (exact catalog language) | Weeks |
 |---|---|
-| Build functions with variables, conditionals, loops, arrays | 2, 3, 4 |
-| Implement DOM-based scripts with object manipulation | 2, 4, 8, 9, 10 |
-| Create scripts that process user input | 3, 10, 11 |
-| Develop event-driven scripts | 10, throughout |
-| OOP with class-based JavaScript | 8 |
-| Scope and closures | 5, 6, 7 |
-| Modules and code organization | 9 |
-| Async, fetch, Promises | 11 |
+| Implement scripts that rely on knowledge of DOM architecture and includes methods for manipulating DOM objects | 2, 4, 8, 9, 10 |
+| Construct functions that effectively utilize variables, conditionals, loops, and arrays | 2, 3, 4 |
+| Generate scripts that process user input and provide meaningful output | 3, 10, 11 |
+| Plan and create scripts utilizing events and event handlers that respond to user inputs | 10, throughout |
+
+### COCC Content Outline Topics
+
+| Topic | Weeks |
+|---|---|
+| The Document Object Model (DOM) | 2, 4, 8, 9, 10 |
+| Events and event handling | 10, throughout |
+| Variables and scope | 2, 5, 6, 7 |
+| Conditionals | 3 |
+| Functions | 3 |
+| Strings and numbers | 2 |
+| Arrays | 4 |
+| Loops | 4 |
+| Objects | 2 (object literals), 8 (classes) |
 
 ## YDKJSY Chapter Coverage
 

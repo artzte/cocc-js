@@ -4,9 +4,15 @@ Vite + Vitest starter for CIS 133JS. Provides a dev server, build pipeline, and 
 
 ## Setup
 
+Fork this repo to your own GitHub account, then clone your fork:
+
 ```
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
 npm install
 ```
+
+Don't have a GitHub account? Sign up at [github.com](https://github.com) and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free extras.
 
 ## Commands
 
