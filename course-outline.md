@@ -1,18 +1,27 @@
 # CIS 133JS — Introduction to JavaScript
-## 12-Week Course Outline
 
----
-
-## Course Overview
-
-This course teaches JavaScript fundamentals using *You Don't Know JS Yet* (YDKJSY) as the primary text, with all exercises and projects grounded in browser programming and DOM manipulation. Students learn the language deeply — scope, closures, types, modules, async — and apply that knowledge directly to interactive web development. HTML5 APIs and DOM methods are explored by students via MDN; lectures focus on the JS language itself.
+### Course Description
+Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add interactivity and custom behaviors to web applications by employing front-end JavaScript techniques combined with HTML and CSS.
 
 **Prerequisites**: CIS 122 (intro programming, Python)
 **Assumed background**: basic program logic (variables, conditionals, loops, functions); little or no prior JavaScript
 
----
+### Outcomes
+1. Implement scripts that rely on knowledge of Document Object Model (DOM) architecture and includes methods for manipulating DOM objects.
+2. Construct functions that effectively utilize variables, conditionals, loops, and arrays.
+3. Generate scripts that process user input and provide meaningful output.
+4. Plan and create scripts utilizing events and event handlers that respond to user inputs.
 
-## Tools and Environment
+### Materials and Requirements
+
+The textbook is [You Don't Know JS Yet (book series) - 2nd Edition)](https://github.com/getify/you-dont-know-js). You can read it online, or order a bound copy from the provided links on the book website.
+
+- *You Don't Know JS Yet: Get Started*, 2nd ed. — Kyle Simpson (chapters 1–3; ch4 as bridge reading)
+- *You Don't Know JS Yet: Scope & Closures*, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices optional)
+
+You will also need a computer for building software. Class lectures and demonstrations will be conducted on an Ubuntu laptop, using the Z shell (Zsh), Visual Studio Code, Gitkraken, and Chrome. If you are developing on a Windows laptop, I recommend that you install the Windows Subsystem for Linux (WSL).
+
+Within these environments, we will use the following technologies to build software:
 
 | Tool | Purpose |
 |---|---|
@@ -26,6 +35,10 @@ This course teaches JavaScript fundamentals using *You Don't Know JS Yet* (YDKJS
 | **MDN Web Docs** | Reference for all DOM/HTML5 APIs |
 
 Students who don't already have a GitHub account should sign up at [github.com](https://github.com) and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free access to additional tools.
+
+## 12-Week Course Outline
+
+This course teaches JavaScript fundamentals using *You Don't Know JS Yet* (YDKJSY) as the primary text, with all exercises and projects grounded in browser programming and DOM manipulation. Students learn the language deeply — scope, closures, types, modules, async — and apply that knowledge directly to interactive web development. HTML5 APIs and DOM methods are explored by students via MDN; lectures focus on the JS language itself.
 
 ### Starter Kit
 
@@ -74,15 +87,6 @@ npm install --save-dev vite vitest @vitest/ui jsdom
 
 ---
 
-## Primary Texts
-
-- *You Don't Know JS Yet: Get Started*, 2nd ed. — Kyle Simpson (chapters 1–3; ch4 as bridge reading)
-- *You Don't Know JS Yet: Scope & Closures*, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices optional)
-
-Both books are available free online and are included in the course repo under `book/`.
-
----
-
 ## Assessment
 
 | Component | Weight |
@@ -100,7 +104,7 @@ Students build a complete, deployable browser application using vanilla JS, ES m
 
 ### Submission
 
-All project work is submitted via GitHub. Each milestone is submitted by posting your GitHub repo link (and a deployed URL where applicable) to the course LMS. Grading happens from the repo directly.
+All project work is submitted via GitHub. Each milestone is submitted by posting your GitHub repo link (and a deployed URL where applicable) to the course LMS.
 
 ### Milestones
 
