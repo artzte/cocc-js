@@ -36,6 +36,14 @@ Otherwise it can be tricky to see where your home folder is!
 
 ## Universal setup from Bash shell
 
+## Git?
+
+Is Git already installed? If you're not sure:
+
+    git --version
+
+Make sure you have set up your configs (the two commands at the end of the next section).
+
 ## Git install and setup
 
     sudo apt-get install git
@@ -48,9 +56,9 @@ Otherwise it can be tricky to see where your home folder is!
     cd ~
     mkdir .ssh
     ssh-keygen -t rsa -b 4096 -C "your@email"
-    cat id_rsa.pub | clip.exe
+    cat id_rsa.pub
 
-Now you have your public key on your clipboard. Go to your Github account and add the key here: [https://github.com/settings/keys](https://github.com/settings/keys)
+Copy the public key output to your clipboard. Go to your Github account and add the key here: [https://github.com/settings/keys](https://github.com/settings/keys)
 
 ## Set up a source folder
 
