@@ -2,6 +2,7 @@
 
 Resources:
 
+- [Github educational benefits](https://github.com/settings/education/benefits) -- you will need to add your COCC email address to your account in order to take advantage of Github's generous educational package.
 - [https://learn.microsoft.com/en-us/windows/wsl/](https://learn.microsoft.com/en-us/windows/wsl/)
 - [https://docs.github.com/en/authentication/connecting-to-github-with-ssh](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 - [https://github.com/nodenv/nodenv](https://github.com/nodenv/nodenv)
@@ -67,9 +68,17 @@ Copy the public key output to your clipboard. Go to your Github account and add 
     cd src
     pwd
 
+## Fork the course repository to your own Github account
+
+1. While logged in to your student Github account, visit the [course repo](https://github.com/artzte/cocc-js).
+2. Find the Fork button at the top right, and fork the repo; this copies the repo to your own Github account.
+3. Go to the Settings area of your forked repository, and scroll down to the Danger Zone area. Change the visibility of your repo to private.
+4. Add me as a collaborator (find this under Collaborators and Teams / Manage access). My github handle is `artzte`.
+
+
 ## Clone the course repository
 
-    git clone git@github.com:artzte/cocc-js.git
+    git clone git@github.com:(my-githug-handle)/cocc-js.git
 
 ## Install nodenv and Node
 
