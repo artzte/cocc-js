@@ -1,17 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
+import { renderApp } from '../src/app.js'
 
-describe('starter kit sanity check', () => {
-  beforeEach(() => {
-    document.body.innerHTML = '<div id="app"></div>'
-  })
-
-  it('can read and write DOM text', () => {
+describe('week1 tests', () => {
+  it('can see our changed title for the page', () => {
+    renderApp()
     const app = document.querySelector('#app')
-    app.textContent = 'Hello'
-    expect(app.textContent).toBe('Hello')
-  })
-
-  it('can query by selector', () => {
-    expect(document.querySelector('#app')).not.toBeNull()
+    expect(app.textContent).toBe('Hello, JavaScript. For week 1!')
   })
 })
