@@ -9,31 +9,43 @@ Resources:
 
 ## WSL setup (from PowerShell)
 
-    wsl --install
+```
+wsl --install
+```
 
 ### Get into a Bash shell (from PowerShell)
 
-    bash
+```
+bash
+```
 
 ### Handy Bash commands
 
 #### Change to my home folder under WSL
 
-    cd ~
+```
+cd ~
+```
 
 #### Which folder am I in?
 
-    pwd
+```
+pwd
+```
 
 #### Start Windows Explorer in the current WSL folder
 
-    explorer.exe .
+```
+explorer.exe .
+```
 
 Otherwise it can be tricky to see where your home folder is!
 
 #### Sending information to the Windows clipboard
 
-    ls | clip.exe
+```
+ls | clip.exe
+```
 
 ## Universal setup from Bash shell
 
@@ -41,32 +53,40 @@ Otherwise it can be tricky to see where your home folder is!
 
 Is Git already installed? If you're not sure:
 
-    git --version
+```
+git --version
+```
 
 Make sure you have set up your configs (the two commands at the end of the next section).
 
 ## Git install and setup
 
-    sudo apt-get install git
-    git --version
-    git config --global user.name "Your Name"
-    git config --global user.email "your@email"
+```
+sudo apt-get install git
+git --version
+git config --global user.name "Your Name"
+git config --global user.email "your-cocc-email@cocc.edu"
+```
 
 ## Configure your SSH key for Github
 
-    cd ~
-    mkdir .ssh
-    ssh-keygen -t rsa -b 4096 -C "your@email"
-    cat id_rsa.pub
+```
+cd ~
+mkdir .ssh
+ssh-keygen -t rsa -b 4096 -C "your-cocc-email@cocc.edu"
+cat id_rsa.pub
+```
 
 Copy the public key output to your clipboard. Go to your Github account and add the key here: [https://github.com/settings/keys](https://github.com/settings/keys)
 
 ## Set up a source folder
 
-    cd ~
-    mkdir src
-    cd src
-    pwd
+```
+cd ~
+mkdir src
+cd src
+pwd
+```
 
 ## Fork the course repository to your own Github account
 
@@ -78,7 +98,9 @@ Copy the public key output to your clipboard. Go to your Github account and add 
 
 ## Clone the course repository
 
-    git clone git@github.com:(my-githug-handle)/cocc-js.git
+```
+git clone git@github.com:(my-githug-handle)/cocc-js.git
+```
 
 ## Install nodenv and Node
 
@@ -86,23 +108,27 @@ Just follow the directions on the [nodenv website](https://github.com/nodenv/nod
 
 Then, init your shell for Node:
 
-   ~/.nodenv/bin/nodenv init
+```
+~/.nodenv/bin/nodenv init
+```
 
 Close your terminal and open one again.
 
 Now, install a Node version and make it your global:
 
 ```
-   # see the versions
-   nodenv install --list
+# see the versions
+nodenv install --list
 
-   # install one and make it global
-   nodenv install 24.16.0
-   nodenv global 24.16.0
+# install one and make it global
+nodenv install 24.16.0
+nodenv global 24.16.0
 ```
 
 ## Jump into your course repository and crank up the starter kit!
 
-   cd ~/src/cocc-js/starter
-   npm i
-   npm run dev
+```
+cd ~/src/cocc-js/starter
+npm i
+npm run dev
+```
