@@ -1,3 +1,4 @@
+// "use strict";
 
 function createMistake() {
   accidentalGlobal = "Oops!"; // Forgot 'let', 'const', or 'var'
