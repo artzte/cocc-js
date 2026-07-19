@@ -7,19 +7,25 @@ Resources:
 - [https://docs.github.com/en/authentication/connecting-to-github-with-ssh](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 - [https://github.com/nodenv/nodenv](https://github.com/nodenv/nodenv)
 
-## WSL setup (from PowerShell)
+## Windows only: Windows Subsystem for Linux (WSL) setup
+
+From PowerShell:
 
 ```
 wsl --install
 ```
 
-### Get into a Bash shell (from PowerShell)
+### Open a Bash shell
+
+From PowerShell:
 
 ```
 bash
 ```
 
 ### Handy Bash commands
+
+From Bash:
 
 #### Change to my home folder under WSL
 
@@ -47,7 +53,10 @@ Otherwise it can be tricky to see where your home folder is!
 ls | clip.exe
 ```
 
-## Universal setup from Bash shell
+## Universal Setup (Windows/WSL, MacOS, Ubuntu, etc)
+
+Here, you already have a Linux-compliant command-line environment.
+So you can proceed with the universal course setup requirements.
 
 ## Git?
 
@@ -79,13 +88,12 @@ cat id_rsa.pub
 
 Copy the public key output to your clipboard. Go to your Github account and add the key here: [https://github.com/settings/keys](https://github.com/settings/keys)
 
-## Set up a source folder
+## Set up a source folder, and go there
 
 ```
 cd ~
 mkdir src
 cd src
-pwd
 ```
 
 ## Fork the course repository to your own Github account
@@ -96,13 +104,13 @@ pwd
 4. Add me as a collaborator (find this under Collaborators and Teams / Manage access). My github handle is `artzte`.
 
 
-## Clone the course repository
+## Clone the cocc-js repository which you forked into your own account
 
 ```
 git clone git@github.com:(my-githug-handle)/cocc-js.git
 ```
 
-## Install nodenv and Node
+## Install NodeENV and Node
 
 Just follow the directions on the [nodenv website](https://github.com/nodenv/nodenv). Install both [nodenv](https://github.com/nodenv/node-build#clone-as-nodenv-plugin-using-git) and [node-build plugin](https://github.com/nodenv/node-build#clone-as-nodenv-plugin-using-git).
 
@@ -132,3 +140,10 @@ cd ~/src/cocc-js/starter
 npm i
 npm run dev
 ```
+
+To run tests:
+
+```
+npm test
+```
+
