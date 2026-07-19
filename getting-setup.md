@@ -1,6 +1,12 @@
 # Getting started
 
-Resources:
+First step: if you don't already have a GitHub account, create one for yourself,
+using your COCC email.
+
+During Week1, you'll send me your Github handle so that I can grant you access
+to our course repository.
+
+## Resources:
 
 - [Github educational benefits](https://github.com/settings/education/benefits) -- you will need to add your COCC email address to your account in order to take advantage of Github's generous educational package.
 - [https://learn.microsoft.com/en-us/windows/wsl/](https://learn.microsoft.com/en-us/windows/wsl/)
@@ -96,18 +102,19 @@ mkdir src
 cd src
 ```
 
-## Fork the course repository to your own Github account
+## Create a course repository for your assignments. You will use this repo as a template.
 
 1. While logged in to your student Github account, visit the [course repo](https://github.com/artzte/cocc-js).
-2. Find the Fork button at the top right, and fork the repo; this copies the repo to your own Github account.
-3. Go to the Settings area of your forked repository, and scroll down to the Danger Zone area. Change the visibility of your repo to private.
-4. Add me as a collaborator (find this under Collaborators and Teams / Manage access). My github handle is `artzte`.
+2. Find the green "Use this template" button at the top.
+3. Leave all the default information; I suggest you name your repository e.g `(my-gh-handle)-cocc-js`
+4. Go to the Settings area of your forked repository, and scroll down to the Danger Zone area. Change the visibility of your repo to private.
+5. Add me as a collaborator (find this under Collaborators and Teams / Manage access). My github handle is `artzte`.
 
 
-## Clone the cocc-js repository which you forked into your own account
+## Clone your newly copied repository
 
 ```
-git clone git@github.com:(my-githug-handle)/cocc-js.git
+git clone git@github.com:(my-gh-handle)/cocc-js.git
 ```
 
 ## Install NodeENV and Node
