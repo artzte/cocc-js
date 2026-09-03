@@ -6,6 +6,8 @@ I'm excited to share my passion for JavaScript with you. This language has come 
 
 Today, JavaScript is a powerful tool for building web applications that interact seamlessly with users. With JavaScript, you can create custom behaviors, animate elements, and extend browser functionality. You can also interact with server-side resources, retrieving data, streaming media, and pushing information to databases.
 
+As a user-focused, full-stack developer, I've used JavaScript professionally for many years. JavaScript and Ruby are my two favorite programming languages. I've also enjoyed learning TypeScript, a typed variant of JavaScript that has a number of developer productivity and code-quality benefits.
+
 JavaScript can also be used outside of the browser. We will be using Node.js to build our projects, and to run a development server so we can quickly see how our changes affect the user experience. You can build ambitious server-side applications using Node, and even build command-line utilities to make your life more efficient.
 
 As an overview of what to expect from this course:
@@ -14,8 +16,14 @@ As an overview of what to expect from this course:
 * You'll apply these concepts directly to interactive web development
 * We'll focus on the language itself, exploring scope, closures, types, modules, and async programming
 
-To get started, make sure you have a computer for building software. I'll conduct class lectures and demonstrations on a Linux laptop. I'll be using the Z shell, Visual Studio Code, Gitkraken, and Chrome.
+We will be using Github, a fantastic code management and continuous integration platform. You'll need a Github account that is capable of hosting private repositories. There are reasonably-priced account tiers that allow you to host private repos, but you can also gain this capability by signing up for an educational account. You can use your COCC email to receive the educational account tier benefits.
 
-If you're developing on a Windows laptop, I recommend installing the Windows Subsystem for Linux (WSL). You'll also need a free educational GitHub account to submit your assignments. We'll talk more about the class requirements during our first week.
+You'll also need a computer for building software. I'll conduct class lectures and demonstrations on a Linux laptop. I'll be using the Z shell, Visual Studio Code, Gitkraken, and Chrome.
 
-That's it for now. I'm excited to get started and learn more about your interests in JavaScript.
+If you have a MacBook or MacBook Pro, you'll find the developer experience to be very similar to my demos, since MacOS is build on top of Linux.
+
+If you're developing on a Windows laptop, you'll need to install the Windows Subsystem for Linux (WSL).
+
+We'll talk more about the class requirements during our first week.
+
+That's it for now. I'm excited to get started and learn more about your interests in JavaScript. For me, teaching is a shared journey of discovery and learning. I look forward to learning more about JavaScript with you.
