@@ -8,11 +8,13 @@ email.
 - [Github educational benefits](https://github.com/settings/education/benefits) -- you will need to
   add your COCC email address to your account in order to take advantage of Github's generous
   educational package.
-- <https://learn.microsoft.com/en-us/windows/wsl/>
+- <https://learn.microsoft.com/en-us/windows/wsl/> - Windows Subsystem for Linux
+- <https://desktop.github.com/download/> - desktop Github app
+- <https://code.visualstudio.com/> - Visual Studio Code
 - <https://docs.github.com/en/authentication/connecting-to-github-with-ssh>
 - <https://github.com/nodenv/nodenv>
 
-## Step 0 (Windows users only): set up the Windows Subsystem for Linux (WSL)
+## Windows users only: set up the Windows Subsystem for Linux (WSL)
 
 From PowerShell:
 
