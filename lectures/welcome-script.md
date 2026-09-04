@@ -12,9 +12,9 @@ JavaScript can also be used outside of the browser. We will be using Node.js to 
 
 As an overview of what to expect from this course:
 
-* We'll learn JavaScript fundamentals using *You Don't Know JS Yet*, a textbook that is available for free on Github
-* You'll apply these concepts directly to interactive web development
-* We'll focus on the language itself, exploring scope, closures, types, modules, and async programming
+- We'll learn JavaScript fundamentals using _You Don't Know JS Yet_, a textbook that is available for free on Github
+- You'll apply these concepts directly to interactive web development
+- We'll focus on the language itself, exploring scope, closures, types, modules, and async programming
 
 We will be using Github, a fantastic code management and continuous integration platform. You'll need a Github account that is capable of hosting private repositories. There are reasonably-priced account tiers that allow you to host private repos, but you can also gain this capability by signing up for an educational account. You can use your COCC email to receive the educational account tier benefits.
 

@@ -1,12 +1,14 @@
 # CIS 133JS — Introduction to JavaScript
 
 ### Course Description
+
 Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add interactivity and custom behaviors to web applications by employing front-end JavaScript techniques combined with HTML and CSS.
 
 **Prerequisites**: CIS 122 (intro programming, Python)
 **Assumed background**: basic program logic (variables, conditionals, loops, functions); little or no prior JavaScript
 
 ### Outcomes
+
 1. Implement scripts that rely on knowledge of Document Object Model (DOM) architecture and includes methods for manipulating DOM objects.
 2. Construct functions that effectively utilize variables, conditionals, loops, and arrays.
 3. Generate scripts that process user input and provide meaningful output.
@@ -16,35 +18,36 @@ Learn programming fundamentals and object-oriented concepts using vanilla JavaSc
 
 The textbook is [You Don't Know JS Yet (book series) - 2nd Edition)](https://github.com/getify/you-dont-know-js). You can read it online, or order a bound copy from the provided links on the book website.
 
-- *You Don't Know JS Yet: Get Started*, 2nd ed. — Kyle Simpson (chapters 1–3; ch4 as bridge reading)
-- *You Don't Know JS Yet: Scope & Closures*, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices optional)
+- _You Don't Know JS Yet: Get Started_, 2nd ed. — Kyle Simpson (chapters 1–3; ch4 as bridge reading)
+- _You Don't Know JS Yet: Scope & Closures_, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices optional)
 
 You will also need a computer for building software. Class lectures and demonstrations will be conducted on an Ubuntu laptop, using the Z shell (Zsh), Visual Studio Code, Gitkraken, and Chrome. If you are developing on a Windows laptop, I recommend that you install the Windows Subsystem for Linux (WSL).
 
 Within these environments, we will use the following technologies to build software:
 
-| Tool | Purpose |
-|---|---|
-| **Vite** | Dev server and build pipeline (native ESM, zero config) |
-| **Vitest** | Unit testing (Jest-compatible API, runs in the same Vite pipeline) |
-| **jsdom** | Lets Vitest test DOM-touching code |
-| **Node.js / npm** | Package management and running scripts |
-| **Git + GitHub** | Version control and project submission; all work submitted as GitHub repo links |
-| **GitHub Pages** | Free static hosting for deployed projects (built-in Vite support) |
-| **Browser DevTools** | Primary debugging environment |
-| **MDN Web Docs** | Reference for all DOM/HTML5 APIs |
+| Tool                 | Purpose                                                                         |
+| -------------------- | ------------------------------------------------------------------------------- |
+| **Vite**             | Dev server and build pipeline (native ESM, zero config)                         |
+| **Vitest**           | Unit testing (Jest-compatible API, runs in the same Vite pipeline)              |
+| **jsdom**            | Lets Vitest test DOM-touching code                                              |
+| **Node.js / npm**    | Package management and running scripts                                          |
+| **Git + GitHub**     | Version control and project submission; all work submitted as GitHub repo links |
+| **GitHub Pages**     | Free static hosting for deployed projects (built-in Vite support)               |
+| **Browser DevTools** | Primary debugging environment                                                   |
+| **MDN Web Docs**     | Reference for all DOM/HTML5 APIs                                                |
 
 Students who don't already have a GitHub account should sign up at [github.com](https://github.com) and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free access to additional tools.
 
 ## 12-Week Course Outline
 
-This course teaches JavaScript fundamentals using *You Don't Know JS Yet* (YDKJSY) as the primary text, with all exercises and projects grounded in browser programming and DOM manipulation. Students learn the language deeply — scope, closures, types, modules, async — and apply that knowledge directly to interactive web development. HTML5 APIs and DOM methods are explored by students via MDN; lectures focus on the JS language itself.
+This course teaches JavaScript fundamentals using _You Don't Know JS Yet_ (YDKJSY) as the primary text, with all exercises and projects grounded in browser programming and DOM manipulation. Students learn the language deeply — scope, closures, types, modules, async — and apply that knowledge directly to interactive web development. HTML5 APIs and DOM methods are explored by students via MDN; lectures focus on the JS language itself.
 
 ### Starter Kit
 
 Scaffolded on day one. Students clone a course-provided repo and run `npm install`.
 
 **`package.json` scripts**:
+
 ```json
 {
   "scripts": {
@@ -58,17 +61,19 @@ Scaffolded on day one. Students clone a course-provided repo and run `npm instal
 ```
 
 **`vite.config.js`**:
+
 ```js
 import { defineConfig } from 'vite'
 
 export default defineConfig({
   test: {
-    environment: 'jsdom'
-  }
+    environment: 'jsdom',
+  },
 })
 ```
 
 **Project layout**:
+
 ```
 starter-kit/
 ├── index.html
@@ -81,6 +86,7 @@ starter-kit/
 ```
 
 **Install**:
+
 ```
 npm install --save-dev vite vitest @vitest/ui jsdom
 ```
@@ -89,12 +95,12 @@ npm install --save-dev vite vitest @vitest/ui jsdom
 
 ## Assessment
 
-| Component | Weight |
-|---|---|
-| Weekly Quizzes (11 × ~10 questions) | 20% |
-| Weekly Programming Challenges (10) | 30% |
-| Final Project (4 milestones) | 40% |
-| Participation / Discussion | 10% |
+| Component                           | Weight |
+| ----------------------------------- | ------ |
+| Weekly Quizzes (11 × ~10 questions) | 20%    |
+| Weekly Programming Challenges (10)  | 30%    |
+| Final Project (4 milestones)        | 40%    |
+| Participation / Discussion          | 10%    |
 
 ---
 
@@ -108,12 +114,12 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Milestones
 
-| # | Week Due | Deliverable | Submit |
-|---|---|---|---|
-| 1 | Week 4 | **Proposal** — app idea, target user, 3–5 core features, chosen public API | `PROPOSAL.md` committed to your project repo |
-| 2 | Week 7 | **Design Document** — wireframes/sketches, data model, module plan, API endpoints | `DESIGN.md` + image files committed to your project repo |
-| 3 | Week 9 | **Initial Structure** — all modules stubbed, placeholder implementations, ≥1 passing test per module | GitHub repo link |
-| 4 | Week 12 | **Final Submission** — complete, working, deployed application | GitHub repo link + deployed URL |
+| #   | Week Due | Deliverable                                                                                          | Submit                                                   |
+| --- | -------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 1   | Week 4   | **Proposal** — app idea, target user, 3–5 core features, chosen public API                           | `PROPOSAL.md` committed to your project repo             |
+| 2   | Week 7   | **Design Document** — wireframes/sketches, data model, module plan, API endpoints                    | `DESIGN.md` + image files committed to your project repo |
+| 3   | Week 9   | **Initial Structure** — all modules stubbed, placeholder implementations, ≥1 passing test per module | GitHub repo link                                         |
+| 4   | Week 12  | **Final Submission** — complete, working, deployed application                                       | GitHub repo link + deployed URL                          |
 
 ### Requirements (Final Submission)
 
@@ -134,15 +140,17 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 1 — What Is JavaScript?
 
-**Reading**: *Get Started* Ch1
+**Reading**: _Get Started_ Ch1
 
 **Topics**:
+
 - The ECMAScript specification, JS engines, and runtime environments
 - Browser vs. Node.js — same language, different host environments
 - Strict mode: what it is, why to always use it
 - The JS development environment: DevTools console, Sources panel, debugger
 
 **Lab (setup focus — no challenge this week)**:
+
 - Create a GitHub account if you don't have one; claim the GitHub Student Developer Pack
 - Fork the course starter kit repo to your own GitHub account; clone it locally
 - Run `npm install`, `npm run dev`, `npm run test` — verify all three work
@@ -156,9 +164,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 2 — Values, Types, and Variables
 
-**Reading**: *Get Started* Ch2 — Values through Declaring and Using Variables
+**Reading**: _Get Started_ Ch2 — Values through Declaring and Using Variables
 
 **Topics**:
+
 - Primitive types: `string`, `number`, `boolean`, `null`, `undefined`, `bigint`, `symbol`
 - Strings in depth: template literals, common methods (`slice`, `includes`, `split`, `trim`)
 - Numbers in depth: `parseInt`, `parseFloat`, `Number`, `Math` object, `NaN` and `isNaN`
@@ -176,9 +185,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 3 — Functions and Comparisons
 
-**Reading**: *Get Started* Ch2 — Functions, Comparisons
+**Reading**: _Get Started_ Ch2 — Functions, Comparisons
 
 **Topics**:
+
 - Function declarations, function expressions, and arrow functions — syntax and behavioral differences
 - Parameters, return values, default parameter values
 - Strict equality (`===`) vs. loose equality (`==`) and when each fires
@@ -194,9 +204,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 4 — Arrays, Loops, and Iteration
 
-**Reading**: *Get Started* Ch2 — How We Organize in JS (arrays/iteration portion); Ch3 — Iteration
+**Reading**: _Get Started_ Ch2 — How We Organize in JS (arrays/iteration portion); Ch3 — Iteration
 
 **Topics**:
+
 - Arrays: creation, indexing, common mutation methods (`push`, `pop`, `splice`, `slice`)
 - `for`, `while`, `for...of` loops
 - The iterator protocol — what it is, why `for...of` works on arrays (and strings, Maps, etc.)
@@ -214,11 +225,12 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 5 — Lexical Scope
 
-**Reading**: *Scope & Closures* Ch1 + Ch2
+**Reading**: _Scope & Closures_ Ch1 + Ch2
 
-*Bridge reading*: *Get Started* Ch4 — The Bigger Picture (a short orienting chapter that previews the three JS pillars: scope/closures, prototypes, and types. Read it as an introduction to the scope unit.)
+_Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting chapter that previews the three JS pillars: scope/closures, prototypes, and types. Read it as an introduction to the scope unit.)
 
 **Topics**:
+
 - How JS compiles code before executing it — why this matters for scope
 - Lexical scope: the scope model JS uses
 - Scope "bubbles": how nested functions create nested scopes
@@ -234,9 +246,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 6 — Scope Chain, Global Scope, and Variable Lifecycle
 
-**Reading**: *Scope & Closures* Ch3, Ch4, Ch5
+**Reading**: _Scope & Closures_ Ch3, Ch4, Ch5
 
 **Topics**:
+
 - The scope chain: how nested scopes link outward
 - Variable shadowing — when and why it bites you
 - The global scope in browsers: `window`, `globalThis`, why global pollution is dangerous
@@ -253,9 +266,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 7 — Closures
 
-**Reading**: *Scope & Closures* Ch6 + Ch7
+**Reading**: _Scope & Closures_ Ch6 + Ch7
 
 **Topics**:
+
 - Limiting scope exposure — the Principle of Least Exposure (POLE)
 - What a closure is: a function that retains access to the variables of its enclosing scope even after that scope has returned
 - Factory functions: using closure to create stateful, encapsulated objects
@@ -274,9 +288,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 8 — Classes and Object-Oriented Programming
 
-**Reading**: *Get Started* Ch2 — How We Organize in JS (classes); Ch3 — `this` Keyword, Prototypes (conceptual read)
+**Reading**: _Get Started_ Ch2 — How We Organize in JS (classes); Ch3 — `this` Keyword, Prototypes (conceptual read)
 
 **Topics**:
+
 - ES6 `class` syntax: `constructor`, instance methods, instance properties
 - `this` inside class methods — how it's bound and how to lose it (and fix it)
 - Inheritance: `extends`, `super()`, overriding methods
@@ -294,9 +309,10 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 ### Week 9 — Modules
 
-**Reading**: *Scope & Closures* Ch8
+**Reading**: _Scope & Closures_ Ch8
 
 **Topics**:
+
 - Why modules: encapsulation, avoiding globals, explicit dependencies
 - ES Modules (ESM): `export` (named and default), `import`, re-exports
 - Module scope — each module is its own scope; nothing leaks to global
@@ -316,11 +332,13 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 ### Week 10 — Events and the DOM
 
 **Reading**: MDN student-directed:
+
 - [Introduction to events](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events)
 - [Event reference](https://developer.mozilla.org/en-US/docs/Web/Events)
 - [HTMLElement: input event](https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event)
 
 **Topics**:
+
 - The event model: bubbling and capturing — what they are, which fires first
 - `addEventListener` / `removeEventListener`; the options object (`once`, `capture`, `passive`)
 - The `Event` object: `target`, `currentTarget`, `preventDefault`, `stopPropagation`
@@ -338,11 +356,13 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 ### Week 11 — Async JavaScript: Promises, Fetch, and Async/Await
 
 **Reading**: MDN student-directed:
+
 - [Using Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 - [async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 - [Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
 
 **Topics**:
+
 - The event loop: why JS is single-threaded but non-blocking (conceptual model; enough to reason about async, not a deep dive)
 - Callbacks and their problems (callback hell — brief historical context)
 - Promises: pending / fulfilled / rejected states; `.then()`, `.catch()`, `.finally()`
@@ -352,6 +372,7 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 - Loading and error states in the DOM — always handle both
 
 **Healthy patterns emphasized**:
+
 ```js
 // Always await inside try/catch
 async function loadData(url) {
@@ -361,7 +382,7 @@ async function loadData(url) {
     return await res.json()
   } catch (err) {
     console.error('fetch failed:', err)
-    throw err  // re-throw so callers can handle it too
+    throw err // re-throw so callers can handle it too
   }
 }
 ```
@@ -384,7 +405,7 @@ async function loadData(url) {
 
 **Project Milestone 4 — Final Submission due**: Complete working application meeting all requirements listed above, deployed and accessible via public URL.
 
-*No quiz this week.*
+_No quiz this week._
 
 ---
 
@@ -392,37 +413,37 @@ async function loadData(url) {
 
 ### COCC Course Outcomes
 
-| Outcome (exact catalog language) | Weeks |
-|---|---|
+| Outcome (exact catalog language)                                                                               | Weeks          |
+| -------------------------------------------------------------------------------------------------------------- | -------------- |
 | Implement scripts that rely on knowledge of DOM architecture and includes methods for manipulating DOM objects | 2, 4, 8, 9, 10 |
-| Construct functions that effectively utilize variables, conditionals, loops, and arrays | 2, 3, 4 |
-| Generate scripts that process user input and provide meaningful output | 3, 10, 11 |
-| Plan and create scripts utilizing events and event handlers that respond to user inputs | 10, throughout |
+| Construct functions that effectively utilize variables, conditionals, loops, and arrays                        | 2, 3, 4        |
+| Generate scripts that process user input and provide meaningful output                                         | 3, 10, 11      |
+| Plan and create scripts utilizing events and event handlers that respond to user inputs                        | 10, throughout |
 
 ### COCC Content Outline Topics
 
-| Topic | Weeks |
-|---|---|
-| The Document Object Model (DOM) | 2, 4, 8, 9, 10 |
-| Events and event handling | 10, throughout |
-| Variables and scope | 2, 5, 6, 7 |
-| Conditionals | 3 |
-| Functions | 3 |
-| Strings and numbers | 2 |
-| Arrays | 4 |
-| Loops | 4 |
-| Objects | 2 (object literals), 8 (classes) |
+| Topic                           | Weeks                            |
+| ------------------------------- | -------------------------------- |
+| The Document Object Model (DOM) | 2, 4, 8, 9, 10                   |
+| Events and event handling       | 10, throughout                   |
+| Variables and scope             | 2, 5, 6, 7                       |
+| Conditionals                    | 3                                |
+| Functions                       | 3                                |
+| Strings and numbers             | 2                                |
+| Arrays                          | 4                                |
+| Loops                           | 4                                |
+| Objects                         | 2 (object literals), 8 (classes) |
 
 ## YDKJSY Chapter Coverage
 
-| Chapter | Week |
-|---|---|
-| *Get Started* Ch1 — What Is JavaScript? | 1 |
-| *Get Started* Ch2 — Surveying JS | 2, 3, 4, 8 |
-| *Get Started* Ch3 — Roots of JS (Iteration, `this`, Prototypes) | 4 (Iteration), 8 (`this`/Prototypes) |
-| *Get Started* Ch4 — The Bigger Picture | 5 (bridge reading) |
-| *Scope & Closures* Ch1–2 — Lexical Scope | 5 |
-| *Scope & Closures* Ch3–5 — Scope Chain, Global, Lifecycle | 6 |
-| *Scope & Closures* Ch6–7 — Limiting Scope, Closures | 7 |
-| *Scope & Closures* Ch8 — Module Pattern | 9 |
-| *S&C* Appendices (implied scopes, named functions, TDZ details) | Optional / self-study |
+| Chapter                                                         | Week                                 |
+| --------------------------------------------------------------- | ------------------------------------ |
+| _Get Started_ Ch1 — What Is JavaScript?                         | 1                                    |
+| _Get Started_ Ch2 — Surveying JS                                | 2, 3, 4, 8                           |
+| _Get Started_ Ch3 — Roots of JS (Iteration, `this`, Prototypes) | 4 (Iteration), 8 (`this`/Prototypes) |
+| _Get Started_ Ch4 — The Bigger Picture                          | 5 (bridge reading)                   |
+| _Scope & Closures_ Ch1–2 — Lexical Scope                        | 5                                    |
+| _Scope & Closures_ Ch3–5 — Scope Chain, Global, Lifecycle       | 6                                    |
+| _Scope & Closures_ Ch6–7 — Limiting Scope, Closures             | 7                                    |
+| _Scope & Closures_ Ch8 — Module Pattern                         | 9                                    |
+| _S&C_ Appendices (implied scopes, named functions, TDZ details) | Optional / self-study                |

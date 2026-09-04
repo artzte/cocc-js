@@ -7,6 +7,6 @@ const html = readFileSync('index.html', 'utf8')
 const body = html.match(/<body>([\s\S]*)<\/body>/)[1]
 
 beforeEach(() => {
-  console.log('Setting up DOM to match our index.html file');
+  console.log('Setting up DOM to match our index.html file')
   document.body.innerHTML = body
 })

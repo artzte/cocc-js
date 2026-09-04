@@ -16,13 +16,15 @@ Don't have a GitHub account? Sign up at [github.com](https://github.com) and cla
 
 ## Commands
 
-| Command | What it does |
-|---|---|
-| `npm run dev` | Start the dev server at `http://localhost:5173` |
-| `npm run build` | Build for production into `dist/` |
-| `npm run preview` | Preview the production build locally |
-| `npm test` | Run all tests once |
-| `npm run test:watch` | Run tests in watch mode |
+| Command                | What it does                                    |
+| ---------------------- | ----------------------------------------------- |
+| `npm run dev`          | Start the dev server at `http://localhost:5173` |
+| `npm run build`        | Build for production into `dist/`               |
+| `npm run preview`      | Preview the production build locally            |
+| `npm test`             | Run all tests once                              |
+| `npm run test:watch`   | Run tests in watch mode                         |
+| `npm run format`       | Format code with Prettier                       |
+| `npm run format:check` | Check code formatting with Prettier             |
 
 ## Two Ways to Use This Kit
 
@@ -44,6 +46,7 @@ test/
 ```
 
 The dev server serves all HTML files from the project root. Access each week at:
+
 - `http://localhost:5173/src/week01/`
 - `http://localhost:5173/src/week02/`
 
