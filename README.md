@@ -3,9 +3,6 @@
 First step: if you don't already have a GitHub account, create one for yourself, using your COCC
 email.
 
-During Week1, you'll send me your Github handle so that I can grant you access to our course
-repository.
-
 ## Resources:
 
 - [Github educational benefits](https://github.com/settings/education/benefits) -- you will need to
