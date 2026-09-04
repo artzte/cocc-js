@@ -90,14 +90,17 @@ export default defineConfig({
 **Project layout**:
 
 ```
-starter-kit/
+starter/
 ├── index.html
 ├── package.json
 ├── vite.config.js
 ├── src/
-│   └── main.js
+│   ├── app.js
+│   └── common/
+│       └── main.js
 └── test/
-    └── main.test.js
+    ├── setup.js
+    └── starter.test.js
 ```
 
 **Install**:
