@@ -10,23 +10,34 @@
 
 ### 1. The Two-Phase Processing Model
 
-JavaScript is a **compiled language** in practice. The engine processes programs in two distinct phases: **parsing/compilation first**, then **execution**.
+JavaScript is a **compiled language** in practice. The engine processes programs in two distinct
+phases: **parsing/compilation first**, then **execution**.
 
 #### Proof of Compilation
 
-1. **Syntax Errors**: A syntax error anywhere in a file (e.g., `.` before a string) halts the entire file. If JS were purely line-by-line interpreted, code preceding the error would execute first.
-2. **Early Errors**: Strict-mode violations (e.g., duplicate function parameters) are caught and thrown before execution begins.
-3. **Hoisting / TDZ**: Accessing a block-scoped variable before its declaration causes a `ReferenceError`, showing that the engine is already aware of the inner variable before executing the line.
+1. **Syntax Errors**: A syntax error anywhere in a file (e.g., `.` before a string) halts the entire
+   file. If JS were purely line-by-line interpreted, code preceding the error would execute first.
+2. **Early Errors**: Strict-mode violations (e.g., duplicate function parameters) are caught and
+   thrown before execution begins.
+3. **Hoisting / TDZ**: Accessing a block-scoped variable before its declaration causes a
+   `ReferenceError`, showing that the engine is already aware of the inner variable before executing
+   the line.
 
 ---
 
 ### 2. Lexical Scope Metaphors
 
-- **Marbles and Buckets**: Variables are marbles; scopes (functions and blocks) are colored buckets. The color of a variable marble is fixed at compile time based on where it was declared.
-- **The Scope Building**: A nested scope hierarchy is like an office building. The current executing scope is the first floor. Resolving a variable involves checking the current floor, then taking the elevator up one floor at a time to check outer scopes, stopping at the global scope (the roof). Lookups are strictly one-directional (upward/outward).
+- **Marbles and Buckets**: Variables are marbles; scopes (functions and blocks) are colored buckets.
+  The color of a variable marble is fixed at compile time based on where it was declared.
+- **The Scope Building**: A nested scope hierarchy is like an office building. The current executing
+  scope is the first floor. Resolving a variable involves checking the current floor, then taking
+  the elevator up one floor at a time to check outer scopes, stopping at the global scope (the
+  roof). Lookups are strictly one-directional (upward/outward).
 - **The Engine Conversation**:
-  - _Compiler_ and _Scope Manager_ converse at compile time to declare variables in their respective scopes.
-  - _Engine_ and _Scope Manager_ converse at runtime to perform lookups, retrieve values (sources), and assign values (targets).
+  - _Compiler_ and _Scope Manager_ converse at compile time to declare variables in their respective
+    scopes.
+  - _Engine_ and _Scope Manager_ converse at runtime to perform lookups, retrieve values (sources),
+    and assign values (targets).
 
 ---
 
@@ -34,22 +45,28 @@ JavaScript is a **compiled language** in practice. The engine processes programs
 
 Variables in execution play one of two roles:
 
-- **Target (LHS)**: The variable is receiving a value (e.g., assignment `x = 2`, function parameters receiving arguments, loop variables, function declarations).
-- **Source (RHS)**: The variable is supplying a value (e.g., referencing a variable to print it, returning it, or calling it as a function).
+- **Target (LHS)**: The variable is receiving a value (e.g., assignment `x = 2`, function parameters
+  receiving arguments, loop variables, function declarations).
+- **Source (RHS)**: The variable is supplying a value (e.g., referencing a variable to print it,
+  returning it, or calling it as a function).
 
 ---
 
 ### 4. Runtime Scope Modifications (Cheating Lexical Scope)
 
-In non-strict mode, developers can bypass lexical scope, causing performance penalties because the engine cannot optimize compile-time lookups:
+In non-strict mode, developers can bypass lexical scope, causing performance penalties because the
+engine cannot optimize compile-time lookups:
 
-- **`eval(codeStr)`**: Compiles and executes code strings on the fly, dynamically introducing declarations into the active scope.
-- **`with (obj)`**: Dynamically converts an object's properties into identifiers inside a block scope.
+- **`eval(codeStr)`**: Compiles and executes code strings on the fly, dynamically introducing
+  declarations into the active scope.
+- **`with (obj)`**: Dynamically converts an object's properties into identifiers inside a block
+  scope.
 - _Note_: Both cheats are **forbidden in strict mode**.
 
 ---
 
 ### 5. Lexical Scope vs. Dynamic Scope
 
-- **Lexical Scope**: Scope boundaries and variable associations are established at compile time (author-time code placement). JS is strictly lexically scoped.
+- **Lexical Scope**: Scope boundaries and variable associations are established at compile time
+  (author-time code placement). JS is strictly lexically scoped.
 - Lookups are optimized away at compile time; runtime lookups are mostly conceptual.

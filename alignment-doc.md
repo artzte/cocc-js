@@ -4,7 +4,9 @@
 
 https://catalog.cocc.edu/course-outlines/cis-133js/
 
-Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add interactivity and custom behaviors to web applications by employing front-end JavaScript techniques combined with HTML and CSS.
+Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add
+interactivity and custom behaviors to web applications by employing front-end JavaScript techniques
+combined with HTML and CSS.
 
 | Objective | Description                                                                                                                             |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------- |

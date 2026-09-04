@@ -2,26 +2,35 @@
 
 ### Course Description
 
-Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add interactivity and custom behaviors to web applications by employing front-end JavaScript techniques combined with HTML and CSS.
+Learn programming fundamentals and object-oriented concepts using vanilla JavaScript syntax. Add
+interactivity and custom behaviors to web applications by employing front-end JavaScript techniques
+combined with HTML and CSS.
 
-**Prerequisites**: CIS 122 (intro programming, Python)
-**Assumed background**: basic program logic (variables, conditionals, loops, functions); little or no prior JavaScript
+**Prerequisites**: CIS 122 (intro programming, Python) **Assumed background**: basic program logic
+(variables, conditionals, loops, functions); little or no prior JavaScript
 
 ### Outcomes
 
-1. Implement scripts that rely on knowledge of Document Object Model (DOM) architecture and includes methods for manipulating DOM objects.
+1. Implement scripts that rely on knowledge of Document Object Model (DOM) architecture and includes
+   methods for manipulating DOM objects.
 2. Construct functions that effectively utilize variables, conditionals, loops, and arrays.
 3. Generate scripts that process user input and provide meaningful output.
 4. Plan and create scripts utilizing events and event handlers that respond to user inputs.
 
 ### Materials and Requirements
 
-The textbook is [You Don't Know JS Yet (book series) - 2nd Edition)](https://github.com/getify/you-dont-know-js). You can read it online, or order a bound copy from the provided links on the book website.
+The textbook is
+[You Don't Know JS Yet (book series) - 2nd Edition)](https://github.com/getify/you-dont-know-js).
+You can read it online, or order a bound copy from the provided links on the book website.
 
 - _You Don't Know JS Yet: Get Started_, 2nd ed. — Kyle Simpson (chapters 1–3; ch4 as bridge reading)
-- _You Don't Know JS Yet: Scope & Closures_, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices optional)
+- _You Don't Know JS Yet: Scope & Closures_, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices
+  optional)
 
-You will also need a computer for building software. Class lectures and demonstrations will be conducted on an Ubuntu laptop, using the Z shell (Zsh), Visual Studio Code, Gitkraken, and Chrome. If you are developing on a Windows laptop, I recommend that you install the Windows Subsystem for Linux (WSL).
+You will also need a computer for building software. Class lectures and demonstrations will be
+conducted on an Ubuntu laptop, using the Z shell (Zsh), Visual Studio Code, Gitkraken, and Chrome.
+If you are developing on a Windows laptop, I recommend that you install the Windows Subsystem for
+Linux (WSL).
 
 Within these environments, we will use the following technologies to build software:
 
@@ -36,11 +45,17 @@ Within these environments, we will use the following technologies to build softw
 | **Browser DevTools** | Primary debugging environment                                                   |
 | **MDN Web Docs**     | Reference for all DOM/HTML5 APIs                                                |
 
-Students who don't already have a GitHub account should sign up at [github.com](https://github.com) and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free access to additional tools.
+Students who don't already have a GitHub account should sign up at [github.com](https://github.com)
+and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free access to
+additional tools.
 
 ## 12-Week Course Outline
 
-This course teaches JavaScript fundamentals using _You Don't Know JS Yet_ (YDKJSY) as the primary text, with all exercises and projects grounded in browser programming and DOM manipulation. Students learn the language deeply — scope, closures, types, modules, async — and apply that knowledge directly to interactive web development. HTML5 APIs and DOM methods are explored by students via MDN; lectures focus on the JS language itself.
+This course teaches JavaScript fundamentals using _You Don't Know JS Yet_ (YDKJSY) as the primary
+text, with all exercises and projects grounded in browser programming and DOM manipulation. Students
+learn the language deeply — scope, closures, types, modules, async — and apply that knowledge
+directly to interactive web development. HTML5 APIs and DOM methods are explored by students via
+MDN; lectures focus on the JS language itself.
 
 ### Starter Kit
 
@@ -106,11 +121,13 @@ npm install --save-dev vite vitest @vitest/ui jsdom
 
 ## Final Project
 
-Students build a complete, deployable browser application using vanilla JS, ES modules, and the course starter kit. No UI frameworks (React, Vue, etc.).
+Students build a complete, deployable browser application using vanilla JS, ES modules, and the
+course starter kit. No UI frameworks (React, Vue, etc.).
 
 ### Submission
 
-All project work is submitted via GitHub. Each milestone is submitted by posting your GitHub repo link (and a deployed URL where applicable) to the course LMS.
+All project work is submitted via GitHub. Each milestone is submitted by posting your GitHub repo
+link (and a deployed URL where applicable) to the course LMS.
 
 ### Milestones
 
@@ -156,9 +173,11 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 - Run `npm install`, `npm run dev`, `npm run test` — verify all three work
 - Explore the browser console: `console.log`, `document`, basic DOM inspection
 - Write and run the first Vitest test
-- Create your **assignments repo** (fork of starter kit) and your **project repo** (fork of starter kit) on GitHub — both will be used throughout the course
+- Create your **assignments repo** (fork of starter kit) and your **project repo** (fork of starter
+  kit) on GitHub — both will be used throughout the course
 
-**Quiz 1**: What is an engine vs. a runtime? What does strict mode change? What is the ECMAScript spec and who writes it?
+**Quiz 1**: What is an engine vs. a runtime? What does strict mode change? What is the ECMAScript
+spec and who writes it?
 
 ---
 
@@ -175,9 +194,11 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 - `let`, `const`, `var` — behavioral differences, when to use each
 - `typeof` operator; type coercion basics
 
-**Browser Exercise**: Use `document.querySelector` to select DOM elements; update `textContent`, `innerHTML`, and attributes using variables of different types.
+**Browser Exercise**: Use `document.querySelector` to select DOM elements; update `textContent`,
+`innerHTML`, and attributes using variables of different types.
 
-**Challenge**: Given a JS data object (name, score, status), write a script that reads the object and renders its contents into a pre-built HTML template — no hardcoded strings in the HTML.
+**Challenge**: Given a JS data object (name, score, status), write a script that reads the object
+and renders its contents into a pre-built HTML template — no hardcoded strings in the HTML.
 
 **Quiz 2**: Primitives vs. objects, `typeof` behavior, `let` vs. `const` vs. `var`
 
@@ -189,14 +210,18 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 **Topics**:
 
-- Function declarations, function expressions, and arrow functions — syntax and behavioral differences
+- Function declarations, function expressions, and arrow functions — syntax and behavioral
+  differences
 - Parameters, return values, default parameter values
 - Strict equality (`===`) vs. loose equality (`==`) and when each fires
 - Truthy/falsy values; conditional logic: `if`/`else`, ternary operator
 
-**Browser Exercise**: Functions that read a form field's value and update a DOM element conditionally based on the input.
+**Browser Exercise**: Functions that read a form field's value and update a DOM element
+conditionally based on the input.
 
-**Challenge**: A username validator — a function that checks whether a username meets a set of rules (minimum length, no spaces, starts with a letter, etc.) and displays pass/fail feedback for each rule in the DOM.
+**Challenge**: A username validator — a function that checks whether a username meets a set of rules
+(minimum length, no spaces, starts with a letter, etc.) and displays pass/fail feedback for each
+rule in the DOM.
 
 **Quiz 3**: Function syntax forms and their differences, strict vs. loose equality, truthy/falsy
 
@@ -213,13 +238,16 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 - The iterator protocol — what it is, why `for...of` works on arrays (and strings, Maps, etc.)
 - Higher-order array methods: `forEach`, `map`, `filter`, `find`, `reduce` (intro)
 
-**Browser Exercise**: Render an array of objects as an HTML list using `map` to build HTML strings, inserted with `innerHTML` or constructed with `createElement`.
+**Browser Exercise**: Render an array of objects as an HTML list using `map` to build HTML strings,
+inserted with `innerHTML` or constructed with `createElement`.
 
-**Challenge**: A filterable item list — render an array of items to the DOM, add a live search input, and filter the displayed items in real time as the user types.
+**Challenge**: A filterable item list — render an array of items to the DOM, add a live search
+input, and filter the displayed items in real time as the user types.
 
 **Quiz 4**: Array methods, `for...of` vs. `for`, iterator protocol basics
 
-**Project Milestone 1 — Proposal due**: 1-page description of your final project idea, target users, core features, and the public API you plan to use.
+**Project Milestone 1 — Proposal due**: 1-page description of your final project idea, target users,
+core features, and the public API you plan to use.
 
 ---
 
@@ -227,7 +255,9 @@ All project work is submitted via GitHub. Each milestone is submitted by posting
 
 **Reading**: _Scope & Closures_ Ch1 + Ch2
 
-_Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting chapter that previews the three JS pillars: scope/closures, prototypes, and types. Read it as an introduction to the scope unit.)
+_Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting chapter that previews
+the three JS pillars: scope/closures, prototypes, and types. Read it as an introduction to the scope
+unit.)
 
 **Topics**:
 
@@ -236,9 +266,11 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 - Scope "bubbles": how nested functions create nested scopes
 - Variable lookup: how the engine walks the scope chain to resolve a name
 
-**Browser Exercise**: Write nested event handler functions at different levels; trace which variables each one can access and why.
+**Browser Exercise**: Write nested event handler functions at different levels; trace which
+variables each one can access and why.
 
-**Challenge**: Refactor a broken script full of global variables and unexpected naming collisions into properly scoped functions — same behavior, no leaking globals.
+**Challenge**: Refactor a broken script full of global variables and unexpected naming collisions
+into properly scoped functions — same behavior, no leaking globals.
 
 **Quiz 5**: Lexical scope model, scope nesting, how variable lookup works
 
@@ -253,14 +285,18 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 - The scope chain: how nested scopes link outward
 - Variable shadowing — when and why it bites you
 - The global scope in browsers: `window`, `globalThis`, why global pollution is dangerous
-- Hoisting: function declarations hoist fully; `var` hoists as `undefined`; `let`/`const` do not hoist usably (Temporal Dead Zone)
+- Hoisting: function declarations hoist fully; `var` hoists as `undefined`; `let`/`const` do not
+  hoist usably (Temporal Dead Zone)
 - Practical TDZ: what error it throws, how to avoid it
 
-**Browser Exercise**: Debug a script where hoisting and shadowing produce unexpected behavior; fix it without changing the observable output.
+**Browser Exercise**: Debug a script where hoisting and shadowing produce unexpected behavior; fix
+it without changing the observable output.
 
-**Challenge**: A scoreboard app — multiple functions share access to a scores array through the scope chain. Demonstrate (and fix) the classic `var`-in-a-loop bug using `let`.
+**Challenge**: A scoreboard app — multiple functions share access to a scores array through the
+scope chain. Demonstrate (and fix) the classic `var`-in-a-loop bug using `let`.
 
-**Quiz 6**: Scope chain traversal, hoisting rules for `var`/`let`/`const`/functions, TDZ, global scope in the browser
+**Quiz 6**: Scope chain traversal, hoisting rules for `var`/`let`/`const`/functions, TDZ, global
+scope in the browser
 
 ---
 
@@ -271,24 +307,31 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 **Topics**:
 
 - Limiting scope exposure — the Principle of Least Exposure (POLE)
-- What a closure is: a function that retains access to the variables of its enclosing scope even after that scope has returned
+- What a closure is: a function that retains access to the variables of its enclosing scope even
+  after that scope has returned
 - Factory functions: using closure to create stateful, encapsulated objects
 - Closure lifecycle and memory: when closures keep variables alive, and when they don't
 - Practical patterns: callbacks with enclosed state, module-like encapsulation
 
-**Browser Exercise**: A counter widget — encapsulate the count variable with closure, expose only `increment`, `decrement`, and `reset` through returned functions, wire each to a DOM button.
+**Browser Exercise**: A counter widget — encapsulate the count variable with closure, expose only
+`increment`, `decrement`, and `reset` through returned functions, wire each to a DOM button.
 
-**Challenge**: A color theme switcher — use closure to hold current theme state; clicking through buttons cycles themes and updates CSS custom properties on `document.documentElement`. The state and the transition logic should be fully hidden inside the closure.
+**Challenge**: A color theme switcher — use closure to hold current theme state; clicking through
+buttons cycles themes and updates CSS custom properties on `document.documentElement`. The state and
+the transition logic should be fully hidden inside the closure.
 
-**Quiz 7**: Closure definition, POLE principle, factory function pattern, closure vs. class (tradeoffs)
+**Quiz 7**: Closure definition, POLE principle, factory function pattern, closure vs. class
+(tradeoffs)
 
-**Project Milestone 2 — Design Document due**: Wireframes or sketches of your UI, data model, planned module breakdown, and the specific API endpoint(s) you will use.
+**Project Milestone 2 — Design Document due**: Wireframes or sketches of your UI, data model,
+planned module breakdown, and the specific API endpoint(s) you will use.
 
 ---
 
 ### Week 8 — Classes and Object-Oriented Programming
 
-**Reading**: _Get Started_ Ch2 — How We Organize in JS (classes); Ch3 — `this` Keyword, Prototypes (conceptual read)
+**Reading**: _Get Started_ Ch2 — How We Organize in JS (classes); Ch3 — `this` Keyword, Prototypes
+(conceptual read)
 
 **Topics**:
 
@@ -299,9 +342,12 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 - When to use classes vs. plain objects vs. closures
 - Prototypes: classes compile down to prototype chains — awareness is enough; we won't go deep
 
-**Browser Exercise**: A `Component` base class with a `render(container)` method; subclass it into `Card` and `List` components that each render themselves into a specified DOM container.
+**Browser Exercise**: A `Component` base class with a `render(container)` method; subclass it into
+`Card` and `List` components that each render themselves into a specified DOM container.
 
-**Challenge**: A task list app using a `Task` class (id, text, done, `toggle()`, `toHTML()`) and a `TaskList` class (manages an array of `Task` instances, renders to DOM, handles add/remove). No global variables.
+**Challenge**: A task list app using a `Task` class (id, text, done, `toggle()`, `toHTML()`) and a
+`TaskList` class (manages an array of `Task` instances, renders to DOM, handles add/remove). No
+global variables.
 
 **Quiz 8**: `class` syntax, `this` binding in methods, `extends`/`super`, static members
 
@@ -319,13 +365,18 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 - How Vite handles ESM in dev (native browser ESM) vs. build (bundled)
 - CommonJS (`require`/`module.exports`): know it exists for reading Node code; write ESM
 
-**Browser Exercise**: Refactor the Week 8 task list app into at least three modules: `task.js`, `taskList.js`, `main.js`.
+**Browser Exercise**: Refactor the Week 8 task list app into at least three modules: `task.js`,
+`taskList.js`, `main.js`.
 
-**Challenge**: Add a `storage.js` module that persists tasks to `localStorage`. Export `save(tasks)` and `load()` functions; import and use them from `taskList.js`. Write Vitest tests for both functions.
+**Challenge**: Add a `storage.js` module that persists tasks to `localStorage`. Export `save(tasks)`
+and `load()` functions; import and use them from `taskList.js`. Write Vitest tests for both
+functions.
 
-**Quiz 9**: Named vs. default exports, `import` syntax variations, module scope vs. global scope, ESM vs. CommonJS
+**Quiz 9**: Named vs. default exports, `import` syntax variations, module scope vs. global scope,
+ESM vs. CommonJS
 
-**Project Milestone 3 — Initial Structure due**: GitHub repo with all planned module files created, core functions stubbed with correct signatures, and at least one passing Vitest test per module.
+**Project Milestone 3 — Initial Structure due**: GitHub repo with all planned module files created,
+core functions stubbed with correct signatures, and at least one passing Vitest test per module.
 
 ---
 
@@ -342,14 +393,19 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 - The event model: bubbling and capturing — what they are, which fires first
 - `addEventListener` / `removeEventListener`; the options object (`once`, `capture`, `passive`)
 - The `Event` object: `target`, `currentTarget`, `preventDefault`, `stopPropagation`
-- Event delegation — attaching one listener to a parent to handle events on dynamic children; closures make delegation handlers clean
+- Event delegation — attaching one listener to a parent to handle events on dynamic children;
+  closures make delegation handlers clean
 - Forms: `submit`, `input`, `change` events; reading, validating, and resetting form data
 
-**Browser Exercise**: Implement a dynamic comment list using event delegation — one listener on the `<ul>` handles delete buttons on items that didn't exist when the page loaded.
+**Browser Exercise**: Implement a dynamic comment list using event delegation — one listener on the
+`<ul>` handles delete buttons on items that didn't exist when the page loaded.
 
-**Challenge**: A multi-step form wizard — three steps revealed sequentially by events, input validated before advancing, a summary rendered at the end. Modularize into at least `wizard.js` and `validation.js`.
+**Challenge**: A multi-step form wizard — three steps revealed sequentially by events, input
+validated before advancing, a summary rendered at the end. Modularize into at least `wizard.js` and
+`validation.js`.
 
-**Quiz 10**: Bubbling vs. capturing, event delegation, `target` vs. `currentTarget`, `preventDefault`, form events
+**Quiz 10**: Bubbling vs. capturing, event delegation, `target` vs. `currentTarget`,
+`preventDefault`, form events
 
 ---
 
@@ -363,7 +419,8 @@ _Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting ch
 
 **Topics**:
 
-- The event loop: why JS is single-threaded but non-blocking (conceptual model; enough to reason about async, not a deep dive)
+- The event loop: why JS is single-threaded but non-blocking (conceptual model; enough to reason
+  about async, not a deep dive)
 - Callbacks and their problems (callback hell — brief historical context)
 - Promises: pending / fulfilled / rejected states; `.then()`, `.catch()`, `.finally()`
 - `async`/`await` as syntactic sugar over Promises — the preferred pattern
@@ -387,11 +444,15 @@ async function loadData(url) {
 }
 ```
 
-**Browser Exercise**: Fetch posts from `https://jsonplaceholder.typicode.com/posts` and render them as cards; show a loading indicator while fetching, show an error message if the fetch fails.
+**Browser Exercise**: Fetch posts from `https://jsonplaceholder.typicode.com/posts` and render them
+as cards; show a loading indicator while fetching, show an error message if the fetch fails.
 
-**Challenge**: A search interface — user types a query, the app fetches results from a chosen public API (Open Library, PokeAPI, GitHub repos, etc.), renders results, handles empty results, and handles fetch errors — all with appropriate DOM feedback at each state.
+**Challenge**: A search interface — user types a query, the app fetches results from a chosen public
+API (Open Library, PokeAPI, GitHub repos, etc.), renders results, handles empty results, and handles
+fetch errors — all with appropriate DOM feedback at each state.
 
-**Quiz 11**: Promise states, `async`/`await` syntax, `fetch` + `.ok` check, `try/catch` with async, event loop basics
+**Quiz 11**: Promise states, `async`/`await` syntax, `fetch` + `.ok` check, `try/catch` with async,
+event loop basics
 
 ---
 
@@ -401,9 +462,11 @@ async function loadData(url) {
 
 **Focus**: Complete, test, and deploy the final project.
 
-**Synchronous session** (if applicable): Live demo and code review. Each student demos their app and walks through one interesting technical decision they made. Brief peer feedback.
+**Synchronous session** (if applicable): Live demo and code review. Each student demos their app and
+walks through one interesting technical decision they made. Brief peer feedback.
 
-**Project Milestone 4 — Final Submission due**: Complete working application meeting all requirements listed above, deployed and accessible via public URL.
+**Project Milestone 4 — Final Submission due**: Complete working application meeting all
+requirements listed above, deployed and accessible via public URL.
 
 _No quiz this week._
 

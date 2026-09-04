@@ -1,6 +1,7 @@
 # CIS 133JS Starter Kit
 
-Vite + Vitest starter for CIS 133JS. Provides a dev server, build pipeline, and unit testing with DOM support out of the box.
+Vite + Vitest starter for CIS 133JS. Provides a dev server, build pipeline, and unit testing with
+DOM support out of the box.
 
 ## Setup
 
@@ -12,7 +13,8 @@ cd <repo-name>
 npm install
 ```
 
-Don't have a GitHub account? Sign up at [github.com](https://github.com) and claim the [GitHub Student Developer Pack](https://education.github.com/pack) for free extras.
+Don't have a GitHub account? Sign up at [github.com](https://github.com) and claim the
+[GitHub Student Developer Pack](https://education.github.com/pack) for free extras.
 
 ## Commands
 
@@ -54,7 +56,8 @@ The root `index.html` can serve as a simple link hub to each week if you like.
 
 ### Option 2 — Final Project Repo
 
-Fork or clone this repo once as your **project** repo. Treat `src/` as your application source and organize it into modules:
+Fork or clone this repo once as your **project** repo. Treat `src/` as your application source and
+organize it into modules:
 
 ```
 src/
@@ -70,7 +73,8 @@ test/
 
 ## Testing
 
-Tests live in `test/` and use [Vitest](https://vitest.dev/) with a jsdom environment, so DOM APIs are available.
+Tests live in `test/` and use [Vitest](https://vitest.dev/) with a jsdom environment, so DOM APIs
+are available.
 
 ```js
 import { describe, it, expect, beforeEach } from 'vitest'
@@ -82,7 +86,8 @@ describe('my module', () => {
 })
 ```
 
-Test your logic, not your DOM wiring. Functions that compute, transform, or validate are good test targets. Event listeners and `querySelector` calls are not.
+Test your logic, not your DOM wiring. Functions that compute, transform, or validate are good test
+targets. Event listeners and `querySelector` calls are not.
 
 ## Stack
 

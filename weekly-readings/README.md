@@ -1,8 +1,10 @@
 # CIS 133JS — Weekly Readings Summaries
 
-This folder contains high-level bullet-pointed summaries of the major points in each week's reading assignments for CIS 133JS (Introduction to JavaScript).
+This folder contains high-level bullet-pointed summaries of the major points in each week's reading
+assignments for CIS 133JS (Introduction to JavaScript).
 
-The primary reading assignments are selected chapters from the _You Don't Know JS Yet_ (YDKJSY) book series by Kyle Simpson, along with student-directed readings from the MDN Web Docs.
+The primary reading assignments are selected chapters from the _You Don't Know JS Yet_ (YDKJSY) book
+series by Kyle Simpson, along with student-directed readings from the MDN Web Docs.
 
 ## Table of Contents
 
