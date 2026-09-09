@@ -207,3 +207,20 @@ To run tests:
 ```
 npm test
 ```
+
+# Visual Studio notes
+
+## If you are on Windows, set WSL as your default terminal profile.
+
+So that, when you open a new terminal window, you will have a bash session.
+
+1. Ctrl+Shift+P (to open the command palette)
+2. Type "Terminal: Select default profile"
+3. Pick "Ubuntu (WSL)"
+
+## Set autosave
+
+So that, when you leave your active tab, the editor will automatically save your work
+
+1. Ctrl+Shift+P (to open the command palette)
+2. Type "Toggle autosave"
