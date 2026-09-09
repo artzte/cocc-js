@@ -224,3 +224,19 @@ So that, when you leave your active tab, the editor will automatically save your
 
 1. Ctrl+Shift+P (to open the command palette)
 2. Type "Toggle autosave"
+
+# Pulling in cocc-js template updates
+
+```
+# Add a remote reference to my repo
+git remote add template git@github.com:artzte/cocc-js.git
+
+# Check out the main branch
+git checkout main
+
+# Confirm no changes locally
+git status
+
+# Merge template updates
+git merge template/main --allow-unrelated-histories -X theirs
+```
