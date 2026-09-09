@@ -46,6 +46,12 @@ cd ~
 pwd
 ```
 
+#### But, which Windows folder am I in?
+
+```
+wslpath -w "$PWD"
+```
+
 #### Start Windows Explorer in the current WSL folder
 
 ```
