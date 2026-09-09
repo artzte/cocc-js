@@ -146,12 +146,12 @@ cd src
 1. While logged in to your student Github account, visit the
    [course repo](https://github.com/artzte/cocc-js).
 2. Find the green "Use this template" button at the top.
-3. Except for the repo name, leave all the default information; I suggest you name your repository
-   e.g `(my-gh-handle)-cocc-js`
-4. Go to the Settings area of your forked repository, and scroll down to the Danger Zone area.
-   Change the visibility of your repo to private.
-5. Add me as a collaborator (find this under Collaborators and Teams / Manage access). My github
-   handle is `artzte`.
+3. Click "Create a new repository"
+4. Name your repository to include your last name e.g `artzt-cocc-js`
+5. Scroll down, and under Configuration, choose "Private" for visibility.
+6. Click the green "Create repository" button and wait a minute for the files to copy over.
+7. Add me as a collaborator (find this under the "Settings" tab, under "Collaborators and Teams" /
+   "Manage access"). My github handle is `artzte`.
 
 ## Step 5: Clone your new repository
 
@@ -198,11 +198,11 @@ nodenv global 24.16.0
 
 ```
 cd ~/src/cocc-js/starter
-npm i
-npm run dev
+npm install
+npm start
 ```
 
-To run tests:
+To run tests (in a separate terminal tab):
 
 ```
 npm test
