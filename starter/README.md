@@ -33,17 +33,52 @@ Don't have a GitHub account? Sign up at [github.com](https://github.com) and cla
 
 ```
 starter/
-├── index.html          # Entry HTML page (loads /src/common/main.js)
+├── index.html          # Entry HTML page (loads style.css and main.js)
 ├── package.json        # Dependencies and scripts
 ├── vite.config.js      # Vite and Vitest configuration
 ├── src/
 │   ├── app.js          # Student anchor file (exports renderApp)
 │   └── common/
-│       └── main.js     # Wrapper entry point (mounts renderApp into #app)
+│       ├── main.js     # Wrapper entry point (mounts renderApp into #app)
+│       └── style.css   # Minimalist styling and typography scheme
 └── test/
     ├── setup.js        # Vitest DOM test setup (loads index.html into jsdom)
     └── starter.test.js # Sanity check tests
 ```
+
+### Component & Test Dependency Diagram
+
+```mermaid
+flowchart TD
+    subgraph Browser ["Browser Runtime (npm run dev)"]
+        HTML["index.html\n(Host Page)\n• div id='app'\n• link rel='stylesheet'\n• script type='module'"]
+    end
+
+    subgraph ProgramFiles ["Program Files (src/)"]
+        Main["src/common/main.js\n(App Entry Point)\n• import { renderApp } from '../app.js'\n• renderApp()"]
+        Style["src/common/style.css\n(Base Stylesheet)\n• Sans-serif typography\n• Semantic element styles"]
+        App["src/app.js\n(Student Anchor File)\n• export function renderApp()\n• document.querySelector('#app')\n• app.textContent = '...'"]
+    end
+
+    subgraph TestFiles ["Test Files (test/)"]
+        Setup["test/setup.js\n(jsdom DOM Setup)\n• readFileSync('index.html')\n• beforeEach: reset document.body"]
+        Test["test/starter.test.js\n(Vitest Test Suite)\n• import { renderApp } from '../src/app.js'\n• beforeEach: renderApp()\n• expect(app.textContent).toBe(...)"]
+    end
+
+    HTML -->|"loads styles"| Style
+    HTML -->|"loads script"| Main
+    Main -->|"imports & executes"| App
+    HTML -.->|"reads DOM markup"| Setup
+    Setup -.->|"prepares jsdom environment for"| Test
+    Test -->|"imports & verifies"| App
+```
+
+- **In the browser (`npm run dev`)**: `index.html` serves as the host shell, applies the minimalist
+  typography and semantic styles from `src/common/style.css`, and loads `src/common/main.js`, which
+  imports `renderApp` from `src/app.js` to mount your application into `<div id="app">`.
+- **In tests (`npm test`)**: `test/setup.js` loads the exact markup from `index.html` into a
+  simulated DOM (`jsdom`), then `test/starter.test.js` imports `renderApp` from `src/app.js` to
+  verify DOM updates without needing a running browser.
 
 ### The Student Anchor Point (`src/app.js`)
 
