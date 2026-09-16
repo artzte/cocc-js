@@ -200,8 +200,10 @@ spec and who writes it?
 **Browser Exercise**: Use `document.querySelector` to select DOM elements; update `textContent`,
 `innerHTML`, and attributes using variables of different types.
 
-**Challenge**: Given a JS data object (name, score, status), write a script that reads the object
-and renders its contents into a pre-built HTML template — no hardcoded strings in the HTML.
+**Challenge**: Given a JS data object describing some real-world entity, like an animal, or a place,
+or a person, write a script that reads the object and renders its contents into a pre-built HTML
+template — no hardcoded strings in the HTML. Include the type of each attribute as reported by the
+`typeof` operator.
 
 **Quiz 2**: Primitives vs. objects, `typeof` behavior, `let` vs. `const` vs. `var`
 
