@@ -9,6 +9,30 @@
 // 5. Paste this code into the snippet
 // 6. Ctrl+S to save it (asterisk next to it should go away)
 
+function valuesDemo() {
+  const values = {
+    string: 'hello',
+    number: 42,
+    boolean: true,
+    undefined: undefined,
+    null: null,
+    bigint: 1234567890123456789012345678901234567890n,
+    object: { a: 1 },
+    array: [1, 2, 3],
+    set: new Set([1, 2, 3]),
+    map: new Map([
+      ['a', 1],
+      ['b', 2],
+    ]),
+    date: new Date(),
+    regex: /abc/,
+  }
+
+  Object.keys(values).forEach((key) => {
+    console.log(`${key}:`, values[key], typeof values[key])
+  })
+}
+
 function stringDemo() {
   const rawInput = '   $49.99 sale price   '
   const clean = rawInput.trim()
@@ -61,6 +85,7 @@ function scopeAndConstMutabilityDemo() {
   }
 }
 
+valuesDemo()
 stringDemo()
 NaNQuirks()
 typeofDemo()
