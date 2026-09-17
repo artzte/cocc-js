@@ -5,3 +5,4 @@ dist/
 *.local
 modules/**/*.html
 modules/**/*.pdf
+modules/week2/week2-quiz.qti.zip

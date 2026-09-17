@@ -22,10 +22,12 @@ Here's an example object:
 
 ### Some possibly helpful JavaScript methods
 
-| Method                                                                                                            | Usefulness                                                                      |
-| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [Object.keys()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)     | Yields an array of keys to an object                                            |
-| [Array.prototype.map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) | Returns an array in which each value is the return value of the passed function |     |
+| Method                                                                                                                     | Usefulness                                                                      |
+| -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [Object.keys() -- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)       | Yields an array of keys to an object                                            |
+| [Array.prototype.map() -- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) | Returns an array in which each value is the return value of the passed function |     |
+
+: Possibly helpful JavaScript methods
 
 ### For your tests:
 
@@ -64,6 +66,6 @@ it('renders the name', () => {
 ```
 
 That `toMatch` assertion is great, right? It uses a
-[regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp),
+[regular expression -- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp),
 which permits flexible matching patterns (such as using the `i` modifier, which tells the JavaScript
 engine to ignore case variations), thus making your test more resilient to future changes.
