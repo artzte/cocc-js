@@ -45,7 +45,7 @@ For:
 
 ```
 <table>
-  <tr>
+  <tr data-test="name">
     <td>name</td>
     <td>Sherman</td>
     <td>string</td>
