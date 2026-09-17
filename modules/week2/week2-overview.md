@@ -38,15 +38,15 @@ By the end of this module you will be able to:
    - [Week 2 Lecture: Values, Types, and Variables](../../lectures/week2-concepts.md) — an
      interactive breakdown of primitive vs. object types, template literals, number handling,
      `typeof` quirks, block scoping, and DOM integration.
-3. **Video Exploration — "JavaScript Can Be Weird"**:
+3. **(Optional) Video Exploration — "JavaScript Can Be Weird"**:
    - Explore JavaScript's type coercion and surprising historical quirks through classic community
      references:
      - [Wat by Gary Bernhardt (CodeMash Talk)](https://www.destroyallsoftware.com/talks/wat)
      - [wtfjs — A curated list of funny and tricky JavaScript examples](https://github.com/denysdovhan/wtfjs)
      - Reference: Douglas Crockford's _JavaScript: The Good Parts_
-4. **Hands-On Practice — Using the Browser Console to Learn**:
-   - Experimenting with `typeof` and type conversions in the Chrome DevTools console.
-   - Inspecting DOM elements and selecting them directly in the console (`$0`,
+4. **(Optional) Hands-On Practice — Using the Browser Console to Learn**:
+   - Experiment with `typeof` and type conversions in the Chrome DevTools console.
+   - Inspect DOM elements and selecting them directly in the console (`$0`,
      `document.querySelector`).
    - Selecting and modifying DOM element content and attributes live in the browser.
 5. **Assessment — Quiz 2**:
@@ -56,8 +56,8 @@ By the end of this module you will be able to:
    - Create your `week2` project folder and branch using `scripts/mpf.sh week2`.
    - Read a structured JavaScript data object (containing name, score, and status) and render its
      properties into a pre-built HTML template using DOM manipulation methods.
-   - Verify tests pass with `npm test`, preview with `npm start`, and submit your GitHub pull
-     request for instructor review.
+   - Add tests, and verify they pass.
+   - Submit a link to your pull request via Canvas, and request **artzte** as a reviewer.
 
 ### Steps to Complete
 
