@@ -26,6 +26,7 @@ Here's an example object:
 | -------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | [Object.keys() -- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)       | Yields an array of keys to an object                                            |
 | [Array.prototype.map() -- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) | Returns an array in which each value is the return value of the passed function |     |
+| [JSON.stringify() -- MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) | Returns a string representation of an object                                    |
 
 : Possibly helpful JavaScript methods
 
