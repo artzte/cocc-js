@@ -1,6 +1,6 @@
 {
   "name": "cocc-js",
-  "baseUrl": "https://github.com/artzt/cocc-js/blob/main",
+  "baseUrl": "https://github.com/artzte/cocc-js/blob/main",
   "version": "1.0.0",
   "private": true,
   "type": "module",
