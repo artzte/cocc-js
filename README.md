@@ -68,6 +68,39 @@ Pipe it to `clip.exe`.
 ls | clip.exe
 ```
 
+#### IMPORTANT: If you are getting a permission error from the mpf.sh script
+
+With Windows and the WSL, we are dealing with two file systems on one machine, that have different
+ways of identifying which files can be run as a program. How you pull your repository down to your
+machine will determine whether there is a followup step after cloning your repo.
+
+If you use the Git command line to clone your personal copy of the class repository (see Step 5,
+below) and you do that within your Bash shell, you are golden; the scripts/mpf.sh script will be
+executable and you can eg:
+
+```
+scripts/mpf.sh week1
+```
+
+without seeing an error message.
+
+If, however, you use the e.g. Github desktop app to clone your repository, when you run the script,
+you will see an error message:
+
+```
+scripts/mpf.sh week1    # produces an error such as "scripts/mpf.sh: Permission denied"
+```
+
+To fix this, just run this command:
+
+```
+chmod u+x scripts/mpf.sh
+```
+
+Why is this the case? It's because the Github Desktop app runs under your Windows host environment,
+while the script is being run within your Bash terminal session, which is under the Linux host
+environment.
+
 ## Universal Setup (Windows/WSL, MacOS, Ubuntu, etc)
 
 Here, you already have a Linux-compliant command-line environment. So you can proceed with the
@@ -164,7 +197,7 @@ cd src
 > [!NOTE] You can also do this using Git Desktop. See Week 1 Getting Started video.
 
 ```
-git clone git@github.com:(my-gh-handle)/cocc-js.git
+git clone git@github.com:(my-gh-handle)/lastname-cocc-js.git
 ```
 
 ## Step 6: Install NodeENV and Node
@@ -212,6 +245,23 @@ To run tests (in a separate terminal tab):
 
 ```
 npm test
+```
+
+## Setting up to receive course updates
+
+I will periodically update this repo during the term. You can retrieve these updates to your own
+repository by setting up a Git remote to your local repo (do this once):
+
+```
+git remote add template git@github.com:artzte/cocc-js.git
+```
+
+Then, to retrieve the updates (do this every time you want to fetch updates):
+
+```
+# make sure you have a clean repo - no changes to commit
+git fetch template
+git merge template/main --allow-unrelated-histories -X theirs -m"course update"
 ```
 
 # Visual Studio notes
