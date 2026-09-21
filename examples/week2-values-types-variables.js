@@ -85,8 +85,21 @@ function scopeAndConstMutabilityDemo() {
   }
 }
 
+function header(label) {
+  console.log(`\n\n***** ${label}`)
+}
+
+header('valuesDemo()')
 valuesDemo()
+
+header('stringDemo()')
 stringDemo()
+
+header('NaNQuirks()')
 NaNQuirks()
+
+header('typeofDemo()')
 typeofDemo()
+
+header('scopeAndConstMutabilityDemo()')
 scopeAndConstMutabilityDemo()
