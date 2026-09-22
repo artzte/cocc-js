@@ -11,8 +11,7 @@ your reasoning.
 ### Question 1: Function Declarations vs. Function Expressions
 
 JavaScript lets you define a function as a declaration (`function greet() {}`) or as an expression
-(`const greet = function () {}`). What's the practical difference between these two forms, and how
-does hoisting affect when each one becomes usable?
+(`const greet = function () {}`). What's the practical difference between these two forms?
 
 ---
 
@@ -27,7 +26,7 @@ you'd specifically choose one over the other?
 ### Question 3: Strict Equality vs. Loose Equality
 
 JavaScript has two equality operators: `===` and `==`. Explain the difference between them, and
-explain why many style guides (including our textbook) recommend defaulting to `===`.
+explain why many style guides recommend defaulting to `===`.
 
 ---
 

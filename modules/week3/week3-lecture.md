@@ -47,3 +47,6 @@ JavaScript gives you three ways to define a function, and each behaves a little 
 - Textbook: _You Don't Know JS Yet: Get Started_, Chapter 2 (_Surveying JS_ — Functions,
   Comparisons)
 - Summary: [Week 3 Reading Summary](../../weekly-readings/week-03.md)
+- Examples:
+  - [Functions and comparisons](../../examples/week3-functions-comparisons.md)
+  - [HTML form handlers example](../../examples/week3-html-forms-handlers.md)

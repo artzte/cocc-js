@@ -19,25 +19,11 @@ Write small functions, one per rule, that each take a username string and return
 Then write a function that runs all the rule functions against a given username and returns a result
 you can render — for example, an array of `{ rule, passed }` objects.
 
-```js
-function hasMinLength(username) {
-  return username.length >= 4
-}
-
-function hasNoSpaces(username) {
-  return !username.includes(' ')
-}
-
-function startsWithLetter(username) {
-  return /^[a-zA-Z]/.test(username)
-}
-```
-
-Wire up a text input and a "Check" button (or a live `input` event listener) so that typing a
-username immediately re-runs the checks and updates the pass/fail list in the DOM.
+Wire up a text input and a "Check" button (or an HTML form) so that submitting a username
+immediately re-runs the checks and updates the pass/fail list in the DOM.
 
 If you have time, make it look good! For example, style passing rules in green and failing rules in
-red, or disable a "submit" button until every rule passes.
+red.
 
 ### For your tests:
 
