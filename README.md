@@ -161,11 +161,11 @@ This is the shortcut method with no passphrase; just hit Enter when prompted for
 cd ~
 mkdir .ssh
 ssh-keygen -t rsa -b 4096 -C "your-cocc-email@cocc.edu"
-cat id_rsa.pub
+cat id_rsa.pub  # copy the output from this command to your clipboard
 ```
 
-Copy the public key output to your clipboard. Go to your Github account and add the key here:
-<https://github.com/settings/keys>
+Copy the public key output from the last line above to your clipboard. 
+Go to your Github account and add the key here: <https://github.com/settings/keys>
 
 ## Step 3: Set up a source folder, and go there
 
