@@ -1,0 +1,8180 @@
+1
+00:00:00,730 --> 00:00:01,770
+Hi everybody,
+
+2
+00:00:02,210 --> 00:00:04,650
+Eric Artst here, your hopefully
+
+3
+00:00:04,650 --> 00:00:10,550
+helpful CIS133JS lecturer.
+
+4
+00:00:10,890 --> 00:00:14,770
+This week we are on
+week three of our course
+
+5
+00:00:14,770 --> 00:00:17,250
+and I'm really excited
+because we're diving
+
+6
+00:00:17,250 --> 00:00:19,570
+into functions and
+comparisons this week.
+
+7
+00:00:19,770 --> 00:00:23,410
+Functions are a super
+important part of
+
+8
+00:00:23,410 --> 00:00:27,830
+JavaScript. They allow
+us to package various
+
+9
+00:00:27,830 --> 00:00:33,350
+types of behaviors that
+define the workflows
+
+10
+00:00:33,350 --> 00:00:39,000
+and logical flows that
+a program executes.
+
+11
+00:00:40,450 --> 00:00:44,670
+They define how the
+program manipulates
+
+12
+00:00:44,670 --> 00:00:51,170
+data within the
+state of the program.
+
+13
+00:00:51,810 --> 00:00:55,410
+and they allow us to
+define reusable behavior
+
+14
+00:00:56,520 --> 00:01:01,490
+that we can export out
+of one module and import
+
+15
+00:01:01,490 --> 00:01:03,890
+into another module and
+use all over the place
+
+16
+00:01:03,890 --> 00:01:08,930
+and we'll go through a
+quick example of that
+
+17
+00:01:09,350 --> 00:01:12,550
+during our demo today
+and we're also going
+
+18
+00:01:12,550 --> 00:01:14,990
+to dive into comparisons
+which a lot of
+
+19
+00:01:14,990 --> 00:01:20,410
+the a lot of the
+comparison subjects in
+
+20
+00:01:20,410 --> 00:01:25,210
+JavaScript are relatively
+straightforward.
+
+21
+00:01:26,370 --> 00:01:33,150
+We have equality operators
+and other operators
+
+22
+00:01:33,150 --> 00:01:36,250
+that look a lot like
+operators in other languages,
+
+23
+00:01:36,250 --> 00:01:38,530
+but there are some
+nuances in JavaScript.
+
+24
+00:01:39,230 --> 00:01:45,550
+And the main nuances are
+around coercion, which is where
+
+25
+00:01:45,550 --> 00:01:50,350
+you have two different
+values that you're comparing
+
+26
+00:01:50,750 --> 00:01:55,410
+that are not of the same
+type as defined by the type
+
+27
+00:01:55,410 --> 00:02:03,710
+of operator and javascript
+will coerce one of the values
+
+28
+00:02:03,710 --> 00:02:09,790
+in these coercive equality
+operations so that it
+
+29
+00:02:09,790 --> 00:02:13,370
+matches the type of the other
+value and that can lead to
+
+30
+00:02:13,370 --> 00:02:18,990
+some confusing and sometimes
+humorous results so we'll
+
+31
+00:02:18,990 --> 00:02:24,530
+talk about all that we'll
+talk about value equality
+
+32
+00:02:24,530 --> 00:02:28,710
+and referential equality
+so how javascript compares
+
+33
+00:02:28,710 --> 00:02:33,370
+primitives to objects is
+quite different Objects are
+
+34
+00:02:33,370 --> 00:02:39,730
+compared by reference, so if
+we're comparing two different
+
+35
+00:02:39,730 --> 00:02:42,470
+objects, we're looking at
+whether those two objects
+
+36
+00:02:42,470 --> 00:02:47,770
+are defined at the same
+location in the application's
+
+37
+00:02:47,770 --> 00:02:52,290
+memory state, whereas with
+primitives, you are actually
+
+38
+00:02:52,290 --> 00:02:57,170
+comparing the values of
+those primitives. we'll talk
+
+39
+00:02:57,170 --> 00:03:01,410
+about truthy and falsy rules
+all values in JavaScript
+
+40
+00:03:01,410 --> 00:03:06,590
+can resolve to truthy or
+falsy and as a result you can
+
+41
+00:03:06,590 --> 00:03:11,830
+use any JavaScript value
+within an if statement or a
+
+42
+00:03:11,830 --> 00:03:22,850
+ternary operation or a loop
+exit condition you don't have
+
+43
+00:03:22,850 --> 00:03:25,870
+to use boolean you can
+use any JavaScript value
+
+44
+00:03:25,870 --> 00:03:29,470
+because all JavaScript values
+will either resolve to truth
+
+45
+00:03:29,470 --> 00:03:33,910
+or false if they are placed
+in within those contexts
+
+46
+00:03:35,050 --> 00:03:38,690
+we're also going to talk
+about the assignment this
+
+47
+00:03:38,690 --> 00:03:41,810
+week because we're quickly
+moving into some very
+
+48
+00:03:41,810 --> 00:03:46,210
+functional work in our assignment
+and this week we're going
+
+49
+00:03:46,210 --> 00:03:52,970
+to create a program that
+displays a html form with
+
+50
+00:03:52,970 --> 00:03:57,270
+an input a text input
+field and the user will be
+
+51
+00:03:57,270 --> 00:04:03,130
+able to type in a username
+into that field and find out
+
+52
+00:04:03,130 --> 00:04:07,990
+whether that username is
+legal according to the
+
+53
+00:04:07,990 --> 00:04:15,050
+rules that have been defined
+around the legality of that
+
+54
+00:04:15,050 --> 00:04:17,770
+username in that context.
+So we're quickly getting
+
+55
+00:04:17,770 --> 00:04:23,420
+into some cool features
+where we are putting inputs
+
+56
+00:04:23,420 --> 00:04:30,090
+into the document and we
+are evaluating the text and
+
+57
+00:04:30,090 --> 00:04:32,830
+data that's been entered
+into those inputs by users
+
+58
+00:04:32,830 --> 00:04:35,530
+and then we're performing
+operations on that data
+
+59
+00:04:35,530 --> 00:04:39,430
+and displaying information
+in response to various tests
+
+60
+00:04:39,430 --> 00:04:45,870
+that we apply to those
+values so yeah this this
+
+61
+00:04:45,870 --> 00:04:49,430
+week's assignment is is going
+to be pretty cool and I'll
+
+62
+00:04:49,430 --> 00:04:53,100
+give you some help with
+some of the sort of runtime
+
+63
+00:04:53,610 --> 00:04:58,310
+environment nuances of the
+browser document object
+
+64
+00:04:58,310 --> 00:05:02,110
+model and how forms work
+and how event handlers work
+
+65
+00:05:02,110 --> 00:05:05,010
+within the DOM, but we'll
+get to that in a minute.
+
+66
+00:05:05,990 --> 00:05:10,250
+So without further ado,
+let's go ahead and jump in.
+
+67
+00:05:10,250 --> 00:05:13,490
+As always, I'm going
+to use our example
+
+68
+00:05:13,490 --> 00:05:20,610
+file as my framework
+for lecturing on this
+
+69
+00:05:20,610 --> 00:05:24,610
+topic, and if I bounce
+back to our module
+
+70
+00:05:24,610 --> 00:05:27,470
+here and jump into
+my lectures page here
+
+71
+00:05:31,030 --> 00:05:35,430
+hopefully we have a
+link to the example here
+
+72
+00:05:35,430 --> 00:05:38,670
+maybe not maybe it's
+in the overview silly
+
+73
+00:05:48,030 --> 00:05:52,050
+me I need to link it to the
+overview but if you go to
+
+74
+00:05:52,050 --> 00:05:54,570
+our class repo you're going
+to see these examples here
+
+75
+00:05:54,570 --> 00:05:59,950
+so under the examples folder
+of the repo we're going
+
+76
+00:05:59,950 --> 00:06:03,130
+to see our week three functions
+comparisons and I'll be
+
+77
+00:06:03,130 --> 00:06:05,870
+sure to link them going
+forward in our overview doc
+
+78
+00:06:06,020 --> 00:06:11,730
+and I have grabbed this
+example like we did last week
+
+79
+00:06:11,730 --> 00:06:17,310
+and I've pasted it into a
+snippet in my chrome developer
+
+80
+00:06:17,310 --> 00:06:22,060
+tool so we can play around
+with function definitions
+
+81
+00:06:23,010 --> 00:06:28,050
+So before we dive in
+too much further as to
+
+82
+00:06:28,050 --> 00:06:30,550
+the various types of
+functions and such,
+
+83
+00:06:30,670 --> 00:06:33,610
+let's talk about
+reusability a little bit.
+
+84
+00:06:33,610 --> 00:06:36,900
+So I'm going to
+run this snippet
+
+85
+00:06:36,900 --> 00:06:38,680
+here, our week three snippet.
+
+86
+00:06:40,870 --> 00:06:44,630
+And you can see that
+it prints out some
+
+87
+00:06:46,090 --> 00:06:49,770
+output, just like our week
+two one. but this week
+
+88
+00:06:49,770 --> 00:06:53,150
+I recognized that
+the output's a little
+
+89
+00:06:53,150 --> 00:06:55,730
+hard to read sometimes
+in the console because
+
+90
+00:06:56,330 --> 00:06:59,250
+it's just a stream of
+output and it's hard to see
+
+91
+00:06:59,250 --> 00:07:02,730
+which function that output
+came from so I wanted to define
+
+92
+00:07:02,730 --> 00:07:11,870
+a heading for each to
+separate each function's
+
+93
+00:07:11,870 --> 00:07:15,570
+output from the other
+function's output. And so I'm
+
+94
+00:07:15,570 --> 00:07:19,090
+printing out these little
+headings here with five asterisks
+
+95
+00:07:19,090 --> 00:07:21,050
+and the name of the
+function. You can see here we
+
+96
+00:07:21,050 --> 00:07:24,150
+have function forms demo,
+and then we have a parameters
+
+97
+00:07:24,150 --> 00:07:26,930
+and returns demo, and
+we have a strict versus
+
+98
+00:07:26,930 --> 00:07:30,410
+loose equality demo, and so
+on and so forth. So these
+
+99
+00:07:30,410 --> 00:07:33,130
+are all different functions
+that do completely different
+
+100
+00:07:33,130 --> 00:07:35,490
+things because they're
+demonstrating different
+
+101
+00:07:35,490 --> 00:07:39,030
+aspects of our topics this
+week, but they all need a
+
+102
+00:07:39,030 --> 00:07:47,330
+header. And we want to use
+that same code repeatedly in
+
+103
+00:07:47,330 --> 00:07:51,750
+this program. And so rather
+than repeating ourselves
+
+104
+00:07:52,430 --> 00:07:58,330
+by defining the same logic
+flows in multiple places,
+
+105
+00:07:58,330 --> 00:08:02,270
+we are defining a single
+reusable function that
+
+106
+00:08:02,270 --> 00:08:07,890
+I called header, and it
+receives an argument called
+
+107
+00:08:08,550 --> 00:08:15,930
+label and prints out
+that passed string in
+
+108
+00:08:15,930 --> 00:08:19,770
+addition to a couple new
+lines and a few asterisks. So
+
+109
+00:08:19,770 --> 00:08:23,550
+it's printing out the label
+that was passed to the
+
+110
+00:08:23,550 --> 00:08:27,530
+function, and it's using
+the string template here
+
+111
+00:08:27,530 --> 00:08:32,270
+to print out a couple
+new lines a few asterisks
+
+112
+00:08:32,270 --> 00:08:35,650
+and the label that was
+passed in so let's look at
+
+113
+00:08:35,650 --> 00:08:40,490
+the parts of this function
+here we have this is a
+
+114
+00:08:40,490 --> 00:08:47,550
+function declaration and
+as a function declaration
+
+115
+00:08:47,990 --> 00:08:51,910
+this can be defined anywhere
+in this module now for
+
+116
+00:08:51,910 --> 00:08:58,950
+clarity the function is defined
+above where it's actually
+
+117
+00:08:58,950 --> 00:09:05,870
+referenced but there is
+a visibility nuance to
+
+118
+00:09:05,870 --> 00:09:11,530
+functions in terms of where
+they are available to use
+
+119
+00:09:11,530 --> 00:09:14,650
+within the program versus
+where they are not available
+
+120
+00:09:14,650 --> 00:09:19,190
+to use and the function
+declaration form of functions
+
+121
+00:09:19,190 --> 00:09:21,970
+which this one is this
+highlighted header function
+
+122
+00:09:21,970 --> 00:09:27,350
+here this definition can
+be placed anywhere in this
+
+123
+00:09:27,350 --> 00:09:31,130
+file and it will be made
+available anywhere in the
+
+124
+00:09:31,130 --> 00:09:36,030
+program so in fact and this
+is a this is a feature of
+
+125
+00:09:36,030 --> 00:09:39,890
+javascript called hoisting
+and we talked about the var
+
+126
+00:09:39,890 --> 00:09:43,870
+keyword last week and how
+it has a similar behavior in
+
+127
+00:09:43,870 --> 00:09:49,750
+that if you define a variable
+using the var keyword
+
+128
+00:09:49,810 --> 00:09:53,370
+you can put that definition
+of that variable at
+
+129
+00:09:53,370 --> 00:09:56,470
+the very bottom of your
+program and then you can
+
+130
+00:09:56,470 --> 00:09:59,370
+refer to it and since
+it isn't defined
+
+131
+00:09:59,370 --> 00:10:02,490
+hasn't been defined a
+value yet it's going
+
+132
+00:10:02,490 --> 00:10:05,290
+to have an undefined
+value until it has that
+
+133
+00:10:05,290 --> 00:10:09,050
+var statement assigning
+value to it but
+
+134
+00:10:11,030 --> 00:10:14,290
+the variable itself is
+available everywhere
+
+135
+00:10:14,290 --> 00:10:18,990
+in the program okay so
+so yeah what's happening
+
+136
+00:10:18,990 --> 00:10:20,530
+here let's just put
+a breakpoint here
+
+137
+00:10:20,530 --> 00:10:23,210
+and we're going to go
+ahead and clear our
+
+138
+00:10:23,210 --> 00:10:25,630
+output and let's just
+run this one more time.
+
+139
+00:10:27,570 --> 00:10:31,010
+And so I started
+running the program and
+
+140
+00:10:31,010 --> 00:10:33,170
+it immediately, before
+it even got to any
+
+141
+00:10:33,170 --> 00:10:36,890
+of the output, it has
+printed out. We've
+
+142
+00:10:36,890 --> 00:10:39,350
+ended up stuck in
+this breakpoint here.
+
+143
+00:10:40,100 --> 00:10:42,590
+I didn't, I don't think
+I talked about the call
+
+144
+00:10:42,590 --> 00:10:45,530
+stack last week when we
+were going through stuff,
+
+145
+00:10:45,530 --> 00:10:49,490
+but in the Chrome
+developer tools, one of the
+
+146
+00:10:49,490 --> 00:10:52,590
+features is that we have
+this call stack and you
+
+147
+00:10:52,590 --> 00:10:57,390
+can see that we are now
+within a context called
+
+148
+00:10:57,390 --> 00:10:59,710
+the header this is the
+header functions context
+
+149
+00:10:59,710 --> 00:11:06,490
+and then the the base
+context is this anonymous
+
+150
+00:11:06,810 --> 00:11:12,590
+context here where we don't
+have a defined function
+
+151
+00:11:12,590 --> 00:11:17,010
+wrapping this entire snippet
+so we're just it's just
+
+152
+00:11:17,010 --> 00:11:24,150
+called anonymous by the
+JavaScript runtime so if
+
+153
+00:11:24,150 --> 00:11:28,590
+I click on this anonymous
+line right here it's showing
+
+154
+00:11:28,590 --> 00:11:32,150
+me that we've stopped we've
+we've hit a breakpoint
+
+155
+00:11:32,150 --> 00:11:38,410
+in the header function on
+line 99 but if I highlight
+
+156
+00:11:38,410 --> 00:11:42,210
+the line below it here
+in the call stack I can
+
+157
+00:11:42,210 --> 00:11:49,950
+see that this is being
+invoked from line 102 so you
+
+158
+00:11:49,950 --> 00:11:53,030
+can use the call stack to
+sort of navigate around
+
+159
+00:11:53,030 --> 00:11:56,150
+within your running program
+and you can see the data
+
+160
+00:11:56,150 --> 00:12:00,890
+that's available at each
+level of the program and
+
+161
+00:12:00,890 --> 00:12:08,690
+there's a a set of values
+that are available in these
+
+162
+00:12:08,690 --> 00:12:14,550
+various places so we have
+right here we have selected
+
+163
+00:12:14,550 --> 00:12:20,110
+the anonymous scope
+here where this header
+
+164
+00:12:20,110 --> 00:12:23,590
+function was first invoked
+and if I look at this this
+
+165
+00:12:23,590 --> 00:12:28,390
+scope value right here well
+scope is defining sort of
+
+166
+00:12:28,390 --> 00:12:37,390
+the geographical location
+of this line of code that's
+
+167
+00:12:37,390 --> 00:12:41,710
+executing and it if we
+expand this we could see
+
+168
+00:12:42,190 --> 00:12:47,130
+what values what variable
+values are available within
+
+169
+00:12:47,130 --> 00:12:49,370
+this global scope and it's
+a huge list because there's
+
+170
+00:12:49,370 --> 00:12:53,310
+a whole bunch of runtime
+environment values that
+
+171
+00:12:53,310 --> 00:12:57,250
+are just available everywhere
+in the browser context.
+
+172
+00:12:58,110 --> 00:13:02,130
+But if we bounce up to
+header, and we're now looking
+
+173
+00:13:02,130 --> 00:13:05,230
+at two scopes here. So
+we have our global scope,
+
+174
+00:13:05,230 --> 00:13:09,390
+which we looked at earlier,
+that was in line 102.
+
+175
+00:13:09,690 --> 00:13:12,490
+But we also have a
+local scope right here.
+
+176
+00:13:12,810 --> 00:13:16,310
+And this is also defining,
+showing us something
+
+177
+00:13:16,310 --> 00:13:18,410
+about the context. So
+I'll get to context in a
+
+178
+00:13:18,410 --> 00:13:21,210
+little bit. But we can
+see that by defining this
+
+179
+00:13:21,210 --> 00:13:25,390
+label parameter for
+this function, and I use
+
+180
+00:13:25,390 --> 00:13:27,810
+parameter and argument
+kind of interchangeably,
+
+181
+00:13:27,810 --> 00:13:30,780
+so I hope that's not
+confusing for you, but this
+
+182
+00:13:31,130 --> 00:13:34,590
+label parameter that's
+part of this function,
+
+183
+00:13:35,130 --> 00:13:38,050
+you can see that it
+has defined a variable
+
+184
+00:13:38,050 --> 00:13:50,230
+called label within the
+scope of this function.
+
+185
+00:13:52,030 --> 00:13:57,370
+And in the developer
+tools, we're able to see
+
+186
+00:13:57,370 --> 00:13:59,390
+what the value of that
+variable is. So that's
+
+187
+00:13:59,390 --> 00:14:02,790
+super helpful. And as
+we looked at last week,
+
+188
+00:14:03,110 --> 00:14:07,430
+you can just hover over a
+given variable and Chrome
+
+189
+00:14:07,430 --> 00:14:09,670
+will helpfully show you
+what the value of that
+
+190
+00:14:09,670 --> 00:14:13,490
+variable is, and I can also
+type label here and hit
+
+191
+00:14:13,490 --> 00:14:16,090
+enter in the console, and
+it'll show me what that value
+
+192
+00:14:16,090 --> 00:14:20,350
+is here. Now, this label
+value is available here,
+
+193
+00:14:20,350 --> 00:14:23,810
+but if I bounce over to
+the global scope here where
+
+194
+00:14:23,810 --> 00:14:27,290
+this function is being
+invoked, and if I try that
+
+195
+00:14:27,290 --> 00:14:29,430
+same thing and type
+label, well, it's going to
+
+196
+00:14:29,430 --> 00:14:33,270
+complain because label is
+defined within the scope of
+
+197
+00:14:33,270 --> 00:14:36,090
+this header function, not
+within the global scope.
+
+198
+00:14:36,230 --> 00:14:38,930
+So that can be a source of
+
+199
+00:14:38,930 --> 00:14:40,910
+confusion sometimes
+in JavaScript.
+
+200
+00:14:41,370 --> 00:14:46,130
+But anyway, so what's
+happening here is there were a
+
+201
+00:14:46,130 --> 00:14:49,090
+bunch of definitions in this
+snippet that all got done.
+
+202
+00:14:49,090 --> 00:14:53,370
+And then we ended up on
+line 102 and we're invoking
+
+203
+00:14:53,370 --> 00:14:56,130
+this header function. And
+we're sending it function
+
+204
+00:14:56,130 --> 00:15:00,090
+forms demo as its parameter
+value for the label to
+
+205
+00:15:00,090 --> 00:15:03,830
+assign to this label parameter.
+and then within the function
+
+206
+00:15:03,830 --> 00:15:06,030
+we have a console dot
+log that's using a string
+
+207
+00:15:06,030 --> 00:15:09,270
+template to print out a little
+header above the function
+
+208
+00:15:09,270 --> 00:15:11,930
+output so we'll go ahead
+and let this well actually
+
+209
+00:15:11,930 --> 00:15:13,750
+I'll leave this breakpoint
+on because I want to run
+
+210
+00:15:13,750 --> 00:15:18,710
+it again okay so just remember
+the call stack because
+
+211
+00:15:18,710 --> 00:15:21,790
+we have anonymous on line
+102 and then we have header
+
+212
+00:15:21,790 --> 00:15:25,750
+on my 99 and let's just
+allow the program to run to
+
+213
+00:15:25,750 --> 00:15:30,130
+the next spot and now we can
+see that we're in line 105
+
+214
+00:15:31,050 --> 00:15:33,530
+of the program we're
+calling this header function
+
+215
+00:15:33,530 --> 00:15:37,750
+with a completely different
+string value to pass to the
+
+216
+00:15:37,750 --> 00:15:44,430
+label and here we're back
+in if I highlight the header
+
+217
+00:15:46,080 --> 00:15:51,470
+scope within the call stack
+I can see that the label
+
+218
+00:15:51,470 --> 00:15:55,350
+now has value of parameter
+and returns demo so that's
+
+219
+00:15:55,350 --> 00:15:59,890
+just a quick demo of reusable
+functions and showing
+
+220
+00:16:00,030 --> 00:16:04,010
+the function declaration
+form of a function
+
+221
+00:16:04,010 --> 00:16:08,350
+and before I leave this
+introduction behind
+
+222
+00:16:08,550 --> 00:16:12,350
+I'm going to go ahead and
+close this and go back to
+
+223
+00:16:12,350 --> 00:16:14,990
+week one and I'm going to
+show you this hoisting uh,
+
+224
+00:16:15,930 --> 00:16:19,830
+feature of the
+function declaration.
+
+225
+00:16:19,830 --> 00:16:22,770
+So I can place this function
+
+226
+00:16:24,650 --> 00:16:29,450
+declaration at the very
+bottom of this program. And
+
+227
+00:16:29,450 --> 00:16:33,110
+you can see that I'm
+invoking the function above
+
+228
+00:16:33,110 --> 00:16:36,410
+where the function is
+actually defined. I'm going to
+
+229
+00:16:36,410 --> 00:16:39,430
+go ahead and save the snippet
+and let's go ahead and
+
+230
+00:16:39,430 --> 00:16:41,290
+run this. And hopefully
+we're going to get the exact
+
+231
+00:16:41,290 --> 00:16:45,580
+same results as before in
+that we are getting that
+
+232
+00:16:45,580 --> 00:16:49,170
+function is being invoked
+successfully with its
+
+233
+00:16:49,170 --> 00:16:53,110
+different arguments or
+parameter values past the label
+
+234
+00:16:53,110 --> 00:16:58,410
+and it is defined at the
+very bottom of this module
+
+235
+00:16:59,510 --> 00:17:05,190
+but it's available throughout
+the module so this is
+
+236
+00:17:05,190 --> 00:17:09,730
+a feature of the function
+declaration form of creating
+
+237
+00:17:09,730 --> 00:17:12,770
+functions there's three
+different ways that you
+
+238
+00:17:12,770 --> 00:17:17,590
+can define a function and
+this function declaration
+
+239
+00:17:18,310 --> 00:17:21,150
+pattern which has been
+around javascript from
+
+240
+00:17:21,150 --> 00:17:26,210
+the very beginning has
+this hoisting capability
+
+241
+00:17:26,630 --> 00:17:30,170
+so these function declarations
+they always follow
+
+242
+00:17:30,170 --> 00:17:32,750
+this format here we have
+the word function followed
+
+243
+00:17:32,750 --> 00:17:34,510
+by the name of the
+function and then we have
+
+244
+00:17:34,510 --> 00:17:38,530
+the arguments if there
+are no arguments or
+
+245
+00:17:38,530 --> 00:17:41,070
+parameters, you just have
+an empty set of parentheses
+
+246
+00:17:41,070 --> 00:17:44,110
+there, and then you have
+the function body, which
+
+247
+00:17:44,110 --> 00:17:48,190
+is enclosed in curly
+braces. So that's the format
+
+248
+00:17:48,190 --> 00:17:51,790
+of the function declaration
+form of functions.
+
+249
+00:17:52,130 --> 00:17:56,070
+So let's go ahead and
+look at our first demo,
+
+250
+00:17:56,070 --> 00:17:58,350
+which we invoke very,
+I think it's the first
+
+251
+00:17:58,350 --> 00:18:00,790
+thing we invoke here, is
+the function forms demo.
+
+252
+00:18:01,030 --> 00:18:03,270
+And we're going to go ahead and
+
+253
+00:18:06,570 --> 00:18:11,590
+start right here at the
+very top and it looks like
+
+254
+00:18:11,590 --> 00:18:17,510
+when I try to define a
+variable there it is a break
+
+255
+00:18:17,510 --> 00:18:19,670
+point it's actually putting
+it here so I'm going to
+
+256
+00:18:19,670 --> 00:18:22,330
+actually drop it right here
+the break point actually
+
+257
+00:18:22,330 --> 00:18:28,230
+let's do it here so we'll
+do this okay so we have
+
+258
+00:18:28,230 --> 00:18:31,130
+a function called
+function forms demo that's
+
+259
+00:18:31,130 --> 00:18:36,510
+demonstrating the three types
+of function declarations so
+
+260
+00:18:36,510 --> 00:18:41,650
+I've just restarted the
+snippet and we can see this
+
+261
+00:18:41,650 --> 00:18:45,280
+right here at the top we
+have all three examples of
+
+262
+00:18:46,830 --> 00:18:50,090
+function forms here and
+we already talked about
+
+263
+00:18:50,090 --> 00:18:53,430
+the function declaration
+form which has the word
+
+264
+00:18:53,430 --> 00:18:55,670
+function, followed by
+the name of the function,
+
+265
+00:18:55,670 --> 00:18:59,910
+followed by a set of
+parentheses with an optional
+
+266
+00:18:59,910 --> 00:19:02,470
+list of arguments within
+those parentheses.
+
+267
+00:19:03,550 --> 00:19:06,990
+What we didn't talk
+about earlier with this
+
+268
+00:19:07,630 --> 00:19:13,510
+header function is the return
+value. Now, this function
+
+269
+00:19:13,510 --> 00:19:16,590
+does not have a return
+value. Well, actually, it
+
+270
+00:19:16,590 --> 00:19:20,330
+does have a return value.
+Because this function doesn't
+
+271
+00:19:20,330 --> 00:19:24,530
+have an explicit return
+statement inside of it it
+
+272
+00:19:24,530 --> 00:19:29,190
+returns undefined so when
+you run this function if you
+
+273
+00:19:29,190 --> 00:19:33,150
+try to capture the output
+or the return value of this
+
+274
+00:19:33,150 --> 00:19:36,010
+header function with whatever
+label you passed into it
+
+275
+00:19:36,010 --> 00:19:38,770
+you're going to get undefined
+as the return value so
+
+276
+00:19:38,970 --> 00:19:42,090
+undefined is the default
+return value of a function
+
+277
+00:19:43,220 --> 00:19:47,330
+and in a function declaration
+you have to use the return
+
+278
+00:19:47,330 --> 00:19:51,530
+value the return keyword
+in order to return value so
+
+279
+00:19:51,530 --> 00:19:55,250
+in the case of this greek
+declaration name function
+
+280
+00:19:55,870 --> 00:20:02,290
+this is a function
+declaration form and it has an
+
+281
+00:20:02,290 --> 00:20:08,570
+explicit return value and it
+returns a string value that's
+
+282
+00:20:08,570 --> 00:20:12,530
+generated from this string
+template so it's returning
+
+283
+00:20:12,530 --> 00:20:18,690
+the value of this string
+template as interpreted
+
+284
+00:20:18,690 --> 00:20:23,950
+given the name that was passed
+to the function so let's
+
+285
+00:20:23,950 --> 00:20:26,210
+go ahead and put a breakpoint
+here and a breakpoint
+
+286
+00:20:26,210 --> 00:20:30,210
+here and we can't really
+put a breakpoint in this one
+
+287
+00:20:30,210 --> 00:20:33,570
+because of this fat arrow thing
+now I can put a breakpoint
+
+288
+00:20:33,570 --> 00:20:37,030
+in this fat arrow function
+but I need to do this
+
+289
+00:20:38,710 --> 00:20:41,610
+and I think there's a
+way of doing this in
+
+290
+00:20:44,210 --> 00:20:47,090
+and I'm going to put an
+explicit return statement
+
+291
+00:20:47,090 --> 00:20:50,210
+here and we'll come
+back to this in a minute
+
+292
+00:20:52,430 --> 00:20:58,290
+okay so first of all we're
+going to log the function
+
+293
+00:20:58,890 --> 00:21:03,730
+declaration we're sending
+the same value to these three
+
+294
+00:21:03,730 --> 00:21:06,910
+functions eta is the name
+in each case that we want
+
+295
+00:21:06,910 --> 00:21:12,590
+to use as the greeting and
+when we invoke the greet
+
+296
+00:21:12,590 --> 00:21:15,450
+declaration function and I'm
+going to go ahead and use
+
+297
+00:21:15,450 --> 00:21:20,230
+the step into function call
+and we end up within this
+
+298
+00:21:20,230 --> 00:21:23,410
+function we can see the
+name parameter is defined
+
+299
+00:21:23,410 --> 00:21:28,710
+as eta and then we're returning
+a greeting of hello eta
+
+300
+00:21:28,710 --> 00:21:32,710
+using this string template
+and we'll ahead and pass
+
+301
+00:21:32,710 --> 00:21:38,490
+over that and the return
+value of greet declaration
+
+302
+00:21:38,490 --> 00:21:41,990
+is being passed to this
+invocation of console.log now
+
+303
+00:21:41,990 --> 00:21:44,710
+let's go ahead and clear
+this console out so we can
+
+304
+00:21:44,710 --> 00:21:47,630
+see exactly what happens here
+we're not confused so I'm
+
+305
+00:21:47,630 --> 00:21:50,370
+going to step over because
+we already ran greet
+
+306
+00:21:50,370 --> 00:21:54,330
+declaration we got back a
+value of hello ada and when we
+
+307
+00:21:54,330 --> 00:21:57,970
+go ahead and allow the
+console.log to execute with
+
+308
+00:21:57,970 --> 00:22:03,350
+that return value, we see
+that it's logging out that
+
+309
+00:22:03,350 --> 00:22:06,180
+string that was returned from
+the function declaration.
+
+310
+00:22:06,790 --> 00:22:11,970
+All right, so the next form
+of defining a function are
+
+311
+00:22:11,970 --> 00:22:15,120
+these function expressions,
+and this is where you
+
+312
+00:22:15,120 --> 00:22:20,490
+assign a function to a
+variable, and so functions are
+
+313
+00:22:20,490 --> 00:22:23,750
+values in JavaScript so
+functions are one of the major
+
+314
+00:22:23,750 --> 00:22:29,330
+value types in JavaScript
+along with objects and strings
+
+315
+00:22:29,330 --> 00:22:32,490
+and the other primitives
+the other object types of
+
+316
+00:22:32,490 --> 00:22:35,490
+functions are a value type
+and so you can assign a
+
+317
+00:22:35,490 --> 00:22:39,570
+function to a variable here
+so we actually have a variable
+
+318
+00:22:39,570 --> 00:22:45,630
+called greet expression
+being invoked with that same
+
+319
+00:22:45,630 --> 00:22:50,410
+string of eta and let's go
+ahead and step over here
+
+320
+00:22:50,410 --> 00:22:52,790
+over this console statement,
+and we bounce right into
+
+321
+00:22:52,790 --> 00:22:55,610
+this function right here,
+we can see a pretty similar
+
+322
+00:22:55,850 --> 00:22:58,890
+construct here in that
+we have the word eta
+
+323
+00:22:58,890 --> 00:23:05,070
+that is being displayed
+for our output. It's
+
+324
+00:23:05,070 --> 00:23:08,310
+being passed into the
+name parameter, and
+
+325
+00:23:08,310 --> 00:23:12,430
+we're returning the same
+template out of this
+
+326
+00:23:13,110 --> 00:23:17,670
+function expression called
+greet expression. And
+
+327
+00:23:17,670 --> 00:23:20,370
+if we step over this, we
+can see that we end up
+
+328
+00:23:22,710 --> 00:23:26,630
+we've run greet expression.
+We have the string helloAda
+
+329
+00:23:26,630 --> 00:23:30,000
+back from it, and now
+we're going to log that
+
+330
+00:23:30,000 --> 00:23:33,440
+value. And so I'm going to
+allow the console.log to
+
+331
+00:23:33,440 --> 00:23:35,580
+execute, and we can see
+that we got the same string.
+
+332
+00:23:35,910 --> 00:23:39,900
+Okay, and now that brings
+us to the last of the three
+
+333
+00:23:39,900 --> 00:23:42,650
+function declaration
+types, and these are arrow
+
+334
+00:23:42,650 --> 00:23:47,030
+functions, or aka, I called
+it a fat arrow function to
+
+335
+00:23:47,030 --> 00:23:51,630
+begin with. there are no
+skinny arrow functions in
+
+336
+00:23:51,630 --> 00:23:55,010
+JavaScript there's just these
+fat arrow functions and they
+
+337
+00:23:55,010 --> 00:23:58,930
+are defined using this
+interesting syntax here where
+
+338
+00:23:58,930 --> 00:24:02,120
+you have instead of having
+a function keyword and
+
+339
+00:24:02,470 --> 00:24:10,150
+having a function name all
+you have is this parenthesis
+
+340
+00:24:10,150 --> 00:24:12,930
+a set of parentheses
+with an optional list of
+
+341
+00:24:12,930 --> 00:24:17,190
+arguments within them. You
+have this fat arrow this equal
+
+342
+00:24:17,190 --> 00:24:23,410
+greater than symbol right
+here and then you if you
+
+343
+00:24:23,410 --> 00:24:26,910
+have multiple lines of this
+fat arrow function you're
+
+344
+00:24:26,910 --> 00:24:30,030
+gonna have to wrap them in
+curly braces just like we
+
+345
+00:24:30,030 --> 00:24:34,170
+do with the other two forms
+and we'll see what it looks
+
+346
+00:24:34,170 --> 00:24:36,890
+like when you don't do
+that in a minute but I'm
+
+347
+00:24:36,890 --> 00:24:44,330
+gonna go ahead and hit my
+resume execution and it looks
+
+348
+00:24:44,330 --> 00:24:49,330
+like it didn't stop at the
+debugger that time so I
+
+349
+00:24:49,330 --> 00:24:52,590
+should have just stopped
+there let's run it again our
+
+350
+00:24:58,690 --> 00:25:03,460
+call stack there it is
+let's run this again okay so
+
+351
+00:25:07,270 --> 00:25:11,270
+I put a debugger statement
+right here in this fat
+
+352
+00:25:11,270 --> 00:25:13,910
+arrow function. I was
+hoping to see it stop there.
+
+353
+00:25:14,090 --> 00:25:18,430
+Oh, there it goes. Maybe I
+forgot to save it. So I stuck
+
+354
+00:25:18,430 --> 00:25:21,050
+this debugger statement in
+here. And so this is the
+
+355
+00:25:21,050 --> 00:25:24,430
+first statement within our
+fat arrow function. And then
+
+356
+00:25:24,430 --> 00:25:26,890
+there's an explicit return
+here, which is returning
+
+357
+00:25:26,890 --> 00:25:30,610
+the string template, same
+thing as the prior to. And we
+
+358
+00:25:30,610 --> 00:25:32,750
+can see that this is going
+to happen the same way. I'm
+
+359
+00:25:32,750 --> 00:25:35,610
+just going to step over
+this debugger statement. And
+
+360
+00:25:35,610 --> 00:25:37,930
+then we're going to allow
+the return statement to run
+
+361
+00:25:37,930 --> 00:25:40,710
+we exit out of the function
+now we're in the console
+
+362
+00:25:40,710 --> 00:25:45,130
+.log and we're going to hit
+over that and we end up with
+
+363
+00:25:45,130 --> 00:25:48,770
+one more hello ada printed
+out on the console all right
+
+364
+00:25:48,770 --> 00:25:51,350
+so now what I want to do
+is I want to go back to the
+
+365
+00:25:51,350 --> 00:25:56,590
+earlier form of this function
+arrow function declaration
+
+366
+00:25:56,590 --> 00:26:00,770
+right here in which I
+didn't have any curly braces
+
+367
+00:26:03,430 --> 00:26:06,650
+I only had this construct
+
+368
+00:26:06,650 --> 00:26:11,330
+right here where we have the
+
+369
+00:26:12,200 --> 00:26:14,430
+let me go ahead
+and save this so we
+
+370
+00:26:14,430 --> 00:26:17,470
+don't have that same
+confusion again here
+
+371
+00:26:19,310 --> 00:26:22,350
+and we'll let this we'll
+let this run through because
+
+372
+00:26:22,350 --> 00:26:25,940
+we um we we stopped it
+there so we're gonna we
+
+373
+00:26:25,940 --> 00:26:28,870
+made a change so we want
+to go ahead and reset the
+
+374
+00:26:28,870 --> 00:26:31,790
+breakpoint here so I'm going
+to run the program again
+
+375
+00:26:31,790 --> 00:26:34,690
+we're stopping out our
+console.log we're invoking
+
+376
+00:26:34,690 --> 00:26:38,350
+greet arrow function and
+let's see what happens here
+
+377
+00:26:38,350 --> 00:26:42,350
+so in this case we've got
+a this function expression
+
+378
+00:26:42,350 --> 00:26:48,850
+arrow function has a
+argument list and closed in
+
+379
+00:26:48,850 --> 00:26:55,010
+parentheses it's got our
+fat arrow symbol and then
+
+380
+00:26:55,010 --> 00:27:02,050
+it's immediately displaying
+a value and in this form
+
+381
+00:27:02,050 --> 00:27:07,650
+of the arrow function this
+value here is the return
+
+382
+00:27:07,650 --> 00:27:12,530
+value so there's an implicit
+return statement happening
+
+383
+00:27:12,530 --> 00:27:15,290
+here and so we're seeing
+we're going to see the
+
+384
+00:27:15,290 --> 00:27:19,290
+same uh value point print
+out so we have hello eta
+
+385
+00:27:19,290 --> 00:27:22,290
+hello eta those were from
+the prior to and then when
+
+386
+00:27:22,290 --> 00:27:25,950
+we trace over this we
+can see that this string
+
+387
+00:27:25,950 --> 00:27:30,010
+right here is the return
+value of this arrow function
+
+388
+00:27:31,390 --> 00:27:35,530
+there's another difference
+between arrow functions and
+
+389
+00:27:35,530 --> 00:27:42,900
+function expressions and
+that's in terms of how scope
+
+390
+00:27:45,870 --> 00:27:55,630
+works and context works so
+scope is the geographical
+
+391
+00:27:55,630 --> 00:28:01,670
+location of a given JavaScript
+statement and the scope
+
+392
+00:28:01,670 --> 00:28:10,230
+of a statement defines the
+visibility of variables
+
+393
+00:28:10,230 --> 00:28:16,010
+that that javascript statement
+has available to it based
+
+394
+00:28:16,010 --> 00:28:20,420
+on its geographical location
+within the program there's
+
+395
+00:28:20,630 --> 00:28:26,870
+another concept in
+javascript called context and
+
+396
+00:28:26,870 --> 00:28:42,610
+that concerns the this keyword
+this is a pointer to the
+
+397
+00:28:42,610 --> 00:28:48,530
+context of any function and
+for function declarations
+
+398
+00:28:48,530 --> 00:28:52,390
+and function function
+expressions, the context can be
+
+399
+00:28:52,390 --> 00:28:54,950
+set at the time that the
+function is invoked. With
+
+400
+00:28:54,950 --> 00:28:59,350
+the fat arrow function, the
+context is set by the enclosing
+
+401
+00:28:59,350 --> 00:29:03,370
+context from where the
+arrow function is defined.
+
+402
+00:29:03,370 --> 00:29:07,110
+So we're going to get into
+this a lot more later on,
+
+403
+00:29:07,510 --> 00:29:09,550
+I believe, in week six.
+
+404
+00:29:09,550 --> 00:29:13,090
+But I just want you to keep
+those two ideas in your
+
+405
+00:29:13,090 --> 00:29:18,450
+head, that we have the idea
+of context, which is the
+
+406
+00:29:18,450 --> 00:29:23,170
+data environment that's
+accessible via the this keyword
+
+407
+00:29:23,170 --> 00:29:26,670
+within a function and then
+we also have scope which
+
+408
+00:29:26,670 --> 00:29:29,510
+is sort of the set of
+variables that are available
+
+409
+00:29:29,510 --> 00:29:34,050
+to a specific line of
+JavaScript based on where that
+
+410
+00:29:34,050 --> 00:29:39,930
+line of JavaScript exists
+and in this case we have
+
+411
+00:29:39,930 --> 00:29:43,790
+within this function forms
+demo we've defined three
+
+412
+00:29:43,790 --> 00:29:47,630
+different functions here we
+have a function declaration
+
+413
+00:29:47,630 --> 00:29:50,450
+called greet declaration
+and then we have a function
+
+414
+00:29:50,450 --> 00:29:54,750
+expression assigned to the
+greet expression constant
+
+415
+00:29:54,750 --> 00:29:58,170
+and then we have a fat arrow
+function that's defined
+
+416
+00:29:58,170 --> 00:30:03,290
+to the greet arrow variable
+and these three variables
+
+417
+00:30:03,290 --> 00:30:07,870
+are all visible within
+this function forms demo
+
+418
+00:30:11,210 --> 00:30:13,990
+scope of this
+function forms demo.
+
+419
+00:30:14,870 --> 00:30:19,490
+So hoisting, how does
+hoisting work? We talked
+
+420
+00:30:19,490 --> 00:30:22,790
+about that earlier when
+we moved the header
+
+421
+00:30:22,790 --> 00:30:25,870
+function, the declaration
+of the header function to
+
+422
+00:30:25,870 --> 00:30:27,930
+the very bottom of the
+file. This works exactly
+
+423
+00:30:27,930 --> 00:30:31,280
+the same when the function
+is defined within a
+
+424
+00:30:31,290 --> 00:30:35,870
+function block of its
+own, and here we have a
+
+425
+00:30:35,870 --> 00:30:40,190
+function called hoisted
+that receives an argument,
+
+426
+00:30:40,870 --> 00:30:50,450
+and it returns hi of
+the name passed in.
+
+427
+00:30:50,630 --> 00:30:54,370
+So if I pass over this
+console log here, we're
+
+428
+00:30:54,370 --> 00:30:59,730
+invoking hoisted
+invoked with an argument
+
+429
+00:30:59,730 --> 00:31:04,890
+of grace we're going to
+see that it worked it
+
+430
+00:31:04,890 --> 00:31:07,730
+didn't crash even though
+hoisted is defined
+
+431
+00:31:08,010 --> 00:31:13,330
+after its reference here
+on line 17 because of
+
+432
+00:31:13,330 --> 00:31:15,750
+the behavior function
+declarations it's possible
+
+433
+00:31:15,750 --> 00:31:17,770
+to declare your functions
+at the bottom of
+
+434
+00:31:17,770 --> 00:31:20,710
+your module and they are
+still hoisted they're
+
+435
+00:31:20,710 --> 00:31:23,610
+they're made visible from
+the top of the module
+
+436
+00:31:23,610 --> 00:31:26,230
+down so that's an interesting
+nuance of how Now,
+
+437
+00:31:28,490 --> 00:31:31,310
+function declarations work,
+which is different from
+
+438
+00:31:31,310 --> 00:31:34,690
+function expressions and
+arrow functions, both of
+
+439
+00:31:34,690 --> 00:31:46,330
+which do not hoist their
+values, except if we defined
+
+440
+00:31:46,330 --> 00:31:51,490
+that function with a var,
+okay? Because we already
+
+441
+00:31:51,490 --> 00:31:55,350
+talked last week about
+VARs and how VARs hoist
+
+442
+00:31:55,350 --> 00:31:59,220
+their values, and that
+is another example of how
+
+443
+00:31:59,220 --> 00:32:03,670
+this idea of hoisting works,
+that if you define a VAR
+
+444
+00:32:03,670 --> 00:32:09,790
+variable, its existence
+and value assigned to it
+
+445
+00:32:09,790 --> 00:32:14,590
+at the time that it is
+created will be hoisted to
+
+446
+00:32:14,590 --> 00:32:19,560
+the top of whatever scope
+that variable is running
+
+447
+00:32:19,560 --> 00:32:23,010
+in and let's go ahead and
+let's go ahead and try that
+
+448
+00:32:23,010 --> 00:32:25,830
+real quick here so we'll
+do another hoisting value
+
+449
+00:32:25,830 --> 00:32:31,510
+but we're going to do a
+var of hoisted fat arrow
+
+450
+00:32:34,490 --> 00:32:39,130
+and I'm going to say it's
+going to equal to a fat
+
+451
+00:32:39,130 --> 00:32:43,770
+arrow function that just
+says it's just going to say
+
+452
+00:32:48,450 --> 00:32:53,070
+hoisted okay and then we're
+going to do the same thing
+
+453
+00:32:53,070 --> 00:32:57,350
+here we're going to do
+console dot log of hoisted
+
+454
+00:32:58,860 --> 00:33:07,990
+fat arrow and hopefully
+this is going to work if it
+
+455
+00:33:07,990 --> 00:33:13,490
+doesn't it's because I've
+forgotten how assignments to
+
+456
+00:33:13,490 --> 00:33:18,690
+hoisted variables actually
+work okay so let's go ahead
+
+457
+00:33:18,690 --> 00:33:21,990
+and it's not letting me
+put a breakpoint in here
+
+458
+00:33:22,200 --> 00:33:24,630
+so we're just going to
+go ahead and run this and
+
+459
+00:33:24,630 --> 00:33:26,750
+hopefully it's not going
+to crash so let's clear the
+
+460
+00:33:26,750 --> 00:33:33,240
+output and run it again looks
+like it didn't crash okay
+
+461
+00:33:33,550 --> 00:33:39,250
+interesting so it didn't
+crash it did not crash but
+
+462
+00:33:39,250 --> 00:33:45,030
+because the assignment to
+this var occurred after its
+
+463
+00:33:45,030 --> 00:33:50,650
+reference this assignment
+never happened before the
+
+464
+00:33:51,590 --> 00:33:58,570
+reference to hoisted fat
+arrow was done so that's
+
+465
+00:33:58,570 --> 00:34:04,250
+how hoisting works with vars
+and that the availability
+
+466
+00:34:04,550 --> 00:34:09,830
+of that variable is hoisted
+to the top of the scope
+
+467
+00:34:11,290 --> 00:34:16,430
+but the actual value assigned
+to it doesn't come into
+
+468
+00:34:16,430 --> 00:34:20,510
+being until that line of
+code is actually run and
+
+469
+00:34:20,510 --> 00:34:27,530
+so if we moved this over
+above our invocation of it.
+
+470
+00:34:27,850 --> 00:34:32,610
+Well, hopefully we're going
+to see the results I'm
+
+471
+00:34:32,610 --> 00:34:40,210
+predicting now, which is that
+it's printing out hoisted
+
+472
+00:34:41,800 --> 00:34:50,710
+fat arrow. Oh, so look at
+what's going on here. So when
+
+473
+00:34:50,710 --> 00:34:55,090
+I did console.log of hoisted
+fat arrow, I just typed
+
+474
+00:34:55,090 --> 00:35:00,690
+in, I typed in hoisted fat
+arrow, and look what it
+
+475
+00:35:00,690 --> 00:35:05,010
+printed out. It printed out
+the actual signature of that
+
+476
+00:35:05,010 --> 00:35:09,430
+arrow function instead of
+actually printing out the
+
+477
+00:35:09,430 --> 00:35:13,810
+return value. Now, was this
+function invoked in this
+
+478
+00:35:13,810 --> 00:35:18,010
+case on line 23 when I tried
+to do this ad hoc demo that
+
+479
+00:35:18,010 --> 00:35:22,750
+failed it was not so what
+we got instead was we got
+
+480
+00:35:22,750 --> 00:35:27,210
+the the value of this
+variable was printed out via
+
+481
+00:35:27,210 --> 00:35:30,530
+this console dot log and the
+value of this variable is
+
+482
+00:35:30,530 --> 00:35:34,230
+a function that returns
+the string hoisted but the
+
+483
+00:35:34,230 --> 00:35:36,930
+function wasn't actually
+invoked so if we want to have
+
+484
+00:35:36,930 --> 00:35:40,670
+what we what I had intended
+here I'm gonna save this
+
+485
+00:35:40,670 --> 00:35:45,430
+let's try it one more time and
+run this and we'll see here
+
+486
+00:35:45,430 --> 00:35:51,290
+actually just do that again
+and yeah there it is so
+
+487
+00:35:51,290 --> 00:35:53,670
+we actually invoke the function
+instead of just printing
+
+488
+00:35:53,670 --> 00:35:58,930
+out the value of this
+hoisted fat hour so okay all
+
+489
+00:35:58,930 --> 00:36:01,870
+right so we talked briefly
+already about the fact
+
+490
+00:36:01,870 --> 00:36:05,830
+that we have parameters and
+return values and functions
+
+491
+00:36:05,830 --> 00:36:08,070
+and so we've kind of covered
+that already but we're
+
+492
+00:36:08,070 --> 00:36:10,590
+going to go ahead and breeze
+through it real quickly here
+
+493
+00:36:10,600 --> 00:36:15,330
+so with our demo script
+here we're going to go ahead
+
+494
+00:36:15,330 --> 00:36:20,250
+and run it and now we're
+in the we did our function
+
+495
+00:36:20,250 --> 00:36:23,750
+forms demo already now
+we're in the parameters and
+
+496
+00:36:23,750 --> 00:36:29,750
+returns demo this function
+defines has a function declaration
+
+497
+00:36:29,750 --> 00:36:33,150
+at the top of it where
+a function called make
+
+498
+00:36:33,150 --> 00:36:36,990
+greeting is defined, but we
+have some new interesting
+
+499
+00:36:36,990 --> 00:36:44,930
+syntax sugar here with our
+parameter list, and we have
+
+500
+00:36:44,930 --> 00:36:52,870
+some default values that
+have been assigned to these
+
+501
+00:36:53,930 --> 00:37:01,090
+two parameters. so the default
+value of name if it's not
+
+502
+00:37:01,090 --> 00:37:04,370
+specified in the invocation
+of the function is going
+
+503
+00:37:04,370 --> 00:37:08,690
+to be friend and the default
+value of the punctuation
+
+504
+00:37:08,690 --> 00:37:13,210
+argument is going to be a
+exclamation point or bang
+
+505
+00:37:13,210 --> 00:37:19,500
+symbol and so we can see some
+examples here of how when
+
+506
+00:37:19,870 --> 00:37:24,490
+we invoke this make greeting
+function without arguments
+
+507
+00:37:24,490 --> 00:37:30,070
+we're getting some default
+values filled in okay
+
+508
+00:37:30,070 --> 00:37:34,040
+so when we call make greeting
+without any parameters
+
+509
+00:37:35,970 --> 00:37:42,690
+passed to it the parameter
+defaults were applied within
+
+510
+00:37:42,690 --> 00:37:46,870
+the parameter block here
+and then we get hello friend
+
+511
+00:37:48,170 --> 00:37:53,870
+per the definition of this
+parameter list now if we
+
+512
+00:37:53,870 --> 00:37:59,270
+only supply one of the
+arguments so we just apply the
+
+513
+00:37:59,270 --> 00:38:06,110
+first one supply the first
+one well we get hello Sam
+
+514
+00:38:06,190 --> 00:38:12,030
+with an exclamation point so
+now we have defined Sam as
+
+515
+00:38:12,030 --> 00:38:15,250
+the first parameter value
+to pass in but we didn't
+
+516
+00:38:15,250 --> 00:38:19,870
+bother to define the punctuation
+argument and so we're
+
+517
+00:38:19,870 --> 00:38:23,470
+sticking with the exclamation
+point but now we have a
+
+518
+00:38:23,470 --> 00:38:31,070
+explicit value of the name
+parameter and then here's
+
+519
+00:38:31,070 --> 00:38:37,190
+the full fully expressed
+invocation of make greedy in
+
+520
+00:38:37,190 --> 00:38:41,870
+which case we have both of
+the arguments defined and
+
+521
+00:38:42,970 --> 00:38:47,090
+we're seeing an output of
+hello sam question mark because
+
+522
+00:38:47,090 --> 00:38:53,690
+we defined both the first
+parameter and the second
+
+523
+00:38:53,690 --> 00:38:57,210
+parameter and so both those
+overrides were applied
+
+524
+00:38:57,540 --> 00:39:05,330
+okay so um if we want to
+create a well let's let's keep
+
+525
+00:39:05,330 --> 00:39:07,870
+let's stick to the script
+here so we have another
+
+526
+00:39:07,870 --> 00:39:12,530
+function here which is our
+min max function and we are
+
+527
+00:39:12,530 --> 00:39:19,260
+passing to this minmax function
+an arguments parameter.
+
+528
+00:39:19,930 --> 00:39:23,440
+And this is demonstrating
+that we can pass
+
+529
+00:39:23,650 --> 00:39:28,510
+various types of
+objects to a function.
+
+530
+00:39:28,510 --> 00:39:32,990
+It doesn't have to be just
+a primitive. It could be an
+
+531
+00:39:32,990 --> 00:39:37,010
+object or any JavaScript
+value. and so this function
+
+532
+00:39:37,010 --> 00:39:44,270
+minmax is defined with a
+numbers argument and it's
+
+533
+00:39:44,270 --> 00:39:47,930
+returning an object here
+that it's sort of defining on
+
+534
+00:39:47,930 --> 00:39:53,130
+the fly here and what it's
+doing is it's passing in an
+
+535
+00:39:58,530 --> 00:39:59,330
+object
+
+536
+00:40:01,530 --> 00:40:06,870
+with a property of min,
+and the property of min is
+
+537
+00:40:06,870 --> 00:40:11,950
+being assigned the result
+of calling math.min with a
+
+538
+00:40:11,950 --> 00:40:18,470
+set of arguments, and the
+max is also being defined
+
+539
+00:40:20,350 --> 00:40:23,710
+to math.max. Now let's see
+how math, what does math
+
+540
+00:40:23,710 --> 00:40:27,930
+.min, how does math.min work?
+So if I type math.min, we
+
+541
+00:40:27,930 --> 00:40:33,390
+can see that the function
+signature has a, it's like
+
+542
+00:40:33,390 --> 00:40:36,390
+an ellipsis with a set of
+values. So if I type one,
+
+543
+00:40:36,390 --> 00:40:41,990
+two, and three of math.min,
+I get one. So that makes
+
+544
+00:40:41,990 --> 00:40:46,610
+sense. And if I type math
+.max of one, two, three,
+
+545
+00:40:46,690 --> 00:40:50,150
+I get three. But what if
+I did this? What if I did
+
+546
+00:40:50,150 --> 00:40:58,790
+math.min of an array of 1,
+2, 3, what happened there?
+
+547
+00:41:00,610 --> 00:41:04,330
+Well, we got the infamous
+not a number result
+
+548
+00:41:04,330 --> 00:41:08,770
+from math.min, and so
+I guess this math.min
+
+549
+00:41:13,210 --> 00:41:21,250
+browser execution context
+function and object when it
+
+550
+00:41:21,250 --> 00:41:25,230
+receives an argument that
+isn't a number and if I did
+
+551
+00:41:25,230 --> 00:41:31,620
+this math.min of let's say
+if I did a string of high
+
+552
+00:41:31,620 --> 00:41:35,160
+there let's see what happens
+there well that's another
+
+553
+00:41:35,160 --> 00:41:41,350
+nan not a number so the way
+this function is defined if
+
+554
+00:41:41,350 --> 00:41:44,370
+it receives an argument
+that is not an actual number
+
+555
+00:41:44,370 --> 00:41:50,730
+it rejects it essentially
+returns a not a number value
+
+556
+00:41:51,750 --> 00:41:58,470
+what if I did this math
+dot min of hi there
+
+557
+00:41:59,170 --> 00:42:04,770
+and one well it's
+still rejecting it okay
+
+558
+00:42:05,030 --> 00:42:07,790
+because I'm passing
+in some random strings
+
+559
+00:42:07,890 --> 00:42:10,890
+but now let's look at a
+little bit of coercion
+
+560
+00:42:10,890 --> 00:42:16,420
+here so I do math dot
+min of one two three
+
+561
+00:42:16,730 --> 00:42:18,750
+I'm not sure what's
+going to happen here
+
+562
+00:42:18,990 --> 00:42:22,310
+But yeah, our helpful
+preview is showing that
+
+563
+00:42:22,310 --> 00:42:25,430
+if I pass three strings
+to this function as
+
+564
+00:42:25,430 --> 00:42:28,790
+the function arguments,
+what's it doing here?
+
+565
+00:42:28,930 --> 00:42:34,270
+It is converting these
+strings to numbers and
+
+566
+00:42:34,270 --> 00:42:40,150
+then printing out the
+smallest of the numbers as
+
+567
+00:42:40,150 --> 00:42:43,630
+converted from these
+strings. So this is this idea
+
+568
+00:42:43,630 --> 00:42:47,830
+of coercion, where
+JavaScript will helpfully
+
+569
+00:42:48,300 --> 00:42:53,470
+coerce a value from one
+type to another in order
+
+570
+00:42:53,470 --> 00:42:55,870
+to try to get a result
+that it thinks you want.
+
+571
+00:42:55,870 --> 00:42:59,250
+And, of course, the problem
+with assuming things is
+
+572
+00:42:59,250 --> 00:43:01,610
+that often our assumptions
+are incorrect, and so
+
+573
+00:43:01,610 --> 00:43:06,190
+sometimes this can lead to
+confusions around programs.
+
+574
+00:43:06,190 --> 00:43:10,170
+But let's go back to
+this syntax right here
+
+575
+00:43:10,170 --> 00:43:13,450
+because we kind of got on a
+little tangent there about
+
+576
+00:43:13,450 --> 00:43:19,490
+these different variations
+of math.min and math.max
+
+577
+00:43:19,490 --> 00:43:21,790
+and how they handle
+different arguments. Now we
+
+578
+00:43:21,790 --> 00:43:27,450
+established that if we
+invoke math.min with an array
+
+579
+00:43:27,450 --> 00:43:31,370
+argument that it refuses
+to deal with that. It's
+
+580
+00:43:31,370 --> 00:43:34,370
+not a number. It's an
+array. It's an object. So it
+
+581
+00:43:34,370 --> 00:43:38,830
+returns and not a number.
+But in here, in this function
+
+582
+00:43:38,830 --> 00:43:46,870
+here, we are deploying
+this expansion operator.
+
+583
+00:43:49,050 --> 00:43:58,990
+So how does this work? So
+if we pass an array, if we
+
+584
+00:43:58,990 --> 00:44:03,990
+define an array, and then
+we invoke a function and we
+
+585
+00:44:04,360 --> 00:44:10,970
+prefix the array argument
+with this three dots, it's
+
+586
+00:44:10,970 --> 00:44:13,890
+not an ellipsis, it's actually
+three separate periods.
+
+587
+00:44:14,850 --> 00:44:16,950
+what javascript is going
+to do is it's going to
+
+588
+00:44:16,950 --> 00:44:19,330
+take that array and it's
+going to break those
+
+589
+00:44:19,450 --> 00:44:22,990
+elements of the array apart
+into separate arguments
+
+590
+00:44:22,990 --> 00:44:24,690
+and then it's going
+to invoke the function
+
+591
+00:44:24,690 --> 00:44:28,390
+with those very arguments
+from the array so that's
+
+592
+00:44:28,390 --> 00:44:30,790
+what this is doing
+right here and let's see
+
+593
+00:44:30,790 --> 00:44:36,710
+if we do this let's say
+test equals one and two
+
+594
+00:44:40,590 --> 00:44:45,650
+and let's do console.log
+of test. I'm not sure
+
+595
+00:44:45,650 --> 00:44:48,870
+what's going to happen
+here. So it printed out
+
+596
+00:44:51,950 --> 00:44:53,310
+the array.
+
+597
+00:44:53,470 --> 00:44:59,770
+But if I do this, console
+.log of test with three
+
+598
+00:44:59,770 --> 00:45:02,610
+dots in front of it, we get
+a slightly different result
+
+599
+00:45:02,610 --> 00:45:06,010
+here. So what happened
+here is in this case, it
+
+600
+00:45:06,010 --> 00:45:09,670
+printed out the array
+representation of the test
+
+601
+00:45:09,670 --> 00:45:14,470
+variable but in this case
+when we prefix the variable
+
+602
+00:45:14,470 --> 00:45:20,310
+name with three dots
+console dot log is actually
+
+603
+00:45:20,310 --> 00:45:24,650
+printing out it those those
+two values were separated
+
+604
+00:45:24,650 --> 00:45:27,250
+into multiple arguments
+because that's how console
+
+605
+00:45:27,250 --> 00:45:31,480
+dot log works if I do
+console dot log of hi there
+
+606
+00:45:36,130 --> 00:45:39,150
+class and I hit enter
+hopefully I type that right
+
+607
+00:45:39,150 --> 00:45:43,910
+yes I did I get hi there
+class if I do console log of
+
+608
+00:45:44,070 --> 00:45:56,590
+an array hi there class I
+get a printout of the array
+
+609
+00:45:56,590 --> 00:45:59,470
+representation of that and
+then let's just go ahead
+
+610
+00:45:59,470 --> 00:46:02,330
+and grab this last thing
+I'm going to go ahead and
+
+611
+00:46:02,330 --> 00:46:06,490
+put that those three dots
+right in front of this
+
+612
+00:46:06,490 --> 00:46:09,290
+array constant see what
+happens now and now we're back
+
+613
+00:46:09,290 --> 00:46:13,470
+to this so you can apply
+this three dot pattern to
+
+614
+00:46:13,470 --> 00:46:17,850
+any array and when you
+invoke a function and you
+
+615
+00:46:17,850 --> 00:46:22,810
+prefix and an array argument
+value that you pass to the
+
+616
+00:46:22,810 --> 00:46:24,910
+function with three periods
+it's going to expand
+
+617
+00:46:24,910 --> 00:46:30,090
+those values into separate
+arguments to pass to that
+
+618
+00:46:30,090 --> 00:46:32,730
+function. That's exactly
+what's going on here. Okay.
+
+619
+00:46:32,870 --> 00:46:35,670
+All right. So what else
+is going on? So we've
+
+620
+00:46:35,670 --> 00:46:39,910
+got a, um, we've got this
+return value here. And
+
+621
+00:46:39,910 --> 00:46:42,850
+I think what I want to
+do, let's do this. So
+
+622
+00:46:44,730 --> 00:46:50,130
+let's do const min max
+result equal, and then
+
+623
+00:46:50,130 --> 00:46:53,470
+we'll go ahead and grab
+this invocation here
+
+624
+00:46:55,000 --> 00:46:59,170
+and we'll put it here and
+then we're going to go
+
+625
+00:46:59,170 --> 00:47:05,310
+ahead and put our min
+max result that I want to
+
+626
+00:47:05,310 --> 00:47:08,990
+see these separate
+values and what they what
+
+627
+00:47:08,990 --> 00:47:12,570
+they end up being I'm
+going to go ahead and hit a
+
+628
+00:47:12,570 --> 00:47:16,050
+breakpoint right here
+and I already saved this
+
+629
+00:47:16,050 --> 00:47:18,350
+let's just refresh this
+page make sure we're not
+
+630
+00:47:18,490 --> 00:47:21,630
+running into serious
+confusion when we invoke
+
+631
+00:47:21,630 --> 00:47:23,450
+this so I'm going to
+go ahead and invoke
+
+632
+00:47:24,330 --> 00:47:27,850
+this function and we're
+going to stop at 939 stopping
+
+633
+00:47:40,570 --> 00:47:42,950
+here do it due to a error
+
+634
+00:47:44,290 --> 00:47:46,950
+maybe it's because I
+left a debug statement
+
+635
+00:47:46,950 --> 00:47:49,290
+in there let's go ahead
+and keep moving here
+
+636
+00:47:49,650 --> 00:47:53,950
+okay here we go so we're
+going to invoke min max
+
+637
+00:47:53,950 --> 00:47:56,190
+with an array and we're
+going to assign it to this
+
+638
+00:47:56,190 --> 00:48:03,170
+constant okay so what is
+in this constant well this
+
+639
+00:48:03,170 --> 00:48:09,290
+is an object that has two
+keys it's got a max key
+
+640
+00:48:09,290 --> 00:48:12,870
+and a min key and so that
+was those were produced by
+
+641
+00:48:12,870 --> 00:48:15,870
+this return statement here
+which we created an object
+
+642
+00:48:15,870 --> 00:48:20,470
+with a key of min and
+a key of max with the
+
+643
+00:48:20,470 --> 00:48:23,790
+pointing to the values that
+were return from these two
+
+644
+00:48:23,790 --> 00:48:29,100
+math functions and then
+what what are we doing here
+
+645
+00:48:29,100 --> 00:48:36,450
+so what we're doing here
+is on line 41 is we're
+
+646
+00:48:36,450 --> 00:48:39,910
+we're doing an assignment
+to two different variables
+
+647
+00:48:40,250 --> 00:48:42,810
+and we have this
+interesting little
+
+648
+00:48:42,810 --> 00:48:46,650
+curly bracket
+construct right here
+
+649
+00:48:47,310 --> 00:48:52,430
+and this is very related
+to the this array explosion
+
+650
+00:48:52,430 --> 00:48:56,670
+operator of this triple
+period here and that what's
+
+651
+00:48:56,670 --> 00:49:01,590
+happening with this is that
+when you make an assignment
+
+652
+00:49:01,590 --> 00:49:04,470
+where the right hand
+value in the assignment is
+
+653
+00:49:04,470 --> 00:49:08,570
+an object and then on the
+left side of the equal
+
+654
+00:49:08,570 --> 00:49:12,570
+sign you have keywords that
+are defined in that object
+
+655
+00:49:12,570 --> 00:49:16,610
+it defines new variables
+so we have a min variable
+
+656
+00:49:16,610 --> 00:49:20,670
+right now and we have a
+max variable we actually
+
+657
+00:49:20,670 --> 00:49:23,190
+have three variables we
+have the min max result that
+
+658
+00:49:23,190 --> 00:49:27,210
+was returned and then we
+performed an assignment in
+
+659
+00:49:27,210 --> 00:49:32,090
+which we exploded the keys
+of this object out into
+
+660
+00:49:32,090 --> 00:49:36,870
+some other variables. Now
+let's see if I can do this.
+
+661
+00:49:37,660 --> 00:49:40,030
+I'm just going to do
+an expression here.
+
+662
+00:49:40,130 --> 00:49:42,890
+I'm going to wrap this
+in parens so I can
+
+663
+00:49:42,890 --> 00:49:44,990
+avoid having to actually
+define a constant.
+
+664
+00:49:44,990 --> 00:49:50,820
+So let's do min and
+max and hello and
+
+665
+00:49:52,650 --> 00:49:58,970
+we're going to say
+equals min max result.
+
+666
+00:49:59,250 --> 00:50:01,070
+Let's see what happens here.
+
+667
+00:50:01,370 --> 00:50:05,590
+Okay, so what happened?
+So we defined, we
+
+668
+00:50:05,590 --> 00:50:08,270
+tried to find min max
+and hello. Okay, so
+
+669
+00:50:08,270 --> 00:50:11,430
+what's min right now? Min
+is one, we established
+
+670
+00:50:11,430 --> 00:50:13,970
+that max is nine.
+And what about hello?
+
+671
+00:50:14,850 --> 00:50:18,710
+Well, hello is undefined.
+Why is hello to undefined?
+
+672
+00:50:18,710 --> 00:50:22,030
+Because there's no key
+called hello in the min max
+
+673
+00:50:22,030 --> 00:50:27,170
+result value this object
+and so it just assigns
+
+674
+00:50:27,170 --> 00:50:30,650
+undefined in this case so this
+is a shortcut in javascript
+
+675
+00:50:30,650 --> 00:50:35,690
+that you can use to pull
+object values out of an
+
+676
+00:50:35,690 --> 00:50:39,470
+object if you want to get
+them into a separate variable
+
+677
+00:50:39,470 --> 00:50:43,050
+and so that was the
+parameters and returns demo
+
+678
+00:50:43,320 --> 00:50:46,950
+we need to keep moving
+all right so let's
+
+679
+00:50:46,950 --> 00:50:49,610
+go to strict versus
+loose equality demo
+
+680
+00:50:50,440 --> 00:50:54,400
+all right now this is
+one of the most crazy and
+
+681
+00:50:54,400 --> 00:50:57,230
+controversial aspects of
+javascript a lot of people think
+
+682
+00:50:57,230 --> 00:51:00,590
+that this is one of the
+examples of why javascript
+
+683
+00:51:00,590 --> 00:51:04,270
+is weird and bad and that
+has these coercions so
+
+684
+00:51:04,270 --> 00:51:10,750
+the triple equal operator
+is a compares the types of
+
+685
+00:51:10,750 --> 00:51:15,750
+the two values first and
+if the types are different
+
+686
+00:51:15,750 --> 00:51:21,390
+types it returns it
+yields a false so it first
+
+687
+00:51:21,390 --> 00:51:26,350
+checks the types of the two
+values and returns false if
+
+688
+00:51:26,350 --> 00:51:29,450
+the types are different
+it then if the types are
+
+689
+00:51:29,450 --> 00:51:33,150
+the same it then goes on to
+the actual values in those
+
+690
+00:51:33,150 --> 00:51:39,350
+two values and it compares
+those okay so in this
+
+691
+00:51:39,350 --> 00:51:42,780
+case we have console dot
+log of one triple equal one
+
+692
+00:51:42,780 --> 00:51:47,530
+and we're getting a true
+because these two numbers
+
+693
+00:51:47,810 --> 00:51:50,750
+are both primitives they're
+both number primitives
+
+694
+00:51:50,750 --> 00:51:52,790
+and they have the same
+value so they're getting
+
+695
+00:51:52,790 --> 00:51:57,050
+a true now if I do a console
+dot log of the number
+
+696
+00:51:57,050 --> 00:52:03,270
+one compared to the
+string of one I get false
+
+697
+00:52:05,030 --> 00:52:08,330
+because the triple equal
+starts with the type
+
+698
+00:52:08,330 --> 00:52:10,950
+and then it looks at the
+values and so in this
+
+699
+00:52:10,950 --> 00:52:13,070
+case the types are different
+one's a number one's
+
+700
+00:52:13,070 --> 00:52:15,390
+a string and so it
+just returns a false in
+
+701
+00:52:15,390 --> 00:52:18,850
+this case and the triple
+equal there's a lot of
+
+702
+00:52:18,850 --> 00:52:22,450
+like linters and I don't
+know if you've um I
+
+703
+00:52:22,450 --> 00:52:26,290
+think we do have a
+JavaScript formatter in this.
+
+704
+00:52:30,770 --> 00:52:36,210
+It's a famous, famous project.
+Okay, so this is a static
+
+705
+00:52:36,210 --> 00:52:43,350
+code analyzer that is a
+incredibly useful tool to
+
+706
+00:52:43,350 --> 00:52:47,310
+have in any kind of JavaScript
+project, and it makes
+
+707
+00:52:47,310 --> 00:52:50,010
+sure that you don't have
+syntax problems in your code.
+
+708
+00:52:50,010 --> 00:52:53,650
+So instead of allowing the
+code to be compiled first and
+
+709
+00:52:53,650 --> 00:52:56,790
+then find out that there's
+a syntax error in it at
+
+710
+00:52:56,790 --> 00:53:01,350
+runtime, we are actually
+doing a static analysis of the
+
+711
+00:53:01,350 --> 00:53:06,320
+code using this tool. And
+in many ESLint definitions,
+
+712
+00:53:08,350 --> 00:53:11,190
+that ESLint is super
+flexible. You can define
+
+713
+00:53:11,190 --> 00:53:13,830
+any kind of rules you
+want in it. It has a
+
+714
+00:53:13,830 --> 00:53:16,250
+bunch of built-in rules
+and has these suggestions
+
+715
+00:53:16,250 --> 00:53:19,170
+and standard things
+and things like that.
+
+716
+00:53:19,490 --> 00:53:26,630
+But in many projects,
+the use of the
+
+717
+00:53:26,630 --> 00:53:29,290
+double equal operator
+is prohibited.
+
+718
+00:53:29,290 --> 00:53:32,380
+And most of the projects
+that I work on professionally
+
+719
+00:53:33,230 --> 00:53:36,910
+have this rule in
+place, that you're not
+
+720
+00:53:36,910 --> 00:53:38,610
+allowed to use the double
+equal. It's just too
+
+721
+00:53:38,610 --> 00:53:41,870
+confusing. Because in this
+case, I have two values.
+
+722
+00:53:42,850 --> 00:53:46,910
+One is a number, one
+is a string. and we're
+
+723
+00:53:46,910 --> 00:53:50,210
+going to see that
+javascript says yeah this
+
+724
+00:53:50,210 --> 00:53:52,630
+is the same these are
+these are the same
+
+725
+00:53:53,530 --> 00:53:58,210
+the number one is the same
+as the string one but that's
+
+726
+00:53:58,210 --> 00:54:01,010
+not really true right there
+are different types now
+
+727
+00:54:01,900 --> 00:54:06,350
+you may be wanting to use a
+double equal operator there
+
+728
+00:54:06,350 --> 00:54:13,720
+may be a situation in your
+code and in fact our our
+
+729
+00:54:17,590 --> 00:54:28,010
+our you don't know JS program
+they are he's his name is
+
+730
+00:54:28,880 --> 00:54:35,550
+his name is Kyle nice my
+kids I have a kid named Kyle
+
+731
+00:54:38,040 --> 00:54:40,910
+So let's see,
+chapter two, this is
+
+732
+00:54:40,910 --> 00:54:42,430
+where he's talking
+about this stuff.
+
+733
+00:54:42,840 --> 00:54:52,730
+Okay, so he is careful to
+indicate in his write-up
+
+734
+00:54:52,730 --> 00:54:58,050
+of the double equal operator
+that it's not evil, that
+
+735
+00:55:03,420 --> 00:55:05,200
+it's a feature of JavaScript.
+
+736
+00:55:06,440 --> 00:55:07,400
+Okay.
+
+737
+00:55:08,780 --> 00:55:14,880
+So in most cases, the
+double equal works
+
+738
+00:55:14,880 --> 00:55:16,920
+exactly the same as
+the triple equal.
+
+739
+00:55:17,060 --> 00:55:21,390
+In cases where you're
+comparing two different values
+
+740
+00:55:21,390 --> 00:55:24,660
+of the same type, they
+work the same. But we do
+
+741
+00:55:24,660 --> 00:55:29,640
+have this coercion behavior
+in the double equal
+
+742
+00:55:29,640 --> 00:55:39,840
+operator and I forget where
+he talks about this the
+
+743
+00:55:41,490 --> 00:55:46,440
+the case of never using
+it versus using it smartly
+
+744
+00:55:46,440 --> 00:55:52,600
+I'm not very smart so I
+never use the coercive value
+
+745
+00:55:52,600 --> 00:56:01,620
+of the equality operator.
+He's kind of dancing about
+
+746
+00:56:01,620 --> 00:56:05,120
+it right here because we
+do use coercive values
+
+747
+00:56:05,120 --> 00:56:09,620
+even if you outlaw the use
+of coercive comparisons
+
+748
+00:56:10,100 --> 00:56:14,040
+using the double equal.
+If you're using any of the
+
+749
+00:56:14,040 --> 00:56:17,520
+greater than, less than,
+greater than equal, etc.
+
+750
+00:56:17,940 --> 00:56:21,520
+comparison operators,
+those coerce. So
+
+751
+00:56:21,530 --> 00:56:25,160
+there is coercion
+going on in JavaScript.
+
+752
+00:56:25,600 --> 00:56:29,140
+And he's saying that
+the wiser approach is
+
+753
+00:56:29,140 --> 00:56:31,720
+not to avoid coercive
+comparisons, but to
+
+754
+00:56:31,720 --> 00:56:33,700
+embrace and learn
+their ins and outs. And
+
+755
+00:56:33,700 --> 00:56:37,140
+that's very true. He's
+very right about that.
+
+756
+00:56:38,040 --> 00:56:42,540
+However, every program
+project that I've
+
+757
+00:56:42,540 --> 00:56:47,280
+worked on in the last
+15 years has outlawed
+
+758
+00:56:47,280 --> 00:56:49,900
+the use of this double
+-equal operator just
+
+759
+00:56:49,900 --> 00:56:52,260
+because of these points
+of confusion, okay?
+
+760
+00:56:52,520 --> 00:56:54,780
+So there's, and
+there's some of this
+
+761
+00:56:54,780 --> 00:56:57,540
+weird, these weird
+JavaScript quirks.
+
+762
+00:56:57,990 --> 00:57:00,040
+They're really all in
+the neighborhood of
+
+763
+00:57:00,040 --> 00:57:03,160
+this coercion behavior.
+So here we have
+
+764
+00:57:03,160 --> 00:57:06,340
+console dot log of null
+equal equal undefined.
+
+765
+00:57:09,360 --> 00:57:12,320
+That yielded true. So if I do
+
+766
+00:57:12,320 --> 00:57:16,920
+null equal equal undefined,
+
+767
+00:57:18,550 --> 00:57:20,460
+that's a little
+confusing, right?
+
+768
+00:57:21,780 --> 00:57:26,240
+These are both being coerced
+into a boolean value if
+
+769
+00:57:28,520 --> 00:57:35,300
+I do null equal equal
+equal undefined it's false
+
+770
+00:57:35,300 --> 00:57:38,540
+because null and undefined
+are two different types and
+
+771
+00:57:38,540 --> 00:57:41,960
+so that they are um that
+yields a false in that case
+
+772
+00:57:41,960 --> 00:57:48,720
+okay so we see right here we
+have referential comparison
+
+773
+00:57:48,720 --> 00:57:54,820
+of different arrays so
+if we have a comparison
+
+774
+00:57:54,820 --> 00:57:59,640
+of the array constant one
+two three and really I think
+
+775
+00:57:59,640 --> 00:58:02,480
+in a way it's easier just
+to put these directly into
+
+776
+00:58:02,480 --> 00:58:05,200
+the console so that we're
+not kind of viewing it
+
+777
+00:58:05,200 --> 00:58:10,860
+through the lens of console
+dot log but if I define an
+
+778
+00:58:10,860 --> 00:58:15,220
+array containing the values
+one two and three and I
+
+779
+00:58:15,220 --> 00:58:19,280
+do a triple equal comparison
+to another array of one
+
+780
+00:58:19,280 --> 00:58:23,680
+two three now you might
+expect this to be true but
+
+781
+00:58:24,080 --> 00:58:27,420
+these are two completely
+different objects in memory
+
+782
+00:58:27,420 --> 00:58:30,580
+so the one on the left is
+one object the one on the
+
+783
+00:58:30,580 --> 00:58:34,520
+right is another object and
+they are both arrays they're
+
+784
+00:58:34,520 --> 00:58:38,940
+both a type of object but
+they're different arrays
+
+785
+00:58:38,940 --> 00:58:43,580
+and so in the case of
+objects the triple equal
+
+786
+00:58:43,580 --> 00:58:47,940
+operator does a comparison
+by reference and I believe
+
+787
+00:58:47,940 --> 00:58:50,880
+it's the same for the double
+equal operator in this
+
+788
+00:58:50,880 --> 00:58:53,900
+case but let's let's just
+see what happens here so if
+
+789
+00:58:53,900 --> 00:58:56,820
+I did use the double equal
+operator it's behaving the
+
+790
+00:58:56,820 --> 00:59:00,300
+same as the triple equal
+operator in this case okay
+
+791
+00:59:01,200 --> 00:59:06,000
+so how if I did want to
+define to look at two
+
+792
+00:59:06,000 --> 00:59:08,460
+different objects and see
+if they're it's actually
+
+793
+00:59:08,460 --> 00:59:11,540
+the same object in memory,
+and there are legitimate
+
+794
+00:59:11,540 --> 00:59:14,220
+cases to do that, what
+I can do is I can define
+
+795
+00:59:14,540 --> 00:59:18,120
+a variable. So here I'm
+going to find a constant a.
+
+796
+00:59:18,820 --> 00:59:22,600
+I'm assigning this array
+to it, and then I'm
+
+797
+00:59:22,600 --> 00:59:25,380
+assigning a new variable
+b to be the value of
+
+798
+00:59:25,380 --> 00:59:28,240
+a. So now they're both
+pointing to the same
+
+799
+00:59:29,020 --> 00:59:31,720
+location in memory
+where this original
+
+800
+00:59:31,720 --> 00:59:34,360
+array lives in, and
+so when I do a console
+
+801
+00:59:34,360 --> 00:59:38,460
+.log of a triple
+equal b, it's true.
+
+802
+00:59:39,460 --> 00:59:43,020
+Both of these values
+on either side of
+
+803
+00:59:43,020 --> 00:59:44,840
+the triple equal
+operator are the same
+
+804
+00:59:44,840 --> 00:59:48,420
+object, and so it's
+going to be true.
+
+805
+00:59:49,420 --> 00:59:53,960
+We have quirks. We already
+talked about this not-a
+
+806
+00:59:53,960 --> 00:59:56,760
+-number quirk, where if you
+try to compare not-a-number
+
+807
+00:59:56,760 --> 01:00:01,640
+to not-a-number, you get
+false okay that's a little
+
+808
+01:00:01,640 --> 01:00:06,160
+confusing and then because
+of this quirk in the original
+
+809
+01:00:06,160 --> 01:00:10,000
+definition of how not a
+number behaves with respect
+
+810
+01:00:10,000 --> 01:00:13,820
+to equality operators well
+javascript at some point
+
+811
+01:00:13,820 --> 01:00:18,620
+we had to define a actual
+method called is nan on
+
+812
+01:00:18,620 --> 01:00:22,720
+the number class in order
+to perform this accurately
+
+813
+01:00:22,720 --> 01:00:28,540
+so if I do an nan triple
+equal nan don't do that
+
+814
+01:00:28,540 --> 01:00:37,080
+because it's never going to
+resolve to true but so let's
+
+815
+01:00:37,080 --> 01:00:39,980
+say this let's do this um
+why do we care about this
+
+816
+01:00:39,980 --> 01:00:49,970
+so let's say if I do a min
+of math.min of 1, 2, James,
+
+817
+01:00:51,880 --> 01:00:57,140
+and I want to see if that
+produced a not a number,
+
+818
+01:00:57,720 --> 01:00:59,540
+well, that says false.
+
+819
+01:01:01,000 --> 01:01:06,180
+Okay, so we invoked math.min
+with nonsensical arguments,
+
+820
+01:01:06,180 --> 01:01:10,040
+and we got a not a number
+back, and my code may
+
+821
+01:01:10,040 --> 01:01:12,960
+want to check that return
+value to make sure we didn't
+
+822
+01:01:12,960 --> 01:01:15,600
+get some kind of weird
+value that we didn't expect.
+
+823
+01:01:16,220 --> 01:01:17,140
+Well,
+
+824
+01:01:17,520 --> 01:01:20,620
+we can't use the triple
+equal operator, but
+
+825
+01:01:20,620 --> 01:01:26,340
+we can use the number
+.isNAN for this purpose.
+
+826
+01:01:29,800 --> 01:01:35,640
+number dot is nan of that
+same function that we
+
+827
+01:01:35,700 --> 01:01:40,000
+invoked earlier and in
+this case we're getting
+
+828
+01:01:40,000 --> 01:01:42,480
+true so this is how you
+can make sure that what
+
+829
+01:01:42,480 --> 01:01:44,220
+you're getting back is
+actually a number not a
+
+830
+01:01:44,220 --> 01:01:49,250
+not a number okay all
+right let's move on so uh
+
+831
+01:01:49,250 --> 01:01:54,760
+truthy falsy okay so we
+have uh the idea that
+
+832
+01:01:55,140 --> 01:01:59,180
+values in javascript can be
+truthy or falsy any value
+
+833
+01:01:59,180 --> 01:02:03,860
+is either truthy or falsy
+and why is a value truthy
+
+834
+01:02:03,860 --> 01:02:08,520
+or falsy well it sort of
+depends on the type of
+
+835
+01:02:08,520 --> 01:02:12,400
+the value and so in this
+first example here we're
+
+836
+01:02:12,400 --> 01:02:16,520
+doing an if then and we're
+using a empty string as our
+
+837
+01:02:16,520 --> 01:02:20,560
+if test and we can see
+that that's a falsy value
+
+838
+01:02:21,500 --> 01:02:24,240
+because it's we're ending
+up in the else clause here
+
+839
+01:02:24,240 --> 01:02:27,300
+here's another example
+okay so here's a string
+
+840
+01:02:28,970 --> 01:02:37,740
+containing the string character
+of zero and we're using
+
+841
+01:02:37,740 --> 01:02:43,420
+that to test in an if and
+we're getting a truthy
+
+842
+01:02:43,420 --> 01:02:48,390
+value out of that okay but
+what if we did this if zero
+
+843
+01:02:48,910 --> 01:03:02,000
+console dot log truth
+truthy else console dot log
+
+844
+01:03:02,170 --> 01:03:05,310
+all c what do you think
+is going to happen an
+
+845
+01:03:06,180 --> 01:03:12,000
+uncaught exception if zero
+console dot log truthy
+
+846
+01:03:12,000 --> 01:03:14,340
+I need a semicolon
+there. Sorry about that.
+
+847
+01:03:14,740 --> 01:03:16,740
+Let's try that. Okay,
+so what happened there?
+
+848
+01:03:16,960 --> 01:03:17,480
+So
+
+849
+01:03:17,900 --> 01:03:22,920
+the zero is a falsy
+value, the numeric
+
+850
+01:03:22,920 --> 01:03:25,120
+zero, but not a
+string zero. So this
+
+851
+01:03:25,120 --> 01:03:26,620
+is one of these
+JavaScript quirks.
+
+852
+01:03:28,020 --> 01:03:32,120
+Any kind of object value
+type, such as an array, is
+
+853
+01:03:32,120 --> 01:03:36,880
+going to be truthy. that's
+easy and then we have these
+
+854
+01:03:36,880 --> 01:03:42,160
+what's this demonstrating
+that we can do a oh this is
+
+855
+01:03:42,160 --> 01:03:47,300
+the ternary operator okay so
+this is sort of a shortcut
+
+856
+01:03:47,300 --> 01:03:51,860
+if then statement so we
+have a age defined as the
+
+857
+01:03:51,860 --> 01:03:56,180
+number 20 and then we're
+going to assign the variable
+
+858
+01:03:56,180 --> 01:04:00,400
+status the value of this
+ternary expression in which
+
+859
+01:04:00,400 --> 01:04:04,980
+we are comparing age is
+greater than equal to 18 and
+
+860
+01:04:05,920 --> 01:04:09,150
+if it's greater than equal
+to 18 we're going to put
+
+861
+01:04:09,180 --> 01:04:12,720
+adult as the status otherwise
+we're going to put minor
+
+862
+01:04:12,720 --> 01:04:18,050
+as the status so how does
+this work so it indeed
+
+863
+01:04:18,240 --> 01:04:27,200
+compared the age to 18 and
+then it assigned because this
+
+864
+01:04:27,200 --> 01:04:31,380
+is it evaluates to true,
+as we would expect, it's
+
+865
+01:04:31,380 --> 01:04:34,520
+assigning the value adult.
+So this is just a shortcut
+
+866
+01:04:34,520 --> 01:04:38,530
+if statement. But getting
+back to our JavaScript quirks,
+
+867
+01:04:39,500 --> 01:04:42,440
+let's just grab this little
+expression right here.
+
+868
+01:04:44,340 --> 01:04:47,540
+This is where this stuff
+can get a little bit tricky.
+
+869
+01:04:48,440 --> 01:04:52,480
+Because these greater than
+and greater than or equal
+
+870
+01:04:52,480 --> 01:04:57,720
+operators they perform
+coercion so if I did this so
+
+871
+01:05:05,260 --> 01:05:08,760
+what's happening there is
+I changed that comparison
+
+872
+01:05:08,760 --> 01:05:16,120
+value to a string of 18 and
+in this case it converted
+
+873
+01:05:16,120 --> 01:05:20,280
+the 18 into the number
+18 and then perform the
+
+874
+01:05:20,680 --> 01:05:25,400
+comparison so as you see we
+can't get away from this coercion
+
+875
+01:05:25,400 --> 01:05:29,380
+problem issue. And I think
+like, I'm pretty sure
+
+876
+01:05:29,380 --> 01:05:32,520
+that the math function,
+the math, the math object
+
+877
+01:05:32,520 --> 01:05:40,040
+has just a ton of useful
+functions. And I thought maybe
+
+878
+01:05:40,040 --> 01:05:42,180
+there'd be a greater than,
+but some of the, some of
+
+879
+01:05:42,180 --> 01:05:46,940
+the math libraries define
+different actual explicit
+
+880
+01:05:46,940 --> 01:05:55,160
+values to look at perform
+non-coercive comparisons
+
+881
+01:05:55,160 --> 01:05:57,860
+here but it's not it's not
+present here in the math
+
+882
+01:05:57,860 --> 01:06:02,980
+function okay what if I did
+this let's pull that up so
+
+883
+01:06:09,720 --> 01:06:18,080
+what happened there so that
+was that yielded a falsie
+
+884
+01:06:18,080 --> 01:06:22,720
+a false value when I
+compared the number eight uh
+
+885
+01:06:22,720 --> 01:06:28,140
+the number 20 so because
+age has 20 in it I compared
+
+886
+01:06:28,140 --> 01:06:33,600
+20 to the string 18 boof
+um what is 18 boof well
+
+887
+01:06:33,600 --> 01:06:38,220
+it's a it's I'm pretty sure
+that converts coerced into
+
+888
+01:06:38,220 --> 01:06:42,100
+a not a number and so if
+I did this age is greater
+
+889
+01:06:42,100 --> 01:06:46,300
+than or equal to not a
+number question mark adult
+
+890
+01:06:58,400 --> 01:07:00,660
+and then sure enough,
+
+891
+01:07:01,200 --> 01:07:04,040
+that's what happened
+there, is that 18 boof
+
+892
+01:07:04,040 --> 01:07:07,680
+string was coerced into
+a not a number object.
+
+893
+01:07:08,280 --> 01:07:23,140
+So is not a number 18
+boof is not a number.
+
+894
+01:07:25,220 --> 01:07:35,020
+Oh, it's a number, sorry
+not math oh so 18 booth is
+
+895
+01:07:35,020 --> 01:07:41,500
+is not a nan hmm interesting
+all right well um what if
+
+896
+01:07:41,500 --> 01:07:49,680
+I did number of 18 booth I
+think number is a constructor
+
+897
+01:07:49,680 --> 01:07:53,040
+it returned not a number
+I'm really confused oh
+
+898
+01:07:57,700 --> 01:08:02,120
+anyway I digress we're
+talking about the ternary
+
+899
+01:08:02,120 --> 01:08:05,300
+operator it's a
+shortcut for an if then
+
+900
+01:08:05,300 --> 01:08:10,140
+statement all right so
+all right so we've we've
+
+901
+01:08:10,140 --> 01:08:12,980
+kind of run through our
+javascript topics thank
+
+902
+01:08:12,980 --> 01:08:15,700
+you for sticking with
+me this long and now I
+
+903
+01:08:15,700 --> 01:08:19,920
+want to jump into our
+assignment for this week
+
+904
+01:08:20,300 --> 01:08:24,940
+So we have an assignment,
+which I believe
+
+905
+01:08:24,940 --> 01:08:27,140
+I may have actually
+dropped into this
+
+906
+01:08:27,220 --> 01:08:29,500
+already. I don't
+think I did already.
+
+907
+01:08:30,000 --> 01:08:33,540
+So the assignment is that
+we're going to create
+
+908
+01:08:33,540 --> 01:08:36,520
+a username validator.
+And I don't think I
+
+909
+01:08:36,520 --> 01:08:41,500
+actually pasted this in
+yet to my thing. Let's go
+
+910
+01:08:41,500 --> 01:08:45,740
+ahead and copy this and
+drop it in right now.
+
+911
+01:09:02,960 --> 01:09:06,740
+So that is the assignment.
+Okay, so this week's
+
+912
+01:09:06,740 --> 01:09:10,960
+assignment, according to how I
+wrote this thing up a week or
+
+913
+01:09:10,960 --> 01:09:14,470
+so ago, is that we are
+going to create a username
+
+914
+01:09:14,470 --> 01:09:16,700
+validator. So write a
+function that checks whether a
+
+915
+01:09:16,700 --> 01:09:19,720
+username meets a set of rules
+and display pass-fail feedback
+
+916
+01:09:19,720 --> 01:09:22,500
+for each individual rule
+in the DOM with no hard
+
+917
+01:09:22,500 --> 01:09:26,800
+-coded results in the HTML.
+and so there's a set of
+
+918
+01:09:26,800 --> 01:09:32,320
+specific rules that we're
+going to use in order to verify
+
+919
+01:09:32,320 --> 01:09:37,980
+that our username is valid
+and there's five of them
+
+920
+01:09:37,980 --> 01:09:42,240
+and there's some suggestions
+on how to do this and some
+
+921
+01:09:42,240 --> 01:09:48,680
+suggestions around tests
+that you can create and but
+
+922
+01:09:48,680 --> 01:09:53,840
+what we want to do is we
+want to create a cool little
+
+923
+01:09:54,150 --> 01:09:59,940
+HTML form for this okay so
+let me close these tabs to
+
+924
+01:09:59,940 --> 01:10:03,560
+the right and let's let's
+let's get out of this whole
+
+925
+01:10:03,560 --> 01:10:08,940
+debugging nonsense here and
+let's look at my demo that
+
+926
+01:10:08,940 --> 01:10:14,340
+I made okay so um so I
+didn't solve this problem yet
+
+927
+01:10:14,340 --> 01:10:19,700
+this this uh problem of
+iterating through a series of
+
+928
+01:10:19,700 --> 01:10:25,300
+uh validation functions
+and determining which one's
+
+929
+01:10:25,300 --> 01:10:29,220
+passed and which one's failed
+and displaying the output
+
+930
+01:10:29,220 --> 01:10:33,720
+so that's part of your
+assignment that you have to
+
+931
+01:10:34,450 --> 01:10:38,840
+complete but you what this
+week's example code has some
+
+932
+01:10:38,840 --> 01:10:43,280
+of this stuff already here
+so that's kind of helpful
+
+933
+01:10:43,960 --> 01:10:47,680
+but what I want to go over
+with you right now is some
+
+934
+01:10:47,680 --> 01:10:50,760
+of the information that
+you're going to need in order
+
+935
+01:10:50,760 --> 01:10:57,180
+to build this program because
+what we want is we want
+
+936
+01:10:57,180 --> 01:11:04,680
+a little web page that has
+a input box and some way
+
+937
+01:11:04,680 --> 01:11:09,620
+of typing data, some way of
+submitting the typed string
+
+938
+01:11:09,620 --> 01:11:15,060
+to a function that will
+evaluate whether this string
+
+939
+01:11:15,060 --> 01:11:20,240
+that was submitted is actually
+a valid username according
+
+940
+01:11:20,240 --> 01:11:23,640
+to the rules that have
+been placed upon us, okay?
+
+941
+01:11:23,960 --> 01:11:28,020
+All right, so So I'll
+show you how my program
+
+942
+01:11:28,020 --> 01:11:30,880
+works, and this program
+is fairly silly.
+
+943
+01:11:31,670 --> 01:11:34,340
+It's just a little
+test harness, okay?
+
+944
+01:11:34,340 --> 01:11:39,560
+So I have to find an
+HTML form here that has
+
+945
+01:11:39,560 --> 01:11:43,540
+an input field, and it
+has a submit button.
+
+946
+01:11:44,760 --> 01:11:51,500
+and if I type james and
+hit enter then it's just
+
+947
+01:11:51,500 --> 01:11:54,880
+doing a console log of
+that string that was
+
+948
+01:11:54,880 --> 01:11:59,200
+entered in the value now
+you didn't see my mouse
+
+949
+01:11:59,200 --> 01:12:01,540
+I don't know if you saw
+where my mouse was but
+
+950
+01:12:01,920 --> 01:12:07,180
+james is very awesome and
+
+951
+01:12:07,180 --> 01:12:08,900
+let's go ahead and hit enter
+
+952
+01:12:10,450 --> 01:12:13,300
+so I'm not pressing the
+click me button I'm just
+
+953
+01:12:13,300 --> 01:12:19,860
+hitting enter okay and so
+this is a a feature of the
+
+954
+01:12:19,860 --> 01:12:23,260
+document object model within
+a browser that there is a
+
+955
+01:12:23,260 --> 01:12:28,800
+specific type of HTML tag
+called form and the form
+
+956
+01:12:28,800 --> 01:12:32,260
+tag allows you to create
+a form that could have one
+
+957
+01:12:32,260 --> 01:12:36,050
+field in it or could have
+a bunch of fields in it and
+
+958
+01:12:36,050 --> 01:12:40,040
+the form can have a submit
+behavior so submitting a
+
+959
+01:12:40,040 --> 01:12:43,020
+form is like you've got a
+bunch of information that
+
+960
+01:12:43,020 --> 01:12:45,620
+you filled out in the form
+and you want to send it
+
+961
+01:12:45,620 --> 01:12:51,920
+somewhere and so that's what
+a form submit is is that
+
+962
+01:12:51,920 --> 01:12:55,600
+you're taking information
+that is contained in the
+
+963
+01:12:55,600 --> 01:13:00,300
+fields of the form and you're
+submitting it maybe to a
+
+964
+01:13:00,300 --> 01:13:04,680
+server somewhere to create
+a new login for somebody.
+
+965
+01:13:05,260 --> 01:13:10,040
+And forms have a behavior
+in which when the user
+
+966
+01:13:10,040 --> 01:13:13,360
+hits the enter key within
+a text field it's going to
+
+967
+01:13:13,360 --> 01:13:16,400
+cause the form to be
+submitted. Now you can also
+
+968
+01:13:16,400 --> 01:13:22,020
+submit a form using a submit
+button. So that's what this
+
+969
+01:13:22,020 --> 01:13:26,250
+button is. It's a button
+with the type of submit.
+
+970
+01:13:26,260 --> 01:13:30,240
+And so if I click this,
+let's put an exclamation
+
+971
+01:13:30,240 --> 01:13:32,980
+point here so we can keep
+track of what we're doing.
+
+972
+01:13:33,300 --> 01:13:37,260
+All right. So here's the
+James is very awesome bang
+
+973
+01:13:37,260 --> 01:13:42,140
+string. And if I click
+this button, I'm getting
+
+974
+01:13:44,200 --> 01:13:49,180
+two exclamation points.
+You know what? I think this
+
+975
+01:13:49,180 --> 01:13:53,280
+one is confusingly added
+so let's let's do this
+
+976
+01:13:56,160 --> 01:14:00,520
+sorry about that because my
+console dot log is actually
+
+977
+01:14:00,520 --> 01:14:04,220
+putting that exclamation
+point in there okay so
+
+978
+01:14:04,220 --> 01:14:08,660
+I put two pounds and I
+clicked click me and it's
+
+979
+01:14:08,660 --> 01:14:12,300
+printing out the string
+that was passed into this
+
+980
+01:14:12,300 --> 01:14:18,800
+form and it puts a exclamation
+point at the end of
+
+981
+01:14:18,800 --> 01:14:23,120
+the string okay so let's
+first look at the markup
+
+982
+01:14:23,120 --> 01:14:29,760
+that I defined here okay
+so what I set up was a form
+
+983
+01:14:30,580 --> 01:14:36,880
+it's in our handy
+app div wrapper that
+
+984
+01:14:36,880 --> 01:14:39,180
+we've used in all of
+our projects so far
+
+985
+01:14:40,240 --> 01:14:45,600
+and within the app div
+wrapper I put in a h1 event
+
+986
+01:14:45,600 --> 01:14:48,920
+handlers heading and then
+I have my form okay and
+
+987
+01:14:48,920 --> 01:14:52,810
+the form has an ID and the
+the ID lets me retrieve
+
+988
+01:14:53,080 --> 01:15:02,700
+the form element using
+the document query I think
+
+989
+01:15:02,700 --> 01:15:14,560
+it's document this is
+find a document dot query
+
+990
+01:15:19,780 --> 01:15:23,520
+selector of pound
+
+991
+01:15:26,880 --> 01:15:33,900
+username form and
+that gave us a link to
+
+992
+01:15:33,900 --> 01:15:39,440
+that form dom element
+okay so I put an ID
+
+993
+01:15:39,440 --> 01:15:42,140
+in the form so I can
+get to it easily from
+
+994
+01:15:42,140 --> 01:15:46,060
+my script using the
+query selector here.
+
+995
+01:15:47,720 --> 01:15:54,620
+And what else is
+here? So the form
+
+996
+01:15:54,620 --> 01:16:00,660
+tag is wrapping an input field.
+
+997
+01:16:01,820 --> 01:16:05,260
+The type of this
+input field is text so
+
+998
+01:16:05,260 --> 01:16:11,070
+if we go to our
+trusty mdn text input
+
+999
+01:16:12,560 --> 01:16:19,500
+page it's a basic
+single line text field
+
+1000
+01:16:20,120 --> 01:16:24,760
+now inputs have all sorts
+of different types that
+
+1001
+01:16:24,760 --> 01:16:28,560
+you can put in which is
+kind of cool And some
+
+1002
+01:16:28,560 --> 01:16:32,960
+of these inputs have very,
+very special rendering
+
+1003
+01:16:33,960 --> 01:16:37,700
+expressions, like a
+password field, for example,
+
+1004
+01:16:38,140 --> 01:16:45,360
+includes the feature of
+blotting out the password.
+
+1005
+01:16:45,360 --> 01:16:48,560
+Okay, so here's a
+password field, and
+
+1006
+01:16:53,440 --> 01:16:54,900
+when I type in the password
+
+1007
+01:16:54,900 --> 01:17:00,280
+field, it masks my information.
+
+1008
+01:17:04,700 --> 01:17:07,200
+So there's lots of
+different types of inputs
+
+1009
+01:17:07,200 --> 01:17:10,840
+that you can define in
+browsers, and I'm sure
+
+1010
+01:17:10,900 --> 01:17:14,820
+in the future there will be
+more types of inputs, like
+
+1011
+01:17:14,820 --> 01:17:20,580
+there's a date input type,
+and it renders a, when
+
+1012
+01:17:20,580 --> 01:17:23,980
+you do input of type of
+date, it gives you a little
+
+1013
+01:17:23,980 --> 01:17:28,160
+date picker, pops up a
+little calendar this is this
+
+1014
+01:17:28,160 --> 01:17:34,500
+is a browser specific
+expression of how a calendar
+
+1015
+01:17:34,500 --> 01:17:37,680
+picker works is this is how
+Chrome does it and this is
+
+1016
+01:17:37,680 --> 01:17:42,660
+influenced by the locale
+that my machine is set to so
+
+1017
+01:17:42,660 --> 01:17:48,460
+if I was if my machine was
+set to work with a different
+
+1018
+01:17:48,460 --> 01:17:51,520
+language from US English
+the calendar would look
+
+1019
+01:17:51,520 --> 01:17:54,210
+a little different from how
+it looks right here just
+
+1020
+01:17:54,210 --> 01:17:57,980
+by means of putting in
+this type equal date but in
+
+1021
+01:17:57,980 --> 01:18:02,460
+this case we're just using
+a simple text field for
+
+1022
+01:18:02,480 --> 01:18:07,130
+input so we're using type
+equal text and by default if
+
+1023
+01:18:07,400 --> 01:18:11,540
+you do an input with no type
+it's a text field I have
+
+1024
+01:18:11,540 --> 01:18:15,720
+my handy ID here so I can
+get to it if I need to I
+
+1025
+01:18:15,820 --> 01:18:20,780
+have a name attribute so
+how this works in forums is
+
+1026
+01:18:20,780 --> 01:18:26,380
+that the name attribute
+becomes an element that is
+
+1027
+01:18:26,380 --> 01:18:33,060
+expressed within the collection
+of fields that are sent to
+
+1028
+01:18:33,060 --> 01:18:39,240
+a back-end server via the
+default form behavior. So
+
+1029
+01:18:39,240 --> 01:18:45,260
+if I didn't have a certain
+element in my script that
+
+1030
+01:18:45,260 --> 01:18:50,120
+prevents the default form
+handling, we would end up having
+
+1031
+01:18:50,120 --> 01:18:58,000
+a submission of my value
+to a server and in fact
+
+1032
+01:18:58,000 --> 01:19:03,650
+let me go ahead and mess and
+break this a little bit so
+
+1033
+01:19:03,720 --> 01:19:10,380
+go to my app.js file here
+I'm going to drag my Visual
+
+1034
+01:19:10,380 --> 01:19:17,180
+Studio now I sternly warned
+you guys not to use copilot
+
+1035
+01:19:17,180 --> 01:19:24,200
+in your text editor due to
+academic honesty issues,
+
+1036
+01:19:24,400 --> 01:19:27,260
+but it's super helpful.
+
+1037
+01:19:28,670 --> 01:19:30,770
+Um, so you may see
+a little copilot
+
+1038
+01:19:30,770 --> 01:19:33,060
+stuff because I do
+use copilot, um,
+
+1039
+01:19:33,180 --> 01:19:36,420
+truth be told. Um, so
+this is my program right
+
+1040
+01:19:36,420 --> 01:19:40,700
+here. So here's the
+inner HTML definition of,
+
+1041
+01:19:40,700 --> 01:19:49,460
+I grabbed the, um, the
+form the appdiv and that's
+
+1042
+01:19:49,460 --> 01:19:51,580
+defined by default for
+our project and then
+
+1043
+01:19:51,580 --> 01:19:56,720
+I use this string template
+to create the markup
+
+1044
+01:20:00,570 --> 01:20:03,680
+And I inserted that
+markup into the
+
+1045
+01:20:03,680 --> 01:20:07,270
+innerHTML of this app
+element. So this markup
+
+1046
+01:20:07,270 --> 01:20:15,350
+here is being dumped
+into this app div.
+
+1047
+01:20:18,400 --> 01:20:22,990
+Okay, so how am I wiring
+all this up? All right,
+
+1048
+01:20:23,330 --> 01:20:30,770
+so what I'm doing is after
+I define the form And I
+
+1049
+01:20:30,770 --> 01:20:33,870
+place it into the DOM by
+assigning this string template
+
+1050
+01:20:33,870 --> 01:20:38,210
+to this inner HTML value.
+And I'm going to put
+
+1051
+01:20:38,210 --> 01:20:46,170
+this example up in our
+example area of our project.
+
+1052
+01:20:46,520 --> 01:20:49,240
+And I don't know if
+I talked about this
+
+1053
+01:20:49,240 --> 01:20:51,010
+before. I don't think
+I did, actually.
+
+1054
+01:20:51,510 --> 01:20:55,830
+Let's go to my JavaScript
+repo real quick.
+
+1055
+01:20:55,830 --> 01:20:57,770
+because I wanted to
+because I am going to be
+
+1056
+01:20:57,770 --> 01:21:00,870
+updating this repo as
+we go over the course
+
+1057
+01:21:00,870 --> 01:21:03,690
+of this term because
+this is actually the
+
+1058
+01:21:03,690 --> 01:21:05,950
+first time I've taught
+this javascript class
+
+1059
+01:21:06,470 --> 01:21:10,390
+using this format that I'm
+making up as I go along
+
+1060
+01:21:10,390 --> 01:21:14,950
+essentially so um you
+know there are a set of
+
+1061
+01:21:14,950 --> 01:21:20,050
+examples in this repo of
+mine for our class and I
+
+1062
+01:21:20,050 --> 01:21:24,630
+just added this week three
+functions comparisons
+
+1063
+01:21:26,290 --> 01:21:32,450
+example to our example folder.
+And this is the snippet
+
+1064
+01:21:32,450 --> 01:21:35,510
+that I was messing around
+with during the beginning
+
+1065
+01:21:35,510 --> 01:21:39,990
+of my lecture. I have not
+put in a week three form
+
+1066
+01:21:40,940 --> 01:21:45,730
+handling example yet, but
+I'm going to do it. It's just
+
+1067
+01:21:45,730 --> 01:21:47,790
+not there yet. I'm going
+to do that right after I
+
+1068
+01:21:47,790 --> 01:21:51,910
+finish this lecture okay
+but when you cloned your
+
+1069
+01:21:51,910 --> 01:21:57,090
+repository initially and you
+created a new repository using
+
+1070
+01:21:57,090 --> 01:22:00,290
+this repository as a template
+and you brought it down
+
+1071
+01:22:00,290 --> 01:22:08,350
+to your local machine I
+haven't defined this example
+
+1072
+01:22:08,350 --> 01:22:11,610
+yet and so it's not there
+on your local machine you
+
+1073
+01:22:11,610 --> 01:22:15,030
+know I mean if you visit
+my webpage here this repo
+
+1074
+01:22:15,030 --> 01:22:18,110
+on public this public
+repository you'll see it as soon
+
+1075
+01:22:18,110 --> 01:22:22,380
+as I put it up but it's
+not in your local folder so
+
+1076
+01:22:22,380 --> 01:22:31,090
+if you want to grab updates
+to the project there is I
+
+1077
+01:22:31,290 --> 01:22:34,070
+believe there's some
+instructions in here which I hope
+
+1078
+01:22:34,070 --> 01:22:46,560
+I put okay so it's in read
+me and it's this heading
+
+1079
+01:22:47,600 --> 01:22:51,210
+called setting up to receive
+course updates and this
+
+1080
+01:22:51,210 --> 01:22:53,870
+is a little bit of git
+stuff you can kind of see
+
+1081
+01:22:53,870 --> 01:22:58,230
+how this works but you begin
+by adding a remote to my
+
+1082
+01:22:58,230 --> 01:23:04,830
+public repository that you
+use to create your personal
+
+1083
+01:23:04,830 --> 01:23:11,130
+copy of this repo and then
+once you've added my repo
+
+1084
+01:23:11,130 --> 01:23:17,370
+as a remote called template.
+So in Git, let's see,
+
+1085
+01:23:18,570 --> 01:23:21,250
+I just got to be careful
+here. I've got lots
+
+1086
+01:23:21,730 --> 01:23:25,730
+of stuff going on on
+this computer and I want
+
+1087
+01:23:25,730 --> 01:23:28,830
+to make sure I'm not
+leaking my work to you
+
+1088
+01:23:29,130 --> 01:23:32,610
+by accident. I'm just
+popping open a new
+
+1089
+01:23:32,610 --> 01:23:35,710
+terminal here. Okay,
+so if I go to source,
+
+1090
+01:23:39,430 --> 01:23:46,750
+Now let's go to slash
+cocc.js slash course.
+
+1091
+01:23:49,940 --> 01:23:57,450
+Okay, if I do a git remote,
+I've only got one remote
+
+1092
+01:23:57,450 --> 01:24:01,890
+to find because this
+is the, I have a local
+
+1093
+01:24:01,890 --> 01:24:10,650
+clone of my cocc.js repo on
+my machine. and origin is
+
+1094
+01:24:10,650 --> 01:24:13,790
+defined by default in a
+git repo and that refers
+
+1095
+01:24:13,790 --> 01:24:17,730
+to the repository that
+you initially cloned the
+
+1096
+01:24:17,730 --> 01:24:22,250
+local copy from. It's called
+origin and in this case
+
+1097
+01:24:22,250 --> 01:24:26,530
+we're defining a second
+remote called template.
+
+1098
+01:24:27,730 --> 01:24:30,530
+Okay so you just have
+to do this once and then
+
+1099
+01:24:30,530 --> 01:24:33,480
+when you do git remote
+and hit enter you'll
+
+1100
+01:24:33,490 --> 01:24:37,810
+actually see two remotes
+you'll see origin and template
+
+1101
+01:24:37,810 --> 01:24:40,710
+and then to reach
+retrieve the templates
+
+1102
+01:24:40,710 --> 01:24:43,130
+whenever you feel like
+fetching some updates you
+
+1103
+01:24:43,130 --> 01:24:46,010
+can just run this you
+do get fetch template so
+
+1104
+01:24:46,010 --> 01:24:50,390
+what that's doing get
+fetched pulls the current
+
+1105
+01:24:50,390 --> 01:24:56,370
+state of this remote
+repository to your local get
+
+1106
+01:24:57,290 --> 01:24:59,550
+repository on your machine. And
+
+1107
+01:24:59,550 --> 01:25:01,730
+then I'm doing
+this merge command.
+
+1108
+01:25:02,350 --> 01:25:06,770
+This is a kind of a
+complicated merge command.
+
+1109
+01:25:06,790 --> 01:25:10,150
+Don't worry too much
+about it. But what this
+
+1110
+01:25:10,150 --> 01:25:12,050
+is doing is it's saying
+that I'm going to
+
+1111
+01:25:12,050 --> 01:25:19,430
+merge the main branch
+of the template remote.
+
+1112
+01:25:20,000 --> 01:25:23,290
+This is to make sure that we
+don't have any messy merge
+
+1113
+01:25:23,290 --> 01:25:27,330
+conflicts because of the
+way that we've instantiated
+
+1114
+01:25:27,330 --> 01:25:32,710
+these repos when we've copied
+them to our github account
+
+1115
+01:25:32,860 --> 01:25:39,220
+we use that template
+feature and so this flag
+
+1116
+01:25:39,220 --> 01:25:43,210
+prevents there from being
+weird merge conflicts and then
+
+1117
+01:25:43,210 --> 01:25:46,510
+this thing this x there is
+basically saying when there's
+
+1118
+01:25:46,510 --> 01:25:55,010
+a merge conflict just use
+the upstream template remote
+
+1119
+01:25:55,360 --> 01:25:59,140
+that's the source of truth
+so we're not gonna have
+
+1120
+01:25:59,970 --> 01:26:04,890
+a merge conflict in files
+that are defined in my local
+
+1121
+01:26:04,890 --> 01:26:07,570
+machine and are also
+defining those remote so it
+
+1122
+01:26:07,570 --> 01:26:11,570
+prevents her from being any
+merge conflicts and then this
+
+1123
+01:26:11,570 --> 01:26:15,910
+last thing is just a little
+kind of a message flag that
+
+1124
+01:26:15,910 --> 01:26:19,770
+you can put into a merge
+command so that it doesn't
+
+1125
+01:26:19,770 --> 01:26:27,190
+create the full screen usually
+a vim editor to edit your
+
+1126
+01:26:27,190 --> 01:26:35,310
+commit description so yeah
+it's a little convoluted
+
+1127
+01:26:35,310 --> 01:26:38,090
+but this is how you can grab
+updates so if you want to
+
+1128
+01:26:38,090 --> 01:26:41,070
+pull the new example that
+I'm going to post after I
+
+1129
+01:26:41,070 --> 01:26:44,970
+finish this lecture showing
+this form handling stuff
+
+1130
+01:26:44,970 --> 01:26:47,610
+this is how you can pull it
+down to your local computer
+
+1131
+01:26:47,610 --> 01:26:51,170
+and have it there or you can
+just visit my my repo and
+
+1132
+01:26:51,170 --> 01:26:59,270
+see it there okay so I got
+I got really off track here
+
+1133
+01:26:59,270 --> 01:27:08,830
+going back to my little
+program I've defined a form
+
+1134
+01:27:09,780 --> 01:27:12,870
+that has a single text
+input. And there's some
+
+1135
+01:27:12,870 --> 01:27:16,730
+little stuff in here
+that I should probably
+
+1136
+01:27:16,730 --> 01:27:19,390
+document what all these
+attributes are doing.
+
+1137
+01:27:19,910 --> 01:27:24,060
+But I'm going to leave
+that off for now. And
+
+1138
+01:27:24,060 --> 01:27:26,250
+the important thing is
+that there's an input
+
+1139
+01:27:26,250 --> 01:27:28,950
+with type text, and it
+has a name of username.
+
+1140
+01:27:28,950 --> 01:27:31,850
+And then there's a
+button, a submit button,
+
+1141
+01:27:31,850 --> 01:27:35,290
+that has the caption
+click me right there.
+
+1142
+01:27:35,510 --> 01:27:38,070
+and maybe we can make
+this a little smarter
+
+1143
+01:27:48,810 --> 01:27:52,430
+that's better okay so
+it checks the username
+
+1144
+01:27:52,430 --> 01:27:54,510
+probably don't need
+an exclamation point
+
+1145
+01:27:55,080 --> 01:28:00,290
+there okay all right
+let's get rid of that
+
+1146
+01:28:01,450 --> 01:28:05,010
+confusing bang there because
+that was confusing me
+
+1147
+01:28:05,090 --> 01:28:10,210
+five minutes after I wrote
+this code okay so I type
+
+1148
+01:28:10,210 --> 01:28:16,150
+in Eric and I hit enter and
+I get hello Eric so this
+
+1149
+01:28:16,150 --> 01:28:19,750
+submit button I can click
+it and that'll cause
+
+1150
+01:28:19,750 --> 01:28:23,110
+the value to be submitted
+or I can just hit enter in
+
+1151
+01:28:23,110 --> 01:28:25,210
+this text field and that'll
+cause the form to be
+
+1152
+01:28:25,210 --> 01:28:30,340
+submitted as well all right
+now how am I wiring up this
+
+1153
+01:28:30,340 --> 01:28:35,330
+code that's causing that
+console to be displayed
+
+1154
+01:28:37,270 --> 01:28:38,730
+Well,
+
+1155
+01:28:39,210 --> 01:28:44,250
+I'm grabbing the form
+element using its ID,
+
+1156
+01:28:44,250 --> 01:28:51,310
+and then I'm using this
+invocation of addEventListener
+
+1157
+01:28:51,310 --> 01:28:54,950
+method on that DOM
+element, and I'm
+
+1158
+01:28:54,950 --> 01:29:01,170
+creating a submit handler
+for this form and you
+
+1159
+01:29:01,170 --> 01:29:04,070
+can see that there's
+an event passed to this
+
+1160
+01:29:04,810 --> 01:29:10,570
+submit handler this
+argument now what kind of
+
+1161
+01:29:11,200 --> 01:29:15,770
+what kind of function
+definition is this exactly
+
+1162
+01:29:16,290 --> 01:29:20,270
+if we go back to our
+different types this
+
+1163
+01:29:27,870 --> 01:29:32,490
+is actually a function
+expression it's an
+
+1164
+01:29:32,490 --> 01:29:35,210
+anonymous function expression
+there's no name here
+
+1165
+01:29:35,210 --> 01:29:37,950
+now I could put a name on
+it if I wanted to that's
+
+1166
+01:29:37,950 --> 01:29:41,690
+allowed this would
+be the username form
+
+1167
+01:29:41,970 --> 01:29:50,350
+handler thank you co-pilot
+okay and so I am invoking
+
+1168
+01:29:50,350 --> 01:29:54,450
+ad event listener there's
+a helpful description
+
+1169
+01:29:54,450 --> 01:29:58,110
+of what this function
+does courtesy of MDN.
+
+1170
+01:29:59,010 --> 01:30:02,510
+The name of the event that
+I'm handling is submit.
+
+1171
+01:30:02,630 --> 01:30:07,810
+And then I pass a value
+to the second argument of
+
+1172
+01:30:07,810 --> 01:30:11,130
+this function, which is a
+function. So I'm passing a
+
+1173
+01:30:11,130 --> 01:30:16,670
+function to this addEventListener
+function. This is
+
+1174
+01:30:16,670 --> 01:30:21,830
+the function that's going
+to be invoked once a submit
+
+1175
+01:30:21,830 --> 01:30:26,590
+event occurs with this
+form. okay let's go ahead
+
+1176
+01:30:26,590 --> 01:30:31,510
+and I've got this enticing
+event prevent default
+
+1177
+01:30:31,510 --> 01:30:38,190
+method and so what is event
+well event is a object type
+
+1178
+01:30:38,190 --> 01:30:43,270
+in the browser runtime
+environment mdn event object
+
+1179
+01:30:45,020 --> 01:30:50,410
+it's a very widely available
+there's a whole ton
+
+1180
+01:30:50,410 --> 01:30:58,350
+of different types of events
+one of which is a submit
+
+1181
+01:30:58,350 --> 01:31:02,210
+event okay so defines the
+object used to represent
+
+1182
+01:31:02,210 --> 01:31:06,010
+HTML form submit event
+okay and it has some
+
+1183
+01:31:06,010 --> 01:31:14,150
+documentation here on our
+beloved MDN website and that
+
+1184
+01:31:15,710 --> 01:31:19,330
+event object has a method
+called prevent default let's
+
+1185
+01:31:19,330 --> 01:31:25,270
+go ahead and put a console
+.log here of form submit
+
+1186
+01:31:28,070 --> 01:31:32,630
+and we're going to pass
+the event and that's going
+
+1187
+01:31:32,630 --> 01:31:36,780
+to cause my browser to
+refresh here so sally is
+
+1188
+01:31:36,780 --> 01:31:39,750
+my name and I'm going
+to hit enter and so I'm
+
+1189
+01:31:39,750 --> 01:31:43,930
+getting all the same
+information here but now it's
+
+1190
+01:31:43,930 --> 01:31:47,410
+logging out this event
+object that's being passed
+
+1191
+01:31:47,410 --> 01:31:50,590
+in and this event object
+has a bunch of properties
+
+1192
+01:31:50,590 --> 01:31:56,220
+okay so the target is
+the the form element and
+
+1193
+01:31:58,150 --> 01:32:02,160
+I'm not sure what submitter
+does exactly default
+
+1194
+01:32:02,690 --> 01:32:07,160
+prevented is true so that
+means that it is not by
+
+1195
+01:32:07,990 --> 01:32:13,730
+calling this method
+prevent default preventing
+
+1196
+01:32:13,730 --> 01:32:17,190
+the default browser behavior
+of a form submission
+
+1197
+01:32:17,190 --> 01:32:21,870
+from occurring at all
+now what is that default
+
+1198
+01:32:21,870 --> 01:32:25,470
+behavior so let's go ahead
+and comment out event up
+
+1199
+01:32:25,470 --> 01:32:28,270
+prevent default and let's
+see what happens here
+
+1200
+01:32:28,270 --> 01:32:33,130
+okay all right so this is
+going to be um margaret
+
+1201
+01:32:35,780 --> 01:32:37,550
+and we're going
+to hit enter what
+
+1202
+01:32:43,050 --> 01:32:44,190
+happened there what
+
+1203
+01:32:50,320 --> 01:32:54,980
+was the default
+behavior of this
+
+1204
+01:32:59,100 --> 01:33:03,200
+event handler for
+the form let's try
+
+1205
+01:33:03,200 --> 01:33:05,340
+this again let's
+just go ahead and
+
+1206
+01:33:08,120 --> 01:33:09,560
+revise the
+
+1207
+01:33:09,840 --> 01:33:12,080
+URL again, margarit.
+
+1208
+01:33:13,960 --> 01:33:16,240
+Note, what I have right here
+
+1209
+01:33:16,800 --> 01:33:19,820
+is I have the
+localhost domain and
+
+1210
+01:33:19,820 --> 01:33:24,420
+the port of our
+starter project.
+
+1211
+01:33:24,420 --> 01:33:27,500
+I'm going to go ahead
+and hit the button.
+
+1212
+01:33:28,480 --> 01:33:31,720
+What just happened here?
+Why didn't I get a console?
+
+1213
+01:33:32,960 --> 01:33:39,080
+that's weird let's try
+it again what why is this
+
+1214
+01:33:39,080 --> 01:33:43,800
+stuff showing up in the
+URL what's this username
+
+1215
+01:33:43,800 --> 01:33:47,320
+thing well we know Margaret
+we know where that came
+
+1216
+01:33:47,320 --> 01:33:49,560
+from because we type the
+word Margaret what if
+
+1217
+01:33:49,560 --> 01:33:53,840
+I type Jim and hit enter
+well now we're getting
+
+1218
+01:33:53,840 --> 01:33:57,720
+username equal Jim But what
+is this URL right here?
+
+1219
+01:33:58,400 --> 01:34:02,200
+Well have you ever gone to
+a website that has query
+
+1220
+01:34:02,200 --> 01:34:04,840
+params where you're doing
+a search for something
+
+1221
+01:34:04,840 --> 01:34:07,520
+and you've got a bunch of
+query params and I've been
+
+1222
+01:34:07,520 --> 01:34:12,890
+looking for Logitech mice
+on my on eBay because my
+
+1223
+01:34:13,740 --> 01:34:16,640
+my Logitech trackball
+is has given up
+
+1224
+01:34:16,640 --> 01:34:19,170
+the ghost so if I type
+Logitech trackball
+
+1225
+01:34:22,540 --> 01:34:27,420
+or something like that
+and hit enter in eBay, I
+
+1226
+01:34:28,300 --> 01:34:31,140
+get something kind of
+similar here. I get a new
+
+1227
+01:34:32,860 --> 01:34:36,300
+path here and there's
+this question mark
+
+1228
+01:34:37,150 --> 01:34:40,800
+separator here and then I
+get something very similar
+
+1229
+01:34:40,800 --> 01:34:44,900
+where I've got the
+text I entered in this
+
+1230
+01:34:45,140 --> 01:34:47,960
+field here and then I've
+got some other stuff
+
+1231
+01:34:47,960 --> 01:34:50,060
+that it threw up there
+but it all ended up in
+
+1232
+01:34:50,060 --> 01:34:54,760
+the browser and then
+if I if I bookmark this
+
+1233
+01:34:58,120 --> 01:35:05,060
+page and I put it in my
+trusty CoCCJ CoCC folder and I
+
+1234
+01:35:05,060 --> 01:35:08,760
+hit done okay so now I
+bookmark this and now what if
+
+1235
+01:35:08,760 --> 01:35:15,340
+I go back to this and I hit
+enter the bookmark star went
+
+1236
+01:35:15,340 --> 01:35:19,900
+away look at that and now
+I've got this this other
+
+1237
+01:35:19,900 --> 01:35:24,400
+URL here if I click here now
+I'm back to the eBay homepage
+
+1238
+01:35:24,400 --> 01:35:29,140
+and I've got a clean URL
+without any query params
+
+1239
+01:35:29,140 --> 01:35:34,020
+so what's happening here
+is this query param pattern
+
+1240
+01:35:34,020 --> 01:35:38,340
+is ubiquitous in the internet
+it's been here forever
+
+1241
+01:35:38,340 --> 01:35:45,180
+since the beginning of browsers
+and if you want to perform
+
+1242
+01:35:45,180 --> 01:35:50,140
+a search on any kind of
+website you will often end
+
+1243
+01:35:50,140 --> 01:35:55,400
+up seeing these search
+parameters show up in your URL.
+
+1244
+01:35:55,960 --> 01:35:59,200
+And remember I
+bookmarked that search
+
+1245
+01:35:59,200 --> 01:36:02,120
+result in eBay?
+Well if I go here
+
+1246
+01:36:02,520 --> 01:36:04,860
+and I go to my
+bookmark and I click it
+
+1247
+01:36:07,700 --> 01:36:11,000
+it's restoring the search
+that I entered complete
+
+1248
+01:36:11,000 --> 01:36:13,760
+with the typo that I
+entered in the field
+
+1249
+01:36:13,760 --> 01:36:18,920
+name here okay so this is
+a uh a url that includes
+
+1250
+01:36:18,920 --> 01:36:23,640
+search params or aka
+query params and these
+
+1251
+01:36:23,640 --> 01:36:27,140
+are um there's a there's
+always a question mark
+
+1252
+01:36:27,140 --> 01:36:30,340
+after the path and then
+there are a series of
+
+1253
+01:36:31,520 --> 01:36:34,920
+key value pairs where the
+key is on the left side of
+
+1254
+01:36:34,920 --> 01:36:36,740
+the equal and the value is
+on the right side of the
+
+1255
+01:36:36,740 --> 01:36:39,340
+equal. And then if there are
+multiple of these, you're
+
+1256
+01:36:39,340 --> 01:36:42,100
+going to see these ampersands
+separating them. So in this
+
+1257
+01:36:42,100 --> 01:36:45,520
+case, it looks like we have
+three different key value
+
+1258
+01:36:45,520 --> 01:36:50,780
+pairs. We have NKW and FROM
+and TREXID, whatever that
+
+1259
+01:36:50,780 --> 01:36:55,020
+is, whatever eBay uses that
+for. But we can use that
+
+1260
+01:36:55,920 --> 01:36:59,580
+in our program here as
+well. So let's say I was
+
+1261
+01:36:59,580 --> 01:37:03,460
+trying to evaluate Sally
+again and I hit enter
+
+1262
+01:37:04,710 --> 01:37:07,930
+and I want to bookmark
+this and put it in my
+
+1263
+01:37:07,930 --> 01:37:11,280
+COCC folder. And then
+I'm going to do it again,
+
+1264
+01:37:11,280 --> 01:37:16,000
+but I'm going to type
+James instead and do that.
+
+1265
+01:37:16,460 --> 01:37:18,360
+And now I can bookmark that.
+
+1266
+01:37:19,320 --> 01:37:21,940
+Okay. Now we're not going
+to see a whole lot here
+
+1267
+01:37:21,940 --> 01:37:24,860
+because I don't have any
+kind of like parsing of this
+
+1268
+01:37:24,860 --> 01:37:27,880
+URL happening it's all
+code that you have to write
+
+1269
+01:37:27,880 --> 01:37:30,960
+in order to wire this type
+of behavior up that we
+
+1270
+01:37:30,960 --> 01:37:35,120
+saw in that eBay website
+where when I restored that
+
+1271
+01:37:35,120 --> 01:37:42,100
+Logitech mouse search bookmark
+I got the field filled
+
+1272
+01:37:42,100 --> 01:37:49,120
+in with my typo written
+search query that I typed
+
+1273
+01:37:49,120 --> 01:37:55,280
+in eBay okay but let's
+go back back to and these
+
+1274
+01:37:55,280 --> 01:37:59,760
+are both bookmarks so this
+one is username equal Sally
+
+1275
+01:37:59,760 --> 01:38:03,280
+and this one is username
+equal James okay so let's
+
+1276
+01:38:03,280 --> 01:38:05,600
+let's go ahead and see
+what's going on here because
+
+1277
+01:38:05,600 --> 01:38:08,520
+it's kind of interesting
+how this stuff works now
+
+1278
+01:38:08,520 --> 01:38:14,380
+forms are super powerful
+elements in JavaScript and
+
+1279
+01:38:14,380 --> 01:38:17,920
+the dom okay and you
+notice that we have a we
+
+1280
+01:38:17,920 --> 01:38:21,620
+commented out event dot
+prevent default so the default
+
+1281
+01:38:22,100 --> 01:38:27,380
+behavior of an HTML form
+in the browser is that when
+
+1282
+01:38:27,380 --> 01:38:31,080
+you submit the value of
+that form, it's going to
+
+1283
+01:38:31,080 --> 01:38:36,380
+perform a GET request to
+the server that served that
+
+1284
+01:38:36,380 --> 01:38:41,800
+page, and each field of
+that form is going to be
+
+1285
+01:38:41,800 --> 01:38:48,840
+represented by a key value
+pair in that search string that
+
+1286
+01:38:48,840 --> 01:38:53,240
+gets created. So that's
+the default behavior of a
+
+1287
+01:38:53,240 --> 01:38:57,650
+form is that it performs a
+get request to the server
+
+1288
+01:38:57,650 --> 01:39:02,900
+and it reloads the browser
+with that new URL that it
+
+1289
+01:39:02,900 --> 01:39:07,140
+constructs from the default
+path that was already
+
+1290
+01:39:07,140 --> 01:39:13,440
+there and the set of form
+values. okay so here we have
+
+1291
+01:39:13,440 --> 01:39:20,720
+a input with a name of user
+name which is represented
+
+1292
+01:39:20,720 --> 01:39:27,140
+right here and when I hit
+when I type in Jane and
+
+1293
+01:39:27,440 --> 01:39:31,360
+I hit enter now before
+when we were preventing the
+
+1294
+01:39:31,360 --> 01:39:33,880
+default behavior we were
+seeing some console action
+
+1295
+01:39:33,880 --> 01:39:37,560
+right but in this case we're
+seeing that the page kind
+
+1296
+01:39:37,560 --> 01:39:40,480
+of refreshes really quickly
+and then the browser URL
+
+1297
+01:39:40,480 --> 01:39:44,160
+gets replaced with the
+former URL with a question
+
+1298
+01:39:44,160 --> 01:39:48,140
+mark and a single search
+key value pair of username
+
+1299
+01:39:48,140 --> 01:39:53,240
+equals J. So username came
+from the name of this field
+
+1300
+01:39:53,240 --> 01:39:56,180
+that I entered as an
+attribute of the input field.
+
+1301
+01:39:56,900 --> 01:40:00,940
+And the value came from
+the value that the user
+
+1302
+01:40:00,940 --> 01:40:03,640
+actually entered. In
+this case, it was Jane.
+
+1303
+01:40:03,800 --> 01:40:04,640
+Okay.
+
+1304
+01:40:04,870 --> 01:40:10,260
+But why did we see any console
+output. Well, the reason
+
+1305
+01:40:10,260 --> 01:40:13,240
+we didn't see any console
+output, maybe it did happen,
+
+1306
+01:40:13,240 --> 01:40:16,400
+but what happened was
+when we submitted the form
+
+1307
+01:40:16,570 --> 01:40:21,380
+and we are allowing the
+default behavior of the browser
+
+1308
+01:40:21,380 --> 01:40:27,840
+form element to be invoked,
+it refreshes the page with
+
+1309
+01:40:27,840 --> 01:40:33,000
+a new URL consisting of
+that original path with the
+
+1310
+01:40:33,000 --> 01:40:36,740
+search query parameters
+appended to it. So if we want
+
+1311
+01:40:36,740 --> 01:40:40,340
+to see that console action
+that we were seeing before,
+
+1312
+01:40:40,920 --> 01:40:44,920
+we got to set up a
+little flag for the
+
+1313
+01:40:44,920 --> 01:40:47,720
+console. And I think
+I always forget where
+
+1314
+01:40:47,720 --> 01:40:49,740
+it is when I have
+the console stuff.
+
+1315
+01:40:50,560 --> 01:40:53,300
+So I hit this gear icon here,
+
+1316
+01:40:53,300 --> 01:40:56,080
+and I am going to say keep log.
+
+1317
+01:40:56,300 --> 01:40:59,980
+Okay, and let's close it
+again. So I just set up
+
+1318
+01:40:59,980 --> 01:41:03,300
+my console so that it's
+going to retain the logs in
+
+1319
+01:41:03,300 --> 01:41:09,140
+between page load transitions
+and so I'm going to
+
+1320
+01:41:09,140 --> 01:41:12,960
+once again type let's type
+Janie this time and hit
+
+1321
+01:41:12,960 --> 01:41:19,880
+enter all right so now we're
+seeing the same behavior
+
+1322
+01:41:19,880 --> 01:41:23,160
+where the screen refresh
+we had a hard reload
+
+1323
+01:41:23,160 --> 01:41:27,680
+of the web page we had a
+new key value pair appended
+
+1324
+01:41:27,680 --> 01:41:31,320
+to the URL after the
+question mark we have our
+
+1325
+01:41:31,320 --> 01:41:35,340
+new value that I entered
+in the field of Janie we
+
+1326
+01:41:35,340 --> 01:41:37,900
+have the old value of
+username equal Janie and now
+
+1327
+01:41:37,900 --> 01:41:41,320
+we're seeing that what was
+happening here was those
+
+1328
+01:41:41,320 --> 01:41:47,000
+console logs were actually
+firing but the browser
+
+1329
+01:41:47,200 --> 01:41:50,200
+refreshed so darn quick
+that we didn't even see
+
+1330
+01:41:50,200 --> 01:41:53,540
+it okay and here chrome
+is giving us a helpful
+
+1331
+01:41:53,540 --> 01:42:00,140
+little navigated to indicator
+here which I think it
+
+1332
+01:42:00,140 --> 01:42:03,260
+only prints that when
+you have that keep log
+
+1333
+01:42:03,260 --> 01:42:10,540
+setting so if I um joseph
+it doesn't print it if
+
+1334
+01:42:10,540 --> 01:42:14,500
+you're not doing blog but
+when you use keep log it
+
+1335
+01:42:20,950 --> 01:42:23,370
+prints it out so you kind
+of keep track of where
+
+1336
+01:42:23,370 --> 01:42:26,850
+it's going and then you
+can even keep testing this
+
+1337
+01:42:28,310 --> 01:42:32,720
+okay because it's retaining
+the console output across
+
+1338
+01:42:32,720 --> 01:42:37,850
+reloads of this browser
+page okay so this is looking
+
+1339
+01:42:37,850 --> 01:42:45,650
+at the default form handling
+behavior of form elements
+
+1340
+01:42:46,490 --> 01:42:49,830
+now what if we had
+another field in
+
+1341
+01:42:49,830 --> 01:42:52,030
+here so let's say
+we had another field
+
+1342
+01:42:57,810 --> 01:42:59,510
+making a copy of this
+
+1343
+01:42:59,710 --> 01:43:02,830
+now we're not going to be
+naughty and use the same
+
+1344
+01:43:02,830 --> 01:43:04,890
+let's just delete id
+because we're not really
+
+1345
+01:43:04,890 --> 01:43:06,830
+we don't really care
+about this but let's use a
+
+1346
+01:43:06,830 --> 01:43:11,330
+different name here so this
+is color and then we're
+
+1347
+01:43:11,330 --> 01:43:14,650
+going to change the
+placeholder to type color thank
+
+1348
+01:43:14,650 --> 01:43:17,930
+you copilot um so let's
+see what we're seeing
+
+1349
+01:43:17,930 --> 01:43:20,930
+here now so we have username
+and color so if I type
+
+1350
+01:43:20,930 --> 01:43:24,130
+jim actually let's clear
+out the console here.
+
+1351
+01:43:24,450 --> 01:43:25,490
+If I type Jim,
+
+1352
+01:43:25,670 --> 01:43:28,890
+and Jim's favorite
+color is red, and
+
+1353
+01:43:28,890 --> 01:43:30,290
+we're going to
+check his username,
+
+1354
+01:43:32,030 --> 01:43:35,730
+we got, now we got two key
+value pairs here. So every
+
+1355
+01:43:35,730 --> 01:43:41,880
+field in the form is going
+to be represented in the
+
+1356
+01:43:41,880 --> 01:43:45,540
+query string that gets
+sent to a back-end server.
+
+1357
+01:43:45,540 --> 01:43:52,110
+And so the dev server for
+this Vite dev server, it's
+
+1358
+01:43:52,110 --> 01:44:00,880
+being hit with this query
+string appended to the host
+
+1359
+01:44:02,090 --> 01:44:07,630
+name and port. And if my
+backend server wasn't this
+
+1360
+01:44:07,630 --> 01:44:10,850
+Vite dev server, but it
+was an actual server that
+
+1361
+01:44:10,850 --> 01:44:14,070
+was going to take this
+username and do something with
+
+1362
+01:44:14,070 --> 01:44:18,040
+it, like create a new
+identity on a given platform,
+
+1363
+01:44:18,670 --> 01:44:22,950
+well, that server
+would be receiving this
+
+1364
+01:44:22,950 --> 01:44:25,490
+information. And that's
+how we set up these client
+
+1365
+01:44:25,490 --> 01:44:31,930
+-server applications using
+the browser, is by pushing
+
+1366
+01:44:31,930 --> 01:44:37,650
+data to the backend
+server using a GET request
+
+1367
+01:44:37,650 --> 01:44:39,870
+or a POST request or
+whatever. There's different
+
+1368
+01:44:39,870 --> 01:44:42,070
+types of these requests
+that we can define.
+
+1369
+01:44:42,090 --> 01:44:44,630
+All right, so let's go back
+
+1370
+01:44:44,630 --> 01:44:52,470
+and restore our behavior here.
+
+1371
+01:44:53,090 --> 01:45:00,770
+And how do we get that
+color? How can we collect
+
+1372
+01:45:00,770 --> 01:45:03,030
+that value? Well,
+Copilot's trying to be
+
+1373
+01:45:03,030 --> 01:45:07,470
+really helpful here. and
+it's showing me that I
+
+1374
+01:45:07,470 --> 01:45:16,330
+can select that color
+input using a selector in
+
+1375
+01:45:16,670 --> 01:45:22,530
+which I provide the the
+name is the attribute
+
+1376
+01:45:22,530 --> 01:45:25,990
+that I'm looking for
+for an element and
+
+1377
+01:45:25,990 --> 01:45:29,130
+then the color and and
+the word color is the
+
+1378
+01:45:29,130 --> 01:45:33,970
+value of that attribute
+So we have name equal
+
+1379
+01:45:33,970 --> 01:45:36,540
+color, and I can do a
+query selector here.
+
+1380
+01:45:36,750 --> 01:45:40,830
+Okay, let's do one
+last thing here.
+
+1381
+01:45:40,870 --> 01:45:43,090
+So this is kind of
+interesting because we
+
+1382
+01:45:43,090 --> 01:45:47,170
+have this form variable
+that we defined,
+
+1383
+01:45:47,870 --> 01:45:51,010
+and we assigned the form
+variable the value of
+
+1384
+01:45:51,010 --> 01:45:54,410
+document.querySelector.
+And so we got that, and
+
+1385
+01:45:54,410 --> 01:45:56,690
+that's how we added the
+event listener. But what if
+
+1386
+01:45:56,690 --> 01:46:00,530
+I wanted to scope my DOM
+lookups, not to the entire
+
+1387
+01:46:00,530 --> 01:46:04,270
+document, but just to
+the specific form because
+
+1388
+01:46:04,270 --> 01:46:08,490
+I can't have another
+element with the same ID.
+
+1389
+01:46:08,790 --> 01:46:14,760
+If I had a second username
+input ID tagged element
+
+1390
+01:46:14,760 --> 01:46:18,150
+further down the DOM, then
+I'm pretty sure that this
+
+1391
+01:46:18,150 --> 01:46:21,210
+input would just pick up the
+second one that was defined.
+
+1392
+01:46:21,210 --> 01:46:25,190
+I'm pretty sure that's
+how query selector works.
+
+1393
+01:46:25,410 --> 01:46:27,850
+Or maybe it's the first
+one. I'm not sure.
+
+1394
+01:46:28,230 --> 01:46:31,430
+But don't do that. don't
+set up two elements with
+
+1395
+01:46:31,430 --> 01:46:33,550
+the same id you're just
+going to confuse yourself
+
+1396
+01:46:33,550 --> 01:46:37,880
+but it's perfectly reasonable
+to use different name
+
+1397
+01:46:37,880 --> 01:46:40,860
+different elements that
+may have the same attribute
+
+1398
+01:46:41,610 --> 01:46:44,730
+the same name attribute
+and the same value
+
+1399
+01:46:44,730 --> 01:46:47,010
+because maybe you have
+a one form two forms
+
+1400
+01:46:47,010 --> 01:46:49,070
+on the same web page
+and they both need a
+
+1401
+01:46:49,070 --> 01:46:56,970
+color input okay I
+defined this form value
+
+1402
+01:46:58,030 --> 01:47:02,550
+constant variable and I
+use that to invoke this
+
+1403
+01:47:02,550 --> 01:47:05,670
+addEventListener and
+then if I want to look
+
+1404
+01:47:05,670 --> 01:47:11,230
+up values not in the
+entire document but scoped
+
+1405
+01:47:11,270 --> 01:47:15,570
+within that form container
+I can replace document
+
+1406
+01:47:15,570 --> 01:47:21,170
+here with form and
+it will work exactly
+
+1407
+01:47:21,170 --> 01:47:26,230
+like it used to go away
+go away I don't want you
+
+1408
+01:47:26,470 --> 01:47:32,250
+um let's add this I'm just
+going to do this form color
+
+1409
+01:47:32,250 --> 01:47:37,070
+input dot value okay so
+let's see what happens here
+
+1410
+01:47:37,070 --> 01:47:41,330
+so here's our browser and
+let's go ahead and clear
+
+1411
+01:47:41,330 --> 01:47:46,000
+out our console and we're
+going to type janie and
+
+1412
+01:47:46,450 --> 01:47:51,750
+we're going to type orange
+for our color and we're
+
+1413
+01:47:51,750 --> 01:47:56,750
+going to check username okay
+so we got a submit event
+
+1414
+01:47:56,750 --> 01:48:03,230
+here and there are it's
+printing out hello Janie orange
+
+1415
+01:48:03,230 --> 01:48:06,190
+and we were able to look
+up these elements that
+
+1416
+01:48:06,190 --> 01:48:10,610
+were scoped within this
+Dom element of form this
+
+1417
+01:48:10,610 --> 01:48:15,770
+container so that's a extremely
+useful tool in your browser
+
+1418
+01:48:15,770 --> 01:48:19,630
+apps is to make sure you
+don't find things that
+
+1419
+01:48:19,630 --> 01:48:28,020
+you didn't mean to find And
+you can do CSS query selector
+
+1420
+01:48:28,020 --> 01:48:31,530
+strings that are scoped
+within a given element.
+
+1421
+01:48:32,330 --> 01:48:33,090
+Okay,
+
+1422
+01:48:33,860 --> 01:48:35,670
+we need to wrap this up. I've
+
+1423
+01:48:35,670 --> 01:48:37,510
+been talking a
+really long time.
+
+1424
+01:48:38,990 --> 01:48:46,420
+Okay, so we are back to
+having prevent default
+
+1425
+01:48:46,420 --> 01:48:51,470
+defined here, okay? and
+that's why we no longer need
+
+1426
+01:48:52,070 --> 01:49:01,950
+this let me just clear
+this out so if his favorite
+
+1427
+01:49:01,950 --> 01:49:07,790
+color is yellow if I hit
+enter we can see that
+
+1428
+01:49:07,790 --> 01:49:10,510
+now we're not seeing that
+behavior of the whole
+
+1429
+01:49:10,510 --> 01:49:13,650
+browser reloading we're not
+seeing those query parameters
+
+1430
+01:49:13,650 --> 01:49:18,750
+thrown into our url and
+leaked to the server
+
+1431
+01:49:18,750 --> 01:49:22,430
+that served this page we're
+seeing that we're getting
+
+1432
+01:49:22,430 --> 01:49:24,610
+our console logs here
+without even we don't
+
+1433
+01:49:24,610 --> 01:49:27,450
+even need keep log anymore
+we can just do this okay
+
+1434
+01:49:33,910 --> 01:49:38,110
+so we're not seeing that
+refresh behavior anymore and
+
+1435
+01:49:38,940 --> 01:49:42,740
+there's different means by
+which you can get to the
+
+1436
+01:49:42,740 --> 01:49:49,740
+various packages of values
+that are in the form. I'm
+
+1437
+01:49:49,740 --> 01:49:52,420
+going to leave that for
+another day because we're deep
+
+1438
+01:49:52,420 --> 01:49:59,060
+into this time now. But
+the main usefulness of this
+
+1439
+01:49:59,230 --> 01:50:04,700
+example here is just giving
+you a little bit of head
+
+1440
+01:50:04,700 --> 01:50:11,020
+start on using the browser
+runtime environments
+
+1441
+01:50:11,020 --> 01:50:17,800
+capabilities around HTML forms
+attaching a submit handler
+
+1442
+01:50:17,800 --> 01:50:21,480
+to your form so that you
+can start doing some of
+
+1443
+01:50:21,480 --> 01:50:24,440
+your tests that you want to
+make against the value and
+
+1444
+01:50:24,440 --> 01:50:28,960
+indicate whether it is a
+correct value or not okay and
+
+1445
+01:50:28,960 --> 01:50:33,220
+let's say I wanted to do
+a simple comparison so say
+
+1446
+01:50:33,220 --> 01:50:37,420
+function check length let's
+say we want to make sure
+
+1447
+01:50:37,420 --> 01:50:44,000
+that the username is at
+least five characters long.
+
+1448
+01:50:44,480 --> 01:50:50,420
+So if username.length
+is less than five,
+
+1449
+01:50:51,410 --> 01:50:53,180
+then we're going
+to print an error.
+
+1450
+01:50:56,700 --> 01:50:59,400
+Thank you, Copilot.
+You're so helpful.
+
+1451
+01:50:59,680 --> 01:51:00,540
+Okay.
+
+1452
+01:51:01,520 --> 01:51:02,660
+All right.
+
+1453
+01:51:02,660 --> 01:51:05,660
+And we're going to invoke
+that check length function
+
+1454
+01:51:05,660 --> 01:51:11,160
+after we've retrieved
+that value we don't have
+
+1455
+01:51:11,160 --> 01:51:13,520
+a color input anymore
+because I just deleted that
+
+1456
+01:51:13,760 --> 01:51:21,260
+so we're going to do a
+check length so we get the
+
+1457
+01:51:21,260 --> 01:51:25,680
+input we get the inputs
+value and then we're going
+
+1458
+01:51:25,680 --> 01:51:29,860
+to say hello username and
+we're also add in your
+
+1459
+01:51:31,840 --> 01:51:41,540
+username is valid equal and
+then I'm going to put in
+
+1460
+01:51:43,200 --> 01:51:45,300
+an invocation of our check
+
+1461
+01:51:45,300 --> 01:51:49,340
+length function
+of username okay
+
+1462
+01:51:55,170 --> 01:51:58,390
+and so now we're actually
+wiring up some of our
+
+1463
+01:51:58,390 --> 01:52:09,290
+stuff here okay so what
+is this gonna do it's not
+
+1464
+01:52:09,290 --> 01:52:13,590
+gonna work how I wanted
+it to so let's say george
+
+1465
+01:52:14,060 --> 01:52:20,850
+is a legal name because
+it's got six characters
+
+1466
+01:52:20,850 --> 01:52:24,030
+I hit check username and
+So what happened here?
+
+1467
+01:52:24,030 --> 01:52:27,610
+Well, we got the value,
+the name printed here.
+
+1468
+01:52:27,810 --> 01:52:30,610
+Your username equal
+value equal undefined.
+
+1469
+01:52:30,610 --> 01:52:33,130
+Why is it undefined?
+Well, it's undefined
+
+1470
+01:52:33,130 --> 01:52:41,070
+because I did not
+return a value here.
+
+1471
+01:52:41,330 --> 01:52:48,210
+So we see that this console
+didn't run, but what
+
+1472
+01:52:48,210 --> 01:52:51,290
+got returned out of this
+function was undefined.
+
+1473
+01:52:51,290 --> 01:52:54,650
+that's the default return
+value of a function this
+
+1474
+01:52:54,650 --> 01:52:59,870
+is a super common programming
+error is to forget to
+
+1475
+01:52:59,870 --> 01:53:02,970
+put a return value into
+our function so what we
+
+1476
+01:53:02,970 --> 01:53:09,960
+want to do is we want to
+return a evaluation and
+
+1477
+01:53:13,140 --> 01:53:16,110
+because we don't want to
+repeat ourselves we're gonna
+
+1478
+01:53:16,110 --> 01:53:26,090
+say const is valid equal
+username but length is
+
+1479
+01:53:26,670 --> 01:53:34,490
+greater than equal to
+five okay and if not is
+
+1480
+01:53:34,490 --> 01:53:38,970
+valid we're still going
+to print our console, and
+
+1481
+01:53:38,970 --> 01:53:42,750
+then we're going to
+return our isValid, okay?
+
+1482
+01:53:43,060 --> 01:53:46,470
+Okay, so we get a username
+passed to our function,
+
+1483
+01:53:46,470 --> 01:53:51,510
+and we assign isValid
+the Boolean result of
+
+1484
+01:53:51,510 --> 01:53:57,250
+comparing the length of that
+string to the constant 5.
+
+1485
+01:53:57,370 --> 01:54:02,430
+We print out a warning
+message to the console if
+
+1486
+01:54:02,430 --> 01:54:06,510
+the username is too short
+and then we return the value
+
+1487
+01:54:06,510 --> 01:54:11,750
+that we received from
+that assignment there okay
+
+1488
+01:54:11,750 --> 01:54:15,290
+and so now we should get
+what we wanted to get here
+
+1489
+01:54:15,290 --> 01:54:24,270
+so let's say jim well jim
+is too short but jimbo
+
+1490
+01:54:26,310 --> 01:54:30,090
+is perfectly valid okay
+so it's sort of the
+
+1491
+01:54:32,130 --> 01:54:34,670
+scaffolding of your html work
+
+1492
+01:54:34,670 --> 01:54:36,910
+and um yeah the assignment
+
+1493
+01:54:38,520 --> 01:54:41,190
+has to be at least four
+characters not more than
+
+1494
+01:54:41,190 --> 01:54:45,420
+16 why would there be a
+maximum length required
+
+1495
+01:54:47,570 --> 01:54:52,230
+good question no spaces
+are allowed in the username
+
+1496
+01:54:52,410 --> 01:54:55,530
+that's just ugly it has to
+start with a letter can't
+
+1497
+01:54:55,530 --> 01:55:00,750
+start with a number or
+syllable and only numbers
+
+1498
+01:55:01,010 --> 01:55:03,730
+letters and underscores are
+allowed and then there's
+
+1499
+01:55:03,730 --> 01:55:06,790
+some little suggestions here
+to use this and then we're
+
+1500
+01:55:06,790 --> 01:55:11,630
+going to want to do some
+testing so ideally you'll
+
+1501
+01:55:11,630 --> 01:55:17,690
+be exporting the functions
+that you define in order
+
+1502
+01:55:17,690 --> 01:55:24,530
+to do these tests and
+you're going to import them
+
+1503
+01:55:24,530 --> 01:55:27,450
+into your test and then you
+can exercise each function
+
+1504
+01:55:27,450 --> 01:55:30,240
+in the test and make sure
+that it is actually um
+
+1505
+01:55:33,670 --> 01:55:38,590
+returning the expected value
+okay so how would I export
+
+1506
+01:55:38,590 --> 01:55:42,330
+that value from my app
+js well I would just do
+
+1507
+01:55:42,330 --> 01:55:46,580
+something like this so I can
+bring this function definition
+
+1508
+01:55:46,750 --> 01:55:50,190
+and I can drop it down
+here we already said that
+
+1509
+01:55:50,450 --> 01:56:04,950
+function declarations can
+be defined anywhere in the
+
+1510
+01:56:04,950 --> 01:56:08,690
+module this is not currently
+exported so we're going
+
+1511
+01:56:08,690 --> 01:56:13,890
+to have to export it we're
+going to export our check
+
+1512
+01:56:13,890 --> 01:56:20,450
+length function it is
+accessible within our function
+
+1513
+01:56:20,450 --> 01:56:23,430
+due to our hoisting so
+let's just verify that we
+
+1514
+01:56:23,430 --> 01:56:28,090
+still have a valid program
+here with my changes it's
+
+1515
+01:56:33,070 --> 01:56:38,090
+still working okay and
+then if I want to create a
+
+1516
+01:56:38,090 --> 01:56:47,350
+test for this let's go
+to my test module I've
+
+1517
+01:56:47,350 --> 01:56:49,970
+been just hacking this up
+directly in my oh no I did
+
+1518
+01:56:49,970 --> 01:56:53,550
+actually make a copy of
+this so let's go ahead
+
+1519
+01:56:53,550 --> 01:56:59,580
+and grab the starter test
+and we're just gonna I'm
+
+1520
+01:57:00,250 --> 01:57:02,790
+gonna leave that test be
+because it's a it's got
+
+1521
+01:57:02,790 --> 01:57:05,870
+some good stuff in it and
+let's just save as we're
+
+1522
+01:57:07,290 --> 01:57:15,670
+going to call this
+username validations okay
+
+1523
+01:57:17,650 --> 01:57:21,330
+and we're going to change
+the name of this test we
+
+1524
+01:57:31,270 --> 01:57:32,890
+don't even need this
+before each because
+
+1525
+01:57:32,890 --> 01:57:34,860
+what I'm going to do
+is I'm going to import
+
+1526
+01:57:36,730 --> 01:57:41,850
+my function which I
+called check length
+
+1527
+01:57:50,080 --> 01:57:54,070
+and I don't even need
+this I don't need to
+
+1528
+01:57:54,070 --> 01:57:57,050
+render the app at
+all because these are
+
+1529
+01:57:57,050 --> 01:58:00,270
+sort of very simple
+utility functions and
+
+1530
+01:58:00,270 --> 01:58:02,660
+we're going to make
+sure that this function
+
+1531
+01:58:04,450 --> 01:58:12,010
+can validate the
+minimum length and
+
+1532
+01:58:12,010 --> 01:58:20,430
+we're going to do an
+expect check length
+
+1533
+01:58:21,070 --> 01:58:25,750
+of a three-character
+username and we're going to
+
+1534
+01:58:25,750 --> 01:58:31,400
+say we want it to be
+return false sometimes
+
+1535
+01:58:32,030 --> 01:58:38,130
+there's a falsity oh yeah
+there we go I don't know
+
+1536
+01:58:38,130 --> 01:58:44,380
+if that that may be a
+guess to be falsie falsies
+
+1537
+01:58:45,550 --> 01:58:49,890
+the word we want there
+okay and then let's add
+
+1538
+01:58:49,890 --> 01:58:54,330
+another actually a lot
+of these sometimes you
+
+1539
+01:58:54,330 --> 01:58:59,570
+can put a little thing to
+print out but can validate
+
+1540
+01:59:01,490 --> 01:59:04,650
+the minimum like this
+is to one more expect
+
+1541
+01:59:05,930 --> 01:59:14,810
+check length of
+ABCDE to be truthy.
+
+1542
+01:59:17,650 --> 01:59:20,030
+And let's get rid
+of these duplicative
+
+1543
+01:59:20,030 --> 01:59:23,110
+tests. So we don't
+really need those. Okay.
+
+1544
+01:59:23,430 --> 01:59:30,390
+And you notice in my editor,
+I have a syntax checking
+
+1545
+01:59:35,390 --> 01:59:39,970
+plugin for visual studio
+so it's basically this is
+
+1546
+01:59:39,970 --> 01:59:44,130
+just showing that the read
+file sync is being imported
+
+1547
+01:59:44,130 --> 01:59:48,390
+but it's not being used nor
+is the before each being
+
+1548
+01:59:48,390 --> 01:59:51,750
+used that's kind of dimmed
+out and let's go ahead and
+
+1549
+01:59:51,750 --> 01:59:57,080
+run our test suite now so
+let's go into cd projects
+
+1550
+01:59:57,450 --> 01:59:58,950
+So I should look.
+
+1551
+02:00:00,350 --> 02:00:00,990
+three.
+
+1552
+02:00:02,830 --> 02:00:04,570
+Cross my fingers.
+
+1553
+02:00:05,440 --> 02:00:08,050
+It's failing. Okay. Let's see.
+
+1554
+02:00:08,710 --> 02:00:12,250
+Um, expect app dot text
+content to be at this, this
+
+1555
+02:00:12,250 --> 02:00:16,870
+starter test is annoying
+because it's always going to
+
+1556
+02:00:16,870 --> 02:00:23,290
+break once we make any change
+to the method. So let's
+
+1557
+02:00:23,290 --> 02:00:27,030
+see. Render starter message
+can query by selector
+
+1558
+02:00:27,350 --> 02:00:29,050
+text content.
+
+1559
+02:00:31,390 --> 02:00:33,910
+Let's just delete this.
+
+1560
+02:00:40,650 --> 02:00:42,230
+Actually, we can just do this.
+
+1561
+02:00:44,010 --> 02:00:45,650
+It renders.
+
+1562
+02:00:45,790 --> 02:00:48,490
+We'll change this
+to renders the form.
+
+1563
+02:00:58,320 --> 02:01:03,780
+And let's say that we want
+the text content to match.
+
+1564
+02:01:04,380 --> 02:01:10,220
+And what did we put
+in our markup here?
+
+1565
+02:01:10,220 --> 02:01:14,080
+Well, it's got the
+word username in it.
+
+1566
+02:01:14,460 --> 02:01:21,140
+Let's just make sure
+that the word username
+
+1567
+02:01:21,140 --> 02:01:25,990
+ended up somewhere in that
+text content property.
+
+1568
+02:01:31,180 --> 02:01:32,180
+Happy.
+
+1569
+02:01:32,940 --> 02:01:34,460
+Awesome. Okay.
+
+1570
+02:01:34,690 --> 02:01:37,180
+All right. So, yeah,
+that's real quick.
+
+1571
+02:01:37,480 --> 02:01:40,540
+Yeah, the recommendation
+is not to try to
+
+1572
+02:01:41,240 --> 02:01:45,460
+phish values out of the DOM
+and use a test to actually
+
+1573
+02:01:45,460 --> 02:01:49,420
+type information into
+the text field. Now, that
+
+1574
+02:01:49,420 --> 02:01:52,920
+may be a reasonable test
+to write at some point in a
+
+1575
+02:01:52,920 --> 02:01:55,600
+more complicated web app,
+but in this case, we just
+
+1576
+02:01:55,600 --> 02:01:59,420
+want to kind of lean on the
+basic form behavior that
+
+1577
+02:01:59,420 --> 02:02:03,680
+we can quickly evaluate
+by monkey testing our
+
+1578
+02:02:06,470 --> 02:02:11,500
+developer preview session
+that Vite is rendering to us.
+
+1579
+02:02:12,120 --> 02:02:14,130
+But you know, this
+username validation,
+
+1580
+02:02:15,100 --> 02:02:15,800
+you know,
+
+1581
+02:02:16,200 --> 02:02:20,360
+try to create a comprehensive
+set of tests that cover
+
+1582
+02:02:20,360 --> 02:02:27,900
+all of the requirements of
+our validation rules and
+
+1583
+02:02:27,900 --> 02:02:31,120
+make sure that you're testing
+both the positive case
+
+1584
+02:02:31,120 --> 02:02:35,800
+that a valid value passes
+but also the negative case
+
+1585
+02:02:35,800 --> 02:02:40,960
+that an invalid value does
+not pass and if you want to
+
+1586
+02:02:40,960 --> 02:02:45,150
+make it even cooler you can
+put in a little indicator
+
+1587
+02:02:45,920 --> 02:02:48,140
+instead of logging
+it to the console you
+
+1588
+02:02:48,140 --> 02:02:51,580
+might put a little
+indicator in your browser
+
+1589
+02:02:52,080 --> 02:02:56,430
+rendering that actually
+shows the result of the
+
+1590
+02:02:56,430 --> 02:02:59,470
+validations that might be
+a cool thing to do okay
+
+1591
+02:02:59,760 --> 02:03:03,620
+all right so and that
+would be something
+
+1592
+02:03:03,620 --> 02:03:07,770
+that you're going to
+wire up here okay so
+
+1593
+02:03:08,440 --> 02:03:12,290
+instead of reporting
+our results let's
+
+1594
+02:03:12,290 --> 02:03:14,800
+go ahead and create
+a wrapper function to
+
+1595
+02:03:20,640 --> 02:03:24,200
+export function check all
+
+1596
+02:03:26,700 --> 02:03:28,800
+and we definitely
+are going to need to
+
+1597
+02:03:28,800 --> 02:03:33,800
+pass the username to
+it and we're gonna
+
+1598
+02:03:36,040 --> 02:03:38,540
+well right now all
+we care about is
+
+1599
+02:03:38,540 --> 02:03:44,800
+the check length
+let's return an object
+
+1600
+02:03:48,260 --> 02:03:49,600
+Okay.
+
+1601
+02:03:51,820 --> 02:03:58,070
+So what we want is if
+any of these evaluate
+
+1602
+02:03:59,320 --> 02:04:03,220
+to false, then we're
+going to return false.
+
+1603
+02:04:03,220 --> 02:04:10,040
+so let's do a const
+length check equal check
+
+1604
+02:04:10,040 --> 02:04:14,060
+length of username
+and let's just do this
+
+1605
+02:04:16,900 --> 02:04:21,220
+and we'll return a object
+with that result in
+
+1606
+02:04:21,220 --> 02:04:24,010
+it so we can pass that
+sort of the fully fledged
+
+1607
+02:04:24,860 --> 02:04:27,900
+expression of all
+of the different
+
+1608
+02:04:27,900 --> 02:04:30,860
+return values okay in an object
+
+1609
+02:04:32,860 --> 02:04:35,960
+but we might want to
+return a falsie result
+
+1610
+02:04:35,960 --> 02:04:41,920
+if any of the values
+failed to validate
+
+1611
+02:04:44,840 --> 02:04:48,620
+but I'm going to leave
+that up to you okay so we
+
+1612
+02:04:48,620 --> 02:04:53,940
+have length as our first
+value here our test okay
+
+1613
+02:04:54,180 --> 02:04:58,080
+and we can see that
+if we do a const
+
+1614
+02:04:58,400 --> 02:05:04,500
+validations equal
+check all of username
+
+1615
+02:05:06,420 --> 02:05:12,230
+and then we do a
+uh console.log and
+
+1616
+02:05:12,420 --> 02:05:14,620
+we're just going to
+do the validations
+
+1617
+02:05:18,000 --> 02:05:21,140
+and that's going to print
+out our lovely object
+
+1618
+02:05:25,800 --> 02:05:28,640
+okay it doesn't like something
+
+1619
+02:05:36,600 --> 02:05:40,860
+about log template
+validations does
+
+1620
+02:05:54,800 --> 02:06:01,740
+anybody see my syntax
+error here hello username
+
+1621
+02:06:02,470 --> 02:06:08,700
+your username is valid
+equal I think there's
+
+1622
+02:06:08,700 --> 02:06:14,560
+Just an extra parenthesis
+there somewhere,
+
+1623
+02:06:20,050 --> 02:06:22,050
+console.log.
+
+1624
+02:06:22,170 --> 02:06:24,250
+Sometimes if you're
+running into syntax
+
+1625
+02:06:24,250 --> 02:06:26,530
+errors, you can just
+delete some code
+
+1626
+02:06:26,550 --> 02:06:28,310
+and it looks like it is that
+
+1627
+02:06:28,310 --> 02:06:30,730
+console that it doesn't like.
+
+1628
+02:06:50,540 --> 02:06:53,020
+Extra parenthesis there, okay?
+
+1629
+02:06:53,220 --> 02:06:56,480
+And what if we wanted to
+put in a little field?
+
+1630
+02:06:59,860 --> 02:07:02,980
+And we're just gonna put
+that in the bottom here.
+
+1631
+02:07:09,980 --> 02:07:17,320
+div is id equal result
+and we're going to keep
+
+1632
+02:07:17,320 --> 02:07:18,980
+that empty for now
+because we don't have any
+
+1633
+02:07:18,980 --> 02:07:22,100
+information in it and
+let's say if our main
+
+1634
+02:07:22,100 --> 02:07:29,200
+event listener go away
+go away copilot I'm going
+
+1635
+02:07:29,200 --> 02:07:33,200
+to say that the result
+we're grabbing the
+
+1636
+02:07:33,200 --> 02:07:36,380
+result value and we're
+going to set the constant
+
+1637
+02:07:36,820 --> 02:07:40,400
+and here is the
+validations.length. Your
+
+1638
+02:07:40,400 --> 02:07:47,760
+username is of correct
+length equal validations.
+
+1639
+02:07:47,760 --> 02:07:48,480
+Hello,
+
+1640
+02:08:03,950 --> 02:08:06,990
+Bo, your username is of
+correct length equals false.
+
+1641
+02:08:06,990 --> 02:08:08,750
+But if I call it Bobby,
+
+1642
+02:08:09,290 --> 02:08:10,370
+hello, Bo,
+
+1643
+02:08:10,650 --> 02:08:12,470
+hello, Bobby, your username
+
+1644
+02:08:12,470 --> 02:08:14,670
+is correct length equals true.
+
+1645
+02:08:14,670 --> 02:08:16,610
+All right, so there's
+a lot you can do
+
+1646
+02:08:16,610 --> 02:08:18,370
+here. You can make
+this look really cool,
+
+1647
+02:08:18,490 --> 02:08:20,390
+and I will leave
+that up to you.
+
+1648
+02:08:20,510 --> 02:08:25,290
+and um you know um yeah I
+hope you have some fun with
+
+1649
+02:08:25,290 --> 02:08:28,310
+this thing you can um make
+it really cool all right
+
+1650
+02:08:28,310 --> 02:08:31,150
+I'll see you guys next week
+thanks for listening this
+
+1651
+02:08:31,150 --> 02:08:37,200
+far and um yeah reach out
+if you need any help cheers

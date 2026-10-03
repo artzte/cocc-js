@@ -3,6 +3,9 @@
 Write a function that checks whether a username meets a set of rules, and display pass/fail feedback
 for each individual rule in the DOM — no hardcoded results in the HTML.
 
+Submit the URL of your pull request for adding this assignment to your projects folder in your repo.
+Be sure to tag me, **artzte**, as a reviewer on your PR.
+
 ### Rules to check
 
 Implement at least the following rules. Feel free to add more.
