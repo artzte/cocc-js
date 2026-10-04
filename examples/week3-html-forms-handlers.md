@@ -48,3 +48,17 @@ export function renderApp() {
   })
 }
 ```
+
+Fancy code to get all the inputs of a form and construct an object:
+
+```
+const form = document.querySelector('form');
+const formValues = {};
+
+form.querySelectorAll('input').forEach(input => {
+  const {name, value} = input;
+  formValues[name] = value;
+});
+
+console.log(formValues);
+```
