@@ -1,5 +1,7 @@
 # HTML forms
 
+[Example page on our class repo](https://github.com/artzte/cocc-js/blob/main/examples/week3-html-forms-handlers.md)
+
 For this week's assignment, we are accepting input from a user and performing actions based on the
 qualities of that input. The classic way to handle data collection in the browser is using HTML
 forms. Forms have around a long time, and they are a great tool because they have built-in to them,
