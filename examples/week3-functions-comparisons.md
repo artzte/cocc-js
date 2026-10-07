@@ -21,9 +21,9 @@ function functionFormsDemo() {
 
   const greetArrow = (name) => `Hello, ${name}!`
 
-  console.log(greetDeclaration('Ada'))
-  console.log(greetExpression('Ada'))
-  console.log(greetArrow('Ada'))
+  console.log('declaration form', greetDeclaration('Ada'))
+  console.log('expression form', greetExpression('Ada'))
+  console.log('arrow form', greetArrow('Ada'))
 
   // Hoisting difference:
   console.log(hoisted('Grace')) // Works! Function declarations hoist fully.
