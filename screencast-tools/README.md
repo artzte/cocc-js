@@ -1,27 +1,46 @@
 # Screencast Tools & Wallpaper Guide
 
-Tools to generate and apply a custom screencast alignment wallpaper for the **Dell Inc. 38" (Dell
-U3818DW)** ultrawide monitor.
+Tools to generate and apply a custom screencast alignment wallpaper for the **Dell Inc. 38" (Dell U3818DW)** ultrawide monitor.
 
 ---
 
 ## Overview & Display Layout
 
 - **Display Resolution**: `3840 × 1600` (24:10 UWQHD+)
-- **Screencast Capture Zone**: Lower-left quadrant
+- **Screencast Capture Zone**: Center-left area with OS bar exclusion buffers
   - **Dimensions**: `1920 × 1080` (1080p FHD, 16:9 aspect ratio)
-  - **Coordinates**: `x: 0 → 1920`, `y: 520 → 1600`
+  - **Coordinates**: `x: 150 → 2070`, `y: 370 → 1450`
+  - **Exclusion Margins**:
+    - **Left Offset (150px)**: Excludes the Ubuntu Dock / application launcher.
+    - **Bottom Offset (150px)**: Excludes the OS window list, taskbar, and bottom panel.
+    - **Top Margin (370px)**: Excludes the GNOME top bar and provides staging room.
   - **Features**:
-    - Camera viewfinder corner brackets and `(0, 0)`, `(1920, 0)`, `(0, 1080)`, `(1920, 1080)`
-      corner labels.
-    - External pixel ruler along top boundary (`y = 520`) and right boundary (`x = 1920`).
-    - Center reticle at `(960, 540)` (screen position `x = 960, y = 1060`).
+    - Camera viewfinder corner brackets with relative `(0, 0)`, `(1920, 0)`, `(0, 1080)`, and `(1920, 1080)` frame coordinates.
+    - External screen coordinate labels at outer corners: `(150, 370)`, `(2070, 370)`, `(150, 1450)`, and `(2070, 1450)`.
+    - External pixel ruler along top boundary (`y = 370`) and right boundary (`x = 2070`), plus subtle ticks along bottom and left.
+    - Center reticle at `(960, 540)` (screen position `x = 1110, y = 910`).
     - Faint rule-of-thirds dashed guidelines and intersection crosses.
-    - Nested `1280 × 720` (720p HD) alignment outline in the bottom-left corner.
-- **Staging / Notes Zone**: `1920 × 520` (top-left, `y: 0 → 520`)
+    - Nested `1280 × 720` (720p HD) alignment outline anchored in the bottom-left corner of the zone.
+    - Dedicated badge pills indicating exclusion buffers and aspect ratio.
+- **Staging / Notes Zone**: `1920 × 370` (top, `x: 150 → 2070`, `y: 0 → 370`)
   - Safe area outside the recording frame for teleprompters, lecture notes, and OBS controls.
-- **Primary Workspace**: `1920 × 1600` (right half, `x: 1920 → 3840`)
+- **Primary Workspace**: `1770 × 1600` (right column, `x: 2070 → 3840`)
   - Dedicated full-height area for code editor, browser preview, and devtools.
+
+---
+
+## OBS Studio Crop Configuration
+
+When capturing the Dell 38" monitor in OBS Studio via a full screen capture source (PipeWire / X11), add or update a **Crop/Pad** filter on the source with the following pixel values:
+
+| Crop Side | Pixels | Rationale |
+| :--- | :--- | :--- |
+| **Left** | `150` | Excludes OS dock and left screen margin |
+| **Top** | `370` | Excludes GNOME top bar and staging area |
+| **Right** | `1770` | Excludes 1770px primary workspace (`3840 - 2070 = 1770`) |
+| **Bottom** | `150` | Excludes bottom OS window list / panel (`1600 - 1450 = 150`) |
+
+This produces an exact `1920 × 1080` pixel output matching your canvas 1:1 without scaling or distortion.
 
 ---
 
@@ -33,8 +52,7 @@ U3818DW)** ultrawide monitor.
   sudo apt install python3-pil python3-numpy
   # or: pip install pillow numpy
   ```
-- Ubuntu font package (default on Ubuntu): `/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf`,
-  `Ubuntu-M.ttf`, `Ubuntu-R.ttf`, `UbuntuMono-B.ttf`, `UbuntuMono-R.ttf`
+- Ubuntu font package (default on Ubuntu): `/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf`, `Ubuntu-M.ttf`, `Ubuntu-R.ttf`, `UbuntuMono-B.ttf`, `UbuntuMono-R.ttf`
 
 ---
 
@@ -49,13 +67,10 @@ python3 generate_wallpaper.py
 
 This generates:
 
-1. `screencast-guide-3840x1600.png`: Standalone 1:1 pixel-perfect wallpaper for the 38" Dell
-   monitor.
-2. `screencast-guide-spanned-5760x1600.png`: Spanned dual-monitor canvas (integrating your laptop
-   screen on the left and the Dell 38" on the right).
+1. `screencast-guide-3840x1600.png`: Standalone 1:1 pixel-perfect wallpaper for the 38" Dell monitor.
+2. `screencast-guide-spanned-5760x1600.png`: Spanned dual-monitor canvas (integrating your laptop screen on the left and the Dell 38" on the right).
 
-The script also automatically places fresh copies into `~/Pictures/` and
-`~/.local/share/backgrounds/`.
+The script automatically updates local repo copies and places fresh copies into `~/Pictures/` and `~/.local/share/backgrounds/`.
 
 ---
 
@@ -107,9 +122,6 @@ gsettings set org.gnome.desktop.background picture-options "spanned"
 
 Edit `generate_wallpaper.py`:
 
-- **Dimensions & Placement**: Adjust `GUIDE_W`, `GUIDE_H`, `GUIDE_X`, and `GUIDE_Y` at the top of
-  the file.
-- **Colors & Theme**: Adjust `CYAN_MAIN`, `CYAN_BRIGHT`, `BG_CARD`, or `RED_REC` in the palette
-  definition.
-- **Grid Density**: Modify the step size in `range(GUIDE_X + 60, GUIDE_X + GUIDE_W, 60)` for tighter
-  or wider alignment points.
+- **Dimensions & Placement**: Adjust `GUIDE_W`, `GUIDE_H`, `OFFSET_X`, and `OFFSET_BOTTOM` at the top of the file.
+- **Colors & Theme**: Adjust `CYAN_MAIN`, `CYAN_BRIGHT`, `BG_CARD`, or `RED_REC` in the palette definition.
+- **Grid Density**: Modify the step size in `range(GUIDE_X + 60, GUIDE_X + GUIDE_W, 60)` for tighter or wider alignment points.

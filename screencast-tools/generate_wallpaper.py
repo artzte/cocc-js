@@ -6,14 +6,21 @@ from PIL import Image, ImageDraw, ImageFont
 WIDTH = 3840
 HEIGHT = 1600
 
-# Screencast region: Lower-Left
+# Screencast region: 1920x1080 (1080p FHD)
 GUIDE_W = 1920
 GUIDE_H = 1080
-GUIDE_X = 0
-GUIDE_Y = HEIGHT - GUIDE_H  # 520
+
+# 150px offsets from left and bottom edges to exclude OS app bars
+# (Ubuntu left dock/launcher and bottom window list/panel)
+OFFSET_X = 150
+OFFSET_BOTTOM = 150
+
+GUIDE_X = OFFSET_X                               # 150
+GUIDE_Y = HEIGHT - GUIDE_H - OFFSET_BOTTOM       # 1600 - 1080 - 150 = 370
 
 def create_dell_wallpaper():
-    print("Generating refined background canvas for Dell U3818DW (3840x1600)...")
+    print(f"Generating refined background canvas for Dell U3818DW ({WIDTH}x{HEIGHT})...")
+    print(f"Screencast Zone: {GUIDE_W}x{GUIDE_H} at x={GUIDE_X}, y={GUIDE_Y} (offset 150px from left & bottom)")
     y_coords, x_coords = np.indices((HEIGHT, WIDTH), dtype=np.float32)
 
     # Ambient radial illumination focused slightly toward workspace
@@ -28,7 +35,10 @@ def create_dell_wallpaper():
     b = (18 + ambient * 16).astype(np.uint8)
 
     # Screencast zone slightly elevated dark tint (#151824)
-    mask_guide = (x_coords < GUIDE_W) & (y_coords >= GUIDE_Y)
+    mask_guide = (
+        (x_coords >= GUIDE_X) & (x_coords < GUIDE_X + GUIDE_W) &
+        (y_coords >= GUIDE_Y) & (y_coords < GUIDE_Y + GUIDE_H)
+    )
     r[mask_guide] = (r[mask_guide] + 6).astype(np.uint8)
     g[mask_guide] = (g[mask_guide] + 7).astype(np.uint8)
     b[mask_guide] = (b[mask_guide] + 11).astype(np.uint8)
@@ -71,7 +81,7 @@ def create_dell_wallpaper():
 
     # 1. Background dot grid inside screencast zone
     for x in range(GUIDE_X + 60, GUIDE_X + GUIDE_W, 60):
-        for y in range(GUIDE_Y + 60, HEIGHT, 60):
+        for y in range(GUIDE_Y + 60, GUIDE_Y + GUIDE_H, 60):
             draw.point((x, y), fill=(148, 163, 184, 28))
             draw.point((x + 1, y), fill=(148, 163, 184, 20))
             draw.point((x, y + 1), fill=(148, 163, 184, 20))
@@ -79,7 +89,7 @@ def create_dell_wallpaper():
     # 2. Rule of Thirds lines (dashed)
     thirds_x = [GUIDE_X + 640, GUIDE_X + 1280]
     for tx in thirds_x:
-        for y in range(GUIDE_Y + 12, HEIGHT - 12, 16):
+        for y in range(GUIDE_Y + 12, GUIDE_Y + GUIDE_H - 12, 16):
             draw.line([(tx, y), (tx, y + 8)], fill=(56, 189, 248, 45), width=1)
 
     thirds_y = [GUIDE_Y + 360, GUIDE_Y + 720]
@@ -93,17 +103,18 @@ def create_dell_wallpaper():
             draw.line([(tx - 8, ty), (tx + 8, ty)], fill=(56, 189, 248, 100), width=1)
             draw.line([(tx, ty - 8), (tx, ty + 8)], fill=(56, 189, 248, 100), width=1)
 
-    # 3. 720p HD Nested Guide (1280 × 720) in bottom-left corner
+    # 3. 720p HD Nested Guide (1280 × 720) anchored in bottom-left corner of screencast zone
     hd_w = 1280
     hd_h = 720
-    hd_y = HEIGHT - hd_h
-    for x in range(GUIDE_X + 10, GUIDE_X + hd_w, 16):
+    hd_x = GUIDE_X + hd_w
+    hd_y = GUIDE_Y + GUIDE_H - hd_h
+    for x in range(GUIDE_X + 10, hd_x, 16):
         draw.line([(x, hd_y), (x + 8, hd_y)], fill=(148, 163, 184, 55), width=1)
-    for y in range(hd_y, HEIGHT - 10, 16):
-        draw.line([(hd_w, y), (hd_w, y + 8)], fill=(148, 163, 184, 55), width=1)
-    draw.text((hd_w - 170, hd_y + 8), "720p HD (1280 × 720)", font=font_mono_sm, fill=(148, 163, 184, 110))
+    for y in range(hd_y, GUIDE_Y + GUIDE_H - 10, 16):
+        draw.line([(hd_x, y), (hd_x, y + 8)], fill=(148, 163, 184, 55), width=1)
+    draw.text((hd_x - 170, hd_y + 8), "720p HD (1280 × 720)", font=font_mono_sm, fill=(148, 163, 184, 110))
 
-    # 4. Center Reticle (x = 960, y = 1060)
+    # 4. Center Reticle (x = 960, y = 540 inside frame)
     cx = GUIDE_X + (GUIDE_W // 2)
     cy = GUIDE_Y + (GUIDE_H // 2)
     draw.arc([(cx - 24, cy - 24), (cx + 24, cy + 24)], start=0, end=360, fill=(56, 189, 248, 120), width=1)
@@ -115,39 +126,67 @@ def create_dell_wallpaper():
     draw.ellipse([(cx - 3, cy - 3), (cx + 3, cy + 3)], fill=WHITE_BRIGHT)
     draw.text((cx - 52, cy + 28), "CENTER (960, 540)", font=font_mono_sm, fill=(125, 211, 252, 140))
 
-    # 5. Boundary Framing for Screencast Guide (y=520, x=1920)
-    draw.line([(0, GUIDE_Y), (GUIDE_W, GUIDE_Y)], fill=CYAN_MAIN, width=3)
-    draw.line([(GUIDE_W, GUIDE_Y), (GUIDE_W, HEIGHT)], fill=CYAN_MAIN, width=3)
+    # 5. Boundary Framing for Screencast Guide (All 4 borders)
+    # Outer glow
+    draw.rectangle(
+        [(GUIDE_X - 1, GUIDE_Y - 1), (GUIDE_X + GUIDE_W + 1, GUIDE_Y + GUIDE_H + 1)],
+        outline=CYAN_GLOW,
+        width=2
+    )
+    # Main boundary line
+    draw.rectangle(
+        [(GUIDE_X, GUIDE_Y), (GUIDE_X + GUIDE_W, GUIDE_Y + GUIDE_H)],
+        outline=CYAN_MAIN,
+        width=3
+    )
+    # Inner glow
+    draw.rectangle(
+        [(GUIDE_X + 2, GUIDE_Y + 2), (GUIDE_X + GUIDE_W - 2, GUIDE_Y + GUIDE_H - 2)],
+        outline=CYAN_GLOW,
+        width=2
+    )
 
-    # Glow
-    draw.line([(0, GUIDE_Y - 1), (GUIDE_W, GUIDE_Y - 1)], fill=CYAN_GLOW, width=3)
-    draw.line([(0, GUIDE_Y + 2), (GUIDE_W, GUIDE_Y + 2)], fill=CYAN_GLOW, width=2)
-    draw.line([(GUIDE_W + 1, GUIDE_Y), (GUIDE_W + 1, HEIGHT)], fill=CYAN_GLOW, width=3)
-    draw.line([(GUIDE_W - 2, GUIDE_Y), (GUIDE_W - 2, HEIGHT)], fill=CYAN_GLOW, width=2)
-
-    # Ruler ticks along top boundary (y=520)
-    for x in range(100, GUIDE_W, 100):
+    # Ruler ticks along top boundary (y = GUIDE_Y)
+    for rel_x in range(100, GUIDE_W, 100):
+        x = GUIDE_X + rel_x
         draw.line([(x, GUIDE_Y - 8), (x, GUIDE_Y)], fill=CYAN_BRIGHT, width=1)
-        if x % 200 == 0:
-            val_str = str(x)
+        if rel_x % 200 == 0:
+            val_str = str(rel_x)
             tb = font_mono_sm.getbbox(val_str)
             tw = tb[2] - tb[0]
             draw.text((x - tw // 2, GUIDE_Y - 22), val_str, font=font_mono_sm, fill=(148, 163, 184, 160))
-    for x in range(50, GUIDE_W, 100):
+    for rel_x in range(50, GUIDE_W, 100):
+        x = GUIDE_X + rel_x
         draw.line([(x, GUIDE_Y - 4), (x, GUIDE_Y)], fill=SLATE_MID, width=1)
 
-    # Ruler ticks along right boundary (x=1920)
+    # Ruler ticks along right boundary (x = GUIDE_X + GUIDE_W)
     for rel_y in range(100, GUIDE_H, 100):
         y = GUIDE_Y + rel_y
-        draw.line([(GUIDE_W, y), (GUIDE_W + 8, y)], fill=CYAN_BRIGHT, width=1)
+        draw.line([(GUIDE_X + GUIDE_W, y), (GUIDE_X + GUIDE_W + 8, y)], fill=CYAN_BRIGHT, width=1)
         if rel_y % 200 == 0:
             val_str = str(rel_y)
             tb = font_mono_sm.getbbox(val_str)
             th_num = tb[3] - tb[1]
-            draw.text((GUIDE_W + 12, y - th_num // 2 - 2), val_str, font=font_mono_sm, fill=(148, 163, 184, 160))
+            draw.text((GUIDE_X + GUIDE_W + 12, y - th_num // 2 - 2), val_str, font=font_mono_sm, fill=(148, 163, 184, 160))
     for rel_y in range(50, GUIDE_H, 100):
         y = GUIDE_Y + rel_y
-        draw.line([(GUIDE_W, y), (GUIDE_W + 4, y)], fill=SLATE_MID, width=1)
+        draw.line([(GUIDE_X + GUIDE_W, y), (GUIDE_X + GUIDE_W + 4, y)], fill=SLATE_MID, width=1)
+
+    # Subtle ruler ticks along left boundary (x = GUIDE_X)
+    for rel_y in range(100, GUIDE_H, 100):
+        y = GUIDE_Y + rel_y
+        draw.line([(GUIDE_X - 6, y), (GUIDE_X, y)], fill=CYAN_BRIGHT, width=1)
+    for rel_y in range(50, GUIDE_H, 100):
+        y = GUIDE_Y + rel_y
+        draw.line([(GUIDE_X - 3, y), (GUIDE_X, y)], fill=SLATE_MID, width=1)
+
+    # Subtle ruler ticks along bottom boundary (y = GUIDE_Y + GUIDE_H)
+    for rel_x in range(100, GUIDE_W, 100):
+        x = GUIDE_X + rel_x
+        draw.line([(x, GUIDE_Y + GUIDE_H), (x, GUIDE_Y + GUIDE_H + 6)], fill=CYAN_BRIGHT, width=1)
+    for rel_x in range(50, GUIDE_W, 100):
+        x = GUIDE_X + rel_x
+        draw.line([(x, GUIDE_Y + GUIDE_H), (x, GUIDE_Y + GUIDE_H + 3)], fill=SLATE_MID, width=1)
 
     # 6. Viewfinder Corner Brackets
     arm = 60
@@ -155,26 +194,32 @@ def create_dell_wallpaper():
     bracket_col = WHITE_BRIGHT
 
     # Top-Left Bracket
-    draw.line([(4, GUIDE_Y + 4), (4 + arm, GUIDE_Y + 4)], fill=bracket_col, width=th)
-    draw.line([(4, GUIDE_Y + 4), (4, GUIDE_Y + 4 + arm)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + 4, GUIDE_Y + 4), (GUIDE_X + 4 + arm, GUIDE_Y + 4)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + 4, GUIDE_Y + 4), (GUIDE_X + 4, GUIDE_Y + 4 + arm)], fill=bracket_col, width=th)
 
     # Top-Right Bracket
-    draw.line([(GUIDE_W - 4 - arm, GUIDE_Y + 4), (GUIDE_W - 4, GUIDE_Y + 4)], fill=bracket_col, width=th)
-    draw.line([(GUIDE_W - 4, GUIDE_Y + 4), (GUIDE_W - 4, GUIDE_Y + 4 + arm)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + GUIDE_W - 4 - arm, GUIDE_Y + 4), (GUIDE_X + GUIDE_W - 4, GUIDE_Y + 4)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + GUIDE_W - 4, GUIDE_Y + 4), (GUIDE_X + GUIDE_W - 4, GUIDE_Y + 4 + arm)], fill=bracket_col, width=th)
 
     # Bottom-Left Bracket
-    draw.line([(4, HEIGHT - 4), (4 + arm, HEIGHT - 4)], fill=bracket_col, width=th)
-    draw.line([(4, HEIGHT - 4 - arm), (4, HEIGHT - 4)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + 4, GUIDE_Y + GUIDE_H - 4), (GUIDE_X + 4 + arm, GUIDE_Y + GUIDE_H - 4)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + 4, GUIDE_Y + GUIDE_H - 4 - arm), (GUIDE_X + 4, GUIDE_Y + GUIDE_H - 4)], fill=bracket_col, width=th)
 
     # Bottom-Right Bracket
-    draw.line([(GUIDE_W - 4 - arm, HEIGHT - 4), (GUIDE_W - 4, HEIGHT - 4)], fill=bracket_col, width=th)
-    draw.line([(GUIDE_W - 4, HEIGHT - 4 - arm), (GUIDE_W - 4, HEIGHT - 4)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + GUIDE_W - 4 - arm, GUIDE_Y + GUIDE_H - 4), (GUIDE_X + GUIDE_W - 4, GUIDE_Y + GUIDE_H - 4)], fill=bracket_col, width=th)
+    draw.line([(GUIDE_X + GUIDE_W - 4, GUIDE_Y + GUIDE_H - 4 - arm), (GUIDE_X + GUIDE_W - 4, GUIDE_Y + GUIDE_H - 4)], fill=bracket_col, width=th)
 
-    # Corner Coordinate Labels
-    draw.text((18, GUIDE_Y + 16), "(0, 0)", font=font_mono_b, fill=CYAN_BRIGHT)
-    draw.text((GUIDE_W - 130, GUIDE_Y + 16), "(1920, 0)", font=font_mono_b, fill=CYAN_BRIGHT)
-    draw.text((18, HEIGHT - 34), "(0, 1080)", font=font_mono_b, fill=CYAN_BRIGHT)
-    draw.text((GUIDE_W - 146, HEIGHT - 34), "(1920, 1080)", font=font_mono_b, fill=CYAN_BRIGHT)
+    # Inner Coordinate Labels (Frame-relative coordinates: 0..1920, 0..1080)
+    draw.text((GUIDE_X + 18, GUIDE_Y + 16), "(0, 0)", font=font_mono_b, fill=CYAN_BRIGHT)
+    draw.text((GUIDE_X + GUIDE_W - 130, GUIDE_Y + 16), "(1920, 0)", font=font_mono_b, fill=CYAN_BRIGHT)
+    draw.text((GUIDE_X + 18, GUIDE_Y + GUIDE_H - 34), "(0, 1080)", font=font_mono_b, fill=CYAN_BRIGHT)
+    draw.text((GUIDE_X + GUIDE_W - 146, GUIDE_Y + GUIDE_H - 34), "(1920, 1080)", font=font_mono_b, fill=CYAN_BRIGHT)
+
+    # Outer Screen Coordinate Labels (Absolute screen coordinates for OBS / window managers)
+    draw.text((GUIDE_X, GUIDE_Y - 22), f"SCREEN ({GUIDE_X}, {GUIDE_Y})", font=font_mono_sm, fill=SLATE_MUTED)
+    draw.text((GUIDE_X + GUIDE_W - 150, GUIDE_Y - 22), f"SCREEN ({GUIDE_X + GUIDE_W}, {GUIDE_Y})", font=font_mono_sm, fill=SLATE_MUTED)
+    draw.text((GUIDE_X, GUIDE_Y + GUIDE_H + 12), f"SCREEN ({GUIDE_X}, {GUIDE_Y + GUIDE_H})", font=font_mono_sm, fill=SLATE_MUTED)
+    draw.text((GUIDE_X + GUIDE_W - 160, GUIDE_Y + GUIDE_H + 12), f"SCREEN ({GUIDE_X + GUIDE_W}, {GUIDE_Y + GUIDE_H})", font=font_mono_sm, fill=SLATE_MUTED)
 
     # 7. Sleek Floating Header Badge Pill
     pill_w = 700
@@ -215,38 +260,48 @@ def create_dell_wallpaper():
     )
     draw.text((ratio_pill_x + 20, pill_y + 12), "16 : 9", font=font_bold_22, fill=SLATE_LIGHT)
 
-    # 8. Top-Left Zone (Staging / Notes: 1920 × 520)
-    staging_card_w = 480
+    # 8. Top-Left Zone (Staging / Notes: 1920 × 370)
+    # Aligned with screencast guide at x=GUIDE_X to clear the left dock
+    staging_card_w = 540
     staging_card_h = 76
+    staging_card_x = GUIDE_X
+    staging_card_y = 100
     draw.rounded_rectangle(
-        [(60, 48), (60 + staging_card_w, 48 + staging_card_h)],
+        [(staging_card_x, staging_card_y), (staging_card_x + staging_card_w, staging_card_y + staging_card_h)],
         radius=12,
         fill=BG_CARD,
         outline=SLATE_DARK,
         width=1
     )
-    draw.line([(60, 48 + 12), (60, 48 + staging_card_h - 12)], fill=CYAN_MAIN, width=4)
-    draw.text((78, 58), "STAGING / LECTURE NOTES", font=font_bold_18, fill=WHITE_DIM)
-    draw.text((78, 88), "1920 × 520 • Safe zone for teleprompter, outline & OBS controls", font=font_reg_13, fill=SLATE_MID)
+    draw.line([(staging_card_x, staging_card_y + 12), (staging_card_x, staging_card_y + staging_card_h - 12)], fill=CYAN_MAIN, width=4)
+    draw.text((staging_card_x + 18, staging_card_y + 12), "STAGING / LECTURE NOTES", font=font_bold_18, fill=WHITE_DIM)
+    draw.text((staging_card_x + 18, staging_card_y + 42), f"{GUIDE_W} × {GUIDE_Y} • Safe zone for teleprompter, outline & OBS controls", font=font_reg_13, fill=SLATE_MID)
 
-    # 9. Divider between Staging and Workspace
-    for y in range(20, GUIDE_Y - 14, 12):
-        draw.line([(1920, y), (1920, y + 6)], fill=(71, 85, 105, 120), width=1)
-    draw.text((1920 - 90, GUIDE_Y - 24), "x = 1920", font=font_mono_sm, fill=(100, 116, 139, 140))
+    # 9. Divider between Screencast Column and Workspace
+    div_x = GUIDE_X + GUIDE_W  # 2070
+    draw.text((div_x + 8, 22), f"x = {div_x}", font=font_mono_sm, fill=(100, 116, 139, 140))
+    for y in range(40, GUIDE_Y - 14, 12):
+        draw.line([(div_x, y), (div_x, y + 6)], fill=(71, 85, 105, 120), width=1)
 
-    # 10. Right Half Zone (Workspace / Secondary Tools: 1920 × 1600)
+    for y in range(GUIDE_Y + GUIDE_H + 14, HEIGHT - 40, 12):
+        draw.line([(div_x, y), (div_x, y + 6)], fill=(71, 85, 105, 120), width=1)
+
+    # 10. Right Half Zone (Workspace / Secondary Tools: 1770 × 1600)
+    ws_w = WIDTH - div_x  # 1770
     ws_card_w = 560
     ws_card_h = 76
+    ws_card_x = div_x + 60  # 2130
+    ws_card_y = staging_card_y
     draw.rounded_rectangle(
-        [(1980, 48), (1980 + ws_card_w, 48 + ws_card_h)],
+        [(ws_card_x, ws_card_y), (ws_card_x + ws_card_w, ws_card_y + ws_card_h)],
         radius=12,
         fill=BG_CARD,
         outline=SLATE_DARK,
         width=1
     )
-    draw.line([(1980, 48 + 12), (1980, 48 + ws_card_h - 12)], fill=(99, 102, 241, 255), width=4)
-    draw.text((1998, 58), "PRIMARY WORKSPACE / CODE EDITOR", font=font_bold_18, fill=WHITE_DIM)
-    draw.text((1998, 88), "1920 × 1600 • Full-height zone for IDE, browser preview & devtools", font=font_reg_13, fill=SLATE_MID)
+    draw.line([(ws_card_x, ws_card_y + 12), (ws_card_x, ws_card_y + ws_card_h - 12)], fill=(99, 102, 241, 255), width=4)
+    draw.text((ws_card_x + 18, ws_card_y + 12), "PRIMARY WORKSPACE / CODE EDITOR", font=font_bold_18, fill=WHITE_DIM)
+    draw.text((ws_card_x + 18, ws_card_y + 42), f"{ws_w} × {HEIGHT} • Full-height zone for IDE, browser preview & devtools", font=font_reg_13, fill=SLATE_MID)
 
     # Workspace corner brackets
     r_arm = 45
@@ -261,6 +316,35 @@ def create_dell_wallpaper():
     spec_w = bbox_spec[2] - bbox_spec[0]
     draw.text((WIDTH - spec_w - 44, HEIGHT - 42), spec_label, font=font_mono_r, fill=SLATE_MUTED)
 
+    # 11. OS App Bar Exclusion Indicators (Left Dock & Bottom Bar)
+    # Bottom margin badge
+    bm_pill_w = 520
+    bm_pill_h = 36
+    bm_x = cx - (bm_pill_w // 2)
+    bm_y = GUIDE_Y + GUIDE_H + 34
+    draw.rounded_rectangle(
+        [(bm_x, bm_y), (bm_x + bm_pill_w, bm_y + bm_pill_h)],
+        radius=8,
+        fill=BG_CARD,
+        outline=SLATE_DARK,
+        width=1
+    )
+    draw.text((bm_x + 20, bm_y + 10), f"▼  OS APP BAR EXCLUSION BUFFER  •  {OFFSET_BOTTOM}px BOTTOM MARGIN", font=font_mono_sm, fill=SLATE_MID)
+
+    # Left margin badge (Dock buffer)
+    dock_card_w = 126
+    dock_card_h = 36
+    dock_x = (GUIDE_X - dock_card_w) // 2  # (150 - 126) // 2 = 12
+    dock_y = cy - (dock_card_h // 2)
+    draw.rounded_rectangle(
+        [(dock_x, dock_y), (dock_x + dock_card_w, dock_y + dock_card_h)],
+        radius=8,
+        fill=BG_CARD,
+        outline=SLATE_DARK,
+        width=1
+    )
+    draw.text((dock_x + 12, dock_y + 10), f"◀  {OFFSET_X}px BUFFER", font=font_mono_sm, fill=SLATE_MID)
+
     return img
 
 def create_spanned_wallpaper(dell_img):
@@ -274,42 +358,52 @@ def create_spanned_wallpaper(dell_img):
     ubuntu_bg_path = "/usr/share/backgrounds/ubuntu-wallpaper-d.png"
     if os.path.exists(ubuntu_bg_path):
         u_img = Image.open(ubuntu_bg_path)
-        # Crop/resize to 1920x1600
         u_scaled = u_img.resize((1920, 1600), Image.Resampling.LANCZOS)
         spanned.paste(u_scaled, (0, 0))
     else:
-        # Fill with matching dark slate
         pass
 
     # Paste Dell image on the right (x = 1920)
     spanned.paste(dell_img, (1920, 0))
     return spanned
 
-# Generate Dell image
-dell_img = create_dell_wallpaper()
+if __name__ == "__main__":
+    SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Output paths
-out_pictures = "/home/eric/Pictures/screencast-guide-3840x1600.png"
-out_bg = "/home/eric/.local/share/backgrounds/screencast-guide-3840x1600.png"
+    # Generate Dell image
+    dell_img = create_dell_wallpaper()
 
-print(f"Saving standalone wallpaper to {out_pictures}...")
-os.makedirs("/home/eric/Pictures", exist_ok=True)
-os.makedirs("/home/eric/.local/share/backgrounds", exist_ok=True)
+    # Save standalone wallpaper to repo directory, Pictures, and backgrounds
+    out_targets = [
+        os.path.join(SCRIPT_DIR, "screencast-guide-3840x1600.png"),
+        os.path.expanduser("~/Pictures/screencast-guide-3840x1600.png"),
+        os.path.expanduser("~/.local/share/backgrounds/screencast-guide-3840x1600.png")
+    ]
 
-dell_img.save(out_pictures, "PNG", optimize=True)
-dell_img.save(out_bg, "PNG", optimize=True)
+    for target in out_targets:
+        print(f"Saving standalone wallpaper to {target}...")
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        dell_img.save(target, "PNG", optimize=True)
 
-# Generate spanned image
-spanned_img = create_spanned_wallpaper(dell_img)
-out_spanned_pic = "/home/eric/Pictures/screencast-guide-spanned-5760x1600.png"
-out_spanned_bg = "/home/eric/.local/share/backgrounds/screencast-guide-spanned-5760x1600.png"
-print(f"Saving spanned wallpaper to {out_spanned_pic}...")
-spanned_img.save(out_spanned_pic, "PNG", optimize=True)
-spanned_img.save(out_spanned_bg, "PNG", optimize=True)
+    # Generate spanned image
+    spanned_img = create_spanned_wallpaper(dell_img)
+    spanned_targets = [
+        os.path.join(SCRIPT_DIR, "screencast-guide-spanned-5760x1600.png"),
+        os.path.expanduser("~/Pictures/screencast-guide-spanned-5760x1600.png"),
+        os.path.expanduser("~/.local/share/backgrounds/screencast-guide-spanned-5760x1600.png")
+    ]
 
-# Generate preview
-preview_path = "/home/eric/.gemini/antigravity-cli/brain/d1c12b75-1afa-495e-a898-b72b4fd7bc0a/scratch/preview-screencast-guide.png"
-preview_img = dell_img.resize((1280, 533), Image.Resampling.LANCZOS)
-preview_img.save(preview_path, "PNG")
+    for target in spanned_targets:
+        print(f"Saving spanned wallpaper to {target}...")
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        spanned_img.save(target, "PNG", optimize=True)
 
-print("All files successfully generated!")
+    # Generate preview in current conversation brain dir if available
+    conv_brain = "/home/eric/.gemini/antigravity-cli/brain/942d2051-ac0f-4b55-a598-844c273b26ab"
+    if os.path.isdir(conv_brain):
+        preview_path = os.path.join(conv_brain, "preview-screencast-guide.png")
+        print(f"Saving preview to {preview_path}...")
+        preview_img = dell_img.resize((1280, 533), Image.Resampling.LANCZOS)
+        preview_img.save(preview_path, "PNG")
+
+    print("All files successfully generated!")
