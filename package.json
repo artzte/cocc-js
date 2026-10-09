@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "weekly:create": "scripts/mpf.sh"
   },
   "devDependencies": {
     "prettier": "^3.9.6"
