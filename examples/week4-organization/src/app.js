@@ -1,7 +1,7 @@
-import { CourseFilter } from './filter-class'
-import { getFilteredCourses } from '../src/filter-classic-module'
-import { filterBuilder } from '../src/filter-functional-closure'
-import data from './data'
+import { CourseFilter } from './filter-class.js'
+import { getFilteredCourses } from './filter-classic-module.js'
+import { filterBuilder } from './filter-functional-closure.js'
+import data from './data.js'
 
 function renderCourses(element, courses) {
   const rows = courses

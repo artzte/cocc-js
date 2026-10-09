@@ -5,12 +5,6 @@ dist/
 # Vendored external text
 book/
 
-# Package manager locks
-package-lock.json
-starter/package-lock.json
-
 # Local agent / editor configs
 .claude/
 
-# Media and assets
-assets/
