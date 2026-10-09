@@ -130,15 +130,17 @@ git push -u origin final-project
 
 You will add to this feature branch across the four project milestones:
 
-1. **Milestone 1 (Week 4) — Proposal**: Commit your `PROPOSAL.md` document outlining your project
-   idea and chosen public API to your `final-project` branch.
-2. **Milestone 2 (Week 7) — Design Document**: Add `DESIGN.md` (sketches, data structures, module
-   plans) and commit.
+1. **Milestone 1 (Week 4) — Proposal**: Commit your proposal document outlining your project idea
+   and chosen public API to your project branch. Due **Monday, Oct. 19**.
+2. **Milestone 2 (Week 7) — Design Document**: Add design document (sketches, data structures,
+   module plans) and commit. Due **Monday, Nov. 9**.
 3. **Milestone 3 (Week 9) — Initial Structure**: Stub all planned module files in `src/`, export
    your functions and classes, import them into `src/app.js`, and write passing unit tests in
-   `test/`.
+   `test/`. Due **Monday, Nov. 23**.
 4. **Milestone 4 (Week 12) — Final Submission**: Complete the application, verify all tests pass
-   (`npm test`), build for production (`npm run build`), and deploy.
+   (`npm test`), build for production (`npm run build`), and deploy. Initial PR due **Monday, 12/7**
+   with instructor tagged as reviewer and preview app running in designated deployment environment;
+   initial comments back by **Wednesday, 12/9**; PR approval required by **Friday, 12/11**.
 
 ### Switching Between Branches
 

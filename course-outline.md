@@ -129,17 +129,19 @@ course starter kit. No UI frameworks (React, Vue, etc.).
 
 ### Submission
 
-All project work is submitted via GitHub. Each milestone is submitted by posting your GitHub repo
-link (and a deployed URL where applicable) to the course LMS.
+All project work is submitted via GitHub. Each milestone is submitted by opening a Pull Request and
+posting your GitHub PR link (and a live preview deployment URL where applicable) to Canvas. Each
+deliverable is due on the Monday following the delivery week, except for the final deliverable,
+which follows a structured review and approval workflow during Finals Week.
 
 ### Milestones
 
-| #   | Week Due | Deliverable                                                                                          | Submit                                                   |
-| --- | -------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| 1   | Week 4   | **Proposal** — app idea, target user, 3–5 core features, chosen public API                           | `PROPOSAL.md` committed to your project repo             |
-| 2   | Week 7   | **Design Document** — wireframes/sketches, data model, module plan, API endpoints                    | `DESIGN.md` + image files committed to your project repo |
-| 3   | Week 9   | **Initial Structure** — all modules stubbed, placeholder implementations, ≥1 passing test per module | GitHub repo link                                         |
-| 4   | Week 12  | **Final Submission** — complete, working, deployed application                                       | GitHub repo link + deployed URL                          |
+| #   | Delivery Week          | Due Date                                                                 | Deliverable                                                                                          | Submit                                                                                                                                                |
+| --- | ---------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Week 4 (starts Oct 12) | **Mon, Oct 19**                                                          | **Proposal** — app idea, target user, 3–5 core features, chosen public API                           | Pull Request with `projects/final/README.md`                                                                                                          |
+| 2   | Week 7 (starts Nov 2)  | **Mon, Nov 9**                                                           | **Design Document** — wireframes/sketches, data model, module plan, API endpoints                    | Pull Request updating `projects/final/README.md`                                                                                                      |
+| 3   | Week 9 (starts Nov 16) | **Mon, Nov 23**                                                          | **Initial Structure** — all modules stubbed, placeholder implementations, ≥1 passing test per module | Pull Request with stubbed ES modules in `src/` and Vitest test scaffold in `test/`                                                                    |
+| 4   | Week 12 (starts Dec 7) | **Mon, Dec 7 (PR)**<br>**Wed, Dec 9 (Review)**<br>**Fri, Dec 11 (Appr)** | **Final Submission** — complete, working, tested, and deployed application                           | Initial PR by Dec 7 with reviewer tagged and preview app running in deployment environment; comments returned by Dec 9; PR approval by Friday, Dec 11 |
 
 ### Requirements (Final Submission)
 
@@ -251,8 +253,8 @@ input, and filter the displayed items in real time as the user types.
 
 **Quiz 4**: Array methods, `for...of` vs. `for`, iterator protocol basics
 
-**Project Milestone 1 — Proposal due**: 1-page description of your final project idea, target users,
-core features, and the public API you plan to use.
+**Project Milestone 1 — Proposal due (Monday, Oct 19)**: 1-page description of your final project
+idea, target users, core features, and the public API you plan to use.
 
 ---
 
@@ -328,8 +330,8 @@ the transition logic should be fully hidden inside the closure.
 **Quiz 7**: Closure definition, POLE principle, factory function pattern, closure vs. class
 (tradeoffs)
 
-**Project Milestone 2 — Design Document due**: Wireframes or sketches of your UI, data model,
-planned module breakdown, and the specific API endpoint(s) you will use.
+**Project Milestone 2 — Design Document due (Monday, Nov 9)**: Wireframes or sketches of your UI,
+data model, planned module breakdown, and the specific API endpoint(s) you will use.
 
 ---
 
@@ -380,8 +382,9 @@ functions.
 **Quiz 9**: Named vs. default exports, `import` syntax variations, module scope vs. global scope,
 ESM vs. CommonJS
 
-**Project Milestone 3 — Initial Structure due**: GitHub repo with all planned module files created,
-core functions stubbed with correct signatures, and at least one passing Vitest test per module.
+**Project Milestone 3 — Initial Structure due (Monday, Nov 23)**: Pull Request with all planned
+module files created, core functions stubbed with correct signatures, and at least one passing
+Vitest test per module.
 
 ---
 
@@ -471,7 +474,10 @@ event loop basics
 walks through one interesting technical decision they made. Brief peer feedback.
 
 **Project Milestone 4 — Final Submission due**: Complete working application meeting all
-requirements listed above, deployed and accessible via public URL.
+requirements listed above, deployed and accessible via public URL. Initial pull request due
+**Monday, 12/7**, with instructor tagged as reviewer and preview app running in the designated
+deployment environment. Initial comments returned by **Wednesday, 12/9**. PR approval from
+instructor required by **Friday, 12/11**.
 
 _No quiz this week._
 

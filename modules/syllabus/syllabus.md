@@ -128,16 +128,25 @@ Additionally, you will need the following in order to complete this course:
 
 ### Due Dates for Major Graded Work
 
-- Weekly quizzes and projects will be due on midnight the Monday following each week
-- The final project is due in phases, on Monday at midnight following the referenced week:
-  - Week 4: Proposal
-  - Week 7: Design document
-  - Week 8: Initial structure
-  - Week 12: Final submission
+- Weekly quizzes and assignments are due at midnight on the Monday following each week.
+- The final project is due in four staged milestones. Each deliverable is due on the Monday
+  following the delivery week, with the exception of the final deliverable in Week 12:
+  - **Milestone 1 (Proposal)**: Delivered in Week 4 (starts Oct 12); due **Monday, October 19** at
+    midnight.
+  - **Milestone 2 (Design Document)**: Delivered in Week 7 (starts Nov 2); due **Monday, November
+    9** at midnight.
+  - **Milestone 3 (Initial Structure & Test Scaffold)**: Delivered in Week 9 (starts Nov 16); due
+    **Monday, November 23** at midnight.
+  - **Milestone 4 (Final Deliverable)**: Delivered during Finals Week (Week 12, starts Dec 7):
+    - Initial pull request due by **Monday, December 7**, with instructor (**Eric Artzt / artzte**)
+      tagged as reviewer and the preview app running in the designated deployment environment.
+    - Initial instructor comments returned by **Wednesday, December 9**.
+    - Final pull request approval from instructor required by **Friday, December 11**.
 
 ### Final Exam Date and Time
 
-We will just have the Final Project, which will be due during Finals Week.
+The Final Project serves as the comprehensive capstone evaluation and final exam for CIS-133JS. See
+the Milestone 4 schedule above for the Finals Week submission, review, and approval deadlines.
 
 ## Grading and Assignments
 
