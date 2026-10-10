@@ -99,7 +99,9 @@ rigorous criteria:
       modals, sorting, or persistent favorites.
 - [ ] **Automated Testing Suite**: Passing Vitest unit tests verifying non-DOM business logic and
       data transformations.
-- [ ] **Public Deployment**: Live preview hosted on GitHub Pages or Netlify with zero build errors.
+- [ ] **Public Deployment**: Live preview hosted on AWS with zero build errors. (Instructor will
+      supply the dev-ops workflow for this; you'll probably just need to add a security key,
+      provided by the instructor, to your repo settings)
 - [ ] **Instructor PR Approval**: Initial pull request opened by Monday, 12/7 with instructor tagged
       as reviewer, preview app running, review comments addressed, and PR approved by Friday, 12/11.
 
