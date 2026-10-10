@@ -9,8 +9,8 @@ total grade**, divided across four equal milestones:
 1. **Week 4 (This Week)**: Project Proposal (`projects/final/README.md`) — **Due Monday, October 19,
    2026 (11:59 PM)**
 2. **Week 7**: Design Document & Architecture Plan — **Due Monday, November 9, 2026 (11:59 PM)**
-3. **Week 9**: Initial Project Structure, Stubs & Vitest Test Scaffold — **Due Monday, November 23,
-   2026 (11:59 PM)**
+3. **Week 9**: Initial Project Structure, Stubs & Vitest Test Scaffold, including initial deployment
+   to AWS (more on that later) — **Due Monday, November 23, 2026 (11:59 PM)**
 4. **Week 12 (Finals Week)**: Complete, Working, Tested & Deployed Application:
    - **Initial Pull Request**: Due **Monday, December 7, 2026 (11:59 PM)** (with instructor tagged
      as reviewer and live preview app running)
@@ -31,7 +31,8 @@ Before drafting your proposal, review the core requirements that your finished a
 satisfy by Week 12:
 
 - **Vanilla JavaScript**: Built using modern vanilla JavaScript and the course starter kit (Vite +
-  Vitest). No front-end frameworks (React, Vue, Angular, Svelte, etc.).
+  Vitest). No front-end frameworks (React, Vue, Angular, Svelte, etc.). You are, however, permitted
+  to import software dependencies that might serve a particular need.
 - **ES Modules**: At least **four (4) separate ES modules** (`import`/`export`) demonstrating a
   clean separation of concerns (for example: API client, state/data management, DOM rendering, and
   user interaction handlers).
@@ -47,7 +48,8 @@ satisfy by Week 12:
   ARIA attributes, keyboard navigability, clear contrast).
 - **Unit Testing**: Thorough automated tests written with **Vitest** covering all non-DOM business
   logic, data transformations, and class methods.
-- **Deployment**: Deployed and publicly accessible on GitHub Pages or Netlify.
+- **Deployment**: Deployed and publicly accessible. Instructor will supply simple instructions for
+  accomplishing the public deployment of your project
 
 ---
 
@@ -79,30 +81,16 @@ List 3 to 5 specific user features you plan to build. Examples:
 
 ### 4. Chosen Public API
 
-- Which public API do you plan to consume? Include a link to the official documentation.
-- What specific endpoint URL(s) will you fetch?
-- Provide an example JSON snippet showing the key fields you plan to extract and display.
-- What authentication (if any) is required?
+- Which API do you plan to consume? Include a link to the official documentation.
+- What specific endpoint URL(s) might you fetch?
+- Provide an example JSON snippet showing the key fields you plan to extract and display, from at
+  least one of your data feeds.
+- What authentication (if any) is required? Are there other setup requirements for the API?
 
 > **Need an API idea?** See our dedicated resource:  
 > 🔗 [**Free Public APIs for Your Final Project**](week4-free-apis-for-project.md) — a curated
 > directory of verified, student-friendly APIs with permissive CORS policies, free access,
 > documentation links, and live example endpoints!
-
-### 5. Architectural Outline (Draft of Modules & Class)
-
-Outline how you anticipate splitting your code across at least four modules, and what role your ES6
-class will play. For example:
-
-- `src/api.js`: Handles asynchronous `fetch` calls and returns formatted data.
-- `src/models/Item.js`: An ES6 class that encapsulates item properties and formatting methods.
-- `src/ui.js`: DOM rendering functions that convert data into accessible HTML cards and tables.
-- `src/app.js`: Application controller that binds event listeners and coordinates state.
-
-### 6. Testing Strategy
-
-- What pure logic functions and model methods do you plan to unit test with Vitest? (e.g., search
-  matchers, data mappers, formatting functions, sorters).
 
 ---
 
@@ -118,8 +106,8 @@ JavaScript code read the response and throw a `CORS error`.
   [Free Public APIs Guide](week4-free-apis-for-project.md) already permit browser requests out of
   the box.
 - **Why not use a proxy?**: While the Vite dev server can proxy requests locally during development
-  (`localhost`), Vite's dev server does not exist when your site is built and published to **GitHub
-  Pages** (which is static hosting). Choosing a CORS-friendly API ensures your code works
+  (`localhost`), Vite's dev server does not exist when your site is built and published, which will
+  be static hosting via S3 and Cloudfront. Choosing a CORS-friendly API ensures your code works
   identically in local development and on your live public site!
 - **Quick Browser Check**: Before writing your proposal, open your browser DevTools console and test
   fetching your endpoint:
@@ -136,6 +124,8 @@ JavaScript code read the response and throw a `CORS error`.
 
 1. In your local repository, create a branch for your final project proposal:
    ```bash
+   git checkout main
+   git pull
    git checkout -b final-project-proposal
    ```
 2. Create the directory `projects/final/` if it does not already exist, and create
@@ -156,10 +146,8 @@ JavaScript code read the response and throw a `CORS error`.
 
 ## Milestone 1 Rubric (100 Points)
 
-| Criteria                             | Points | Description                                                                                        |
-| :----------------------------------- | :----- | :------------------------------------------------------------------------------------------------- |
-| **Concept & Audience**               | 20 pts | Clear definition of project purpose, target audience, and value proposition.                       |
-| **Core Feature Set**                 | 25 pts | 3–5 well-defined interactive user features that fit vanilla JS and DOM scope.                      |
-| **Public API Selection**             | 25 pts | Appropriate API selected with verified open CORS support, documentation links, and sample JSON.    |
-| **Architecture & Testing Plan**      | 20 pts | Logical separation into ≥4 ES modules, role for an ES6 class, and concrete Vitest testing targets. |
-| **Submission & Markdown Formatting** | 10 pts | Cleanly formatted `projects/final/README.md` submitted on time via GitHub PR.                      |
+| Criteria                 | Points | Description                                                                                     |
+| :----------------------- | :----- | :---------------------------------------------------------------------------------------------- |
+| **Concept & Audience**   | 50 pts | Clear definition of project purpose, target audience, and value proposition.                    |
+| **Core Feature Set**     | 25 pts | 3–5 well-defined interactive user features that fit vanilla JS and DOM scope.                   |
+| **Public API Selection** | 25 pts | Appropriate API selected with verified open CORS support, documentation links, and sample JSON. |

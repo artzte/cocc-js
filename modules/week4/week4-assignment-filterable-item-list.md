@@ -14,10 +14,14 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
 1. **Structured Data Collection**: Define an array of at least 6–10 items representing a real-world
    domain of your choice (e.g., books, movies, courses, products, video game characters, or
    recipes). Each item must be an object with at least 3 distinct attributes (e.g., `id`, `title`,
-   `category`, `description`, `price` or `rating`).
+   `category`, `description`, `price` or `rating`). If you'd like, poke around at a few of the free
+   API service suggestions!
 2. **Pure Filtering Function**: Write a dedicated, pure helper function (e.g.,
    `filterItems(items, query)`) that takes an array of items and a search string, and returns a new
-   filtered array.
+   filtered array. (A pure function receives all its data inputs from arguments, and does not mutate
+   those passed elements as it performs its work. It communicates with the caller by way of a return
+   value. It does not introduce side-effects, such as creating or mutating values outside of its
+   arguments and function scope)
    - Use array methods such as `.filter()` and string methods like `.toLowerCase()` and
      `.includes()`.
    - Your function must be case-insensitive (searching "react" should match "React").
@@ -50,124 +54,62 @@ of cards or a formatted table.
 
 ---
 
-### Suggested Code Structure
+### Suggested Structure
 
-Keep your business logic (the filtering function) separate from your UI rendering and event logic.
-This architectural separation makes your code easier to read and straightforward to unit test.
-
-```js
-// src/app.js
-
-export const items = [
-  { id: 1, title: 'JavaScript: The Definitive Guide', author: 'David Flanagan', category: 'Books' },
-  { id: 2, title: 'Eloquent JavaScript', author: 'Marijn Haverbeke', category: 'Books' },
-  { id: 3, title: 'You Don’t Know JS Yet', author: 'Kyle Simpson', category: 'Books' },
-  // ...add more items
-]
-
-export function filterItems(itemsList, query) {
-  const normalizedQuery = (query || '').trim().toLowerCase()
-  if (!normalizedQuery) {
-    return itemsList
-  }
-
-  return itemsList.filter((item) => {
-    const titleMatch = item.title.toLowerCase().includes(normalizedQuery)
-    const authorMatch = item.author.toLowerCase().includes(normalizedQuery)
-    const categoryMatch = item.category.toLowerCase().includes(normalizedQuery)
-    return titleMatch || authorMatch || categoryMatch
-  })
-}
-
-export function renderApp() {
-  const root = document.querySelector('#app')
-  // Render search box and initial list
-  // Attach 'input' event listener to search input
-}
-```
-
----
-
-### For Your Tests
-
-Create a new test file at `test/week4.test.js`. Import your `filterItems` function and sample data,
-and write Vitest tests covering standard, edge, and empty cases:
-
-```js
-import { describe, it, expect } from 'vitest'
-import { filterItems } from '../src/app.js'
-
-const testItems = [
-  {
-    id: 1,
-    title: 'JavaScript: The Definitive Guide',
-    author: 'David Flanagan',
-    category: 'Reference',
-  },
-  { id: 2, title: 'Eloquent JavaScript', author: 'Marijn Haverbeke', category: 'Tutorial' },
-  { id: 3, title: 'You Don’t Know JS Yet', author: 'Kyle Simpson', category: 'Deep Dive' },
-]
-
-describe('filterItems', () => {
-  it('returns all items when the search query is empty', () => {
-    expect(filterItems(testItems, '')).toEqual(testItems)
-    expect(filterItems(testItems, '   ')).toEqual(testItems)
-  })
-
-  it('filters items matching the query in a case-insensitive manner', () => {
-    const result = filterItems(testItems, 'eloquent')
-    expect(result).toHaveLength(1)
-    expect(result[0].title).toBe('Eloquent JavaScript')
-  })
-
-  it('matches across secondary fields like author or category', () => {
-    const result = filterItems(testItems, 'simpson')
-    expect(result).toHaveLength(1)
-    expect(result[0].author).toBe('Kyle Simpson')
-  })
-
-  it('returns an empty array when no items match the query', () => {
-    const result = filterItems(testItems, 'nonexistent query')
-    expect(result).toEqual([])
-  })
-
-  it('does not mutate the original items array', () => {
-    const copy = [...testItems]
-    filterItems(testItems, 'JavaScript')
-    expect(testItems).toEqual(copy)
-  })
-})
-```
-
-#### Testing Hints
-
-Testing pure functions like `filterItems` directly isolates your algorithm logic from browser DOM
-quirks. Verify your tests pass by running:
-
-```bash
-npm test
-```
+- Keep your business logic (the filtering function) separate from your UI rendering and DOM
+  manipulation. This architectural separation makes your code cleaner, easier to understand, and
+  straightforward to test.
+- Write a pure filtering function that accepts your data array and a search string, returning a new
+  filtered array without mutating the original list.
+- Wire an `input` event listener to your search box that re-runs the filter and re-renders the list
+  into the DOM whenever the user types.
+- Include tests that exercise your filtering function with variants such as casing, whitespace, etc.
 
 ---
 
 ### Steps to Complete & Submit
 
-1. Create your `week4` project folder from the starter template:
+1. **Check out your `main` branch and pull latest changes**:  
+   Ensure all prior weeks' content has been pulled into your local repository before branching:
+   ```bash
+   git checkout main
+   git pull origin main
+   ```
+2. **Create a `week4` branch**:
+   ```bash
+   git checkout -b week4
+   ```
+3. **Run the `mpf.sh` script to create your `week4` project**:
    ```bash
    scripts/mpf.sh week4
    ```
-2. Navigate to `projects/week4` and install dependencies:
+4. **Stage, commit, and push the generated project files**:
    ```bash
-   cd projects/week4
-   npm install
+   git add projects/week4
+   git commit -m "feat(week4): scaffold week4 project workspace"
+   git push -u origin week4
    ```
-3. Implement your data list, `filterItems`, DOM rendering, and event listener in `src/app.js`.
-4. Add unit tests in `test/week4.test.js` and verify with `npm test`.
-5. Preview your application in the browser:
-   ```bash
-   npm run dev
-   ```
-6. Commit and push your changes to GitHub, create a Pull Request, and submit the PR link on Canvas
-   with **artzte** assigned as a reviewer.
-7. **Deadline**: This programming assignment is due by **Monday, October 19, 2026 at 11:59 PM** (the
+5. **Work on the exercise**:
+   - Navigate to `projects/week4` and install dependencies:
+     ```bash
+     cd projects/week4
+     npm install
+     ```
+   - Implement your structured dataset, filtering logic, and live DOM rendering in `src/app.js`.
+6. **Commit updates, verify everything is working, and push fixes**:
+   - Preview your application in the browser to ensure the live filter works as expected:
+     ```bash
+     npm start
+     ```
+   - Run tests to verify your code:
+     ```bash
+     npm test
+     ```
+   - Stage, commit, and push any changes needed to fix and finalize your solution.
+7. **Open a Pull Request**:  
+   Open a pull request on GitHub comparing `week4` against `main`, and request **artzte** as a
+   reviewer.
+8. **Submit on Canvas**:  
+   Copy the URL of your PR, paste it into the Canvas assignment submission box, and submit it.
+9. **Deadline**: This programming assignment is due by **Monday, October 19, 2026 at 11:59 PM** (the
    Monday following Week 4).

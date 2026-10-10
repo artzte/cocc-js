@@ -50,9 +50,9 @@ export function renderApp() {
     </form>
     <p id='courses'></p>
   `
-  const div = app.querySelector('#courses')
+  const paragraph = app.querySelector('#courses')
 
-  renderCourses(div, data)
+  renderCourses(paragraph, data)
 
   const form = app.querySelector('form')
   form.addEventListener('submit', (event) => {
@@ -63,6 +63,6 @@ export function renderApp() {
     // const filteredCourses = moduleGetFilteredCourses(filterString)
     // const filteredCourses = functionalGetFilteredCourses(filterString)
 
-    renderCourses(div, filteredCourses)
+    renderCourses(paragraph, filteredCourses)
   })
 }

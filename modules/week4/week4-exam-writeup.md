@@ -37,25 +37,12 @@ weekly programming assignments combined). Rather than leaving this massive asses
 stressful submission at the end of the term, the project exam is partitioned into **four staged
 milestones**:
 
-```
-Term Timeline:
-Week 1 -------- Week 4 (Oct 12) ------ Week 7 (Nov 2) ------ Week 9 (Nov 16) ---- Week 12 (Dec 7)
-                  │                      │                      │                     │
-                  ▼                      ▼                      ▼                     ▼
-             Milestone 1            Milestone 2            Milestone 3           Milestone 4
-              Proposal               Design Doc         Initial Structure      Final Application
-           Due Mon, Oct 19        Due Mon, Nov 9         Due Mon, Nov 23       Initial PR: Mon 12/7
-                (10%)                  (10%)                  (10%)            Comments:   Wed 12/9
-                                                                               Approval:   Fri 12/11
-                                                                                     (10%)
-```
-
-| Milestone       | Delivery Week              | Due Date                                                               | Deliverable                                  | Weight | Location / Requirements                             |
-| :-------------- | :------------------------- | :--------------------------------------------------------------------- | :------------------------------------------- | :----- | :-------------------------------------------------- |
-| **Milestone 1** | **Week 4** (starts Oct 12) | **Monday, Oct 19**                                                     | **Project Proposal & API Selection**         | 10%    | `projects/final/README.md` via GitHub PR            |
-| **Milestone 2** | **Week 7** (starts Nov 2)  | **Monday, Nov 9**                                                      | **Design Document & Architecture Plan**      | 10%    | Additions to `projects/final/README.md` via PR      |
-| **Milestone 3** | **Week 9** (starts Nov 16) | **Monday, Nov 23**                                                     | **Initial Structure & Test Scaffold**        | 10%    | PR with stubbed modules + passing Vitest tests      |
-| **Milestone 4** | **Week 12** (Finals Week)  | **Mon 12/7 (PR)**<br>**Wed 12/9 (Review)**<br>**Fri 12/11 (Approval)** | **Final Application Delivery & Walkthrough** | 10%    | Live deployment preview + PR approved by instructor |
+| Milestone       | Delivery Week              | Due Date                                                               | Deliverable                                  | Weight | Location / Requirements                                                                                    |
+| :-------------- | :------------------------- | :--------------------------------------------------------------------- | :------------------------------------------- | :----- | :--------------------------------------------------------------------------------------------------------- |
+| **Milestone 1** | **Week 4** (starts Oct 12) | **Monday, Oct 19**                                                     | **Project Proposal & API Selection**         | 10%    | `projects/final/README.md` via GitHub PR                                                                   |
+| **Milestone 2** | **Week 7** (starts Nov 2)  | **Monday, Nov 9**                                                      | **Design Document & Architecture Plan**      | 10%    | Additions to `projects/final/README.md` via PR                                                             |
+| **Milestone 3** | **Week 9** (starts Nov 16) | **Monday, Nov 23**                                                     | **Initial Structure & Test Scaffold**        | 10%    | PR with stubbed modules + passing Vitest tests + successful initial deployment to class page hosted on AWS |
+| **Milestone 4** | **Week 12** (Finals Week)  | **Mon 12/7 (PR)**<br>**Wed 12/9 (Review)**<br>**Fri 12/11 (Approval)** | **Final Application Delivery & Walkthrough** | 10%    | Live deployment preview + PR approved by instructor                                                        |
 
 ---
 
@@ -73,8 +60,7 @@ Week 1 -------- Week 4 (Oct 12) ------ Week 7 (Nov 2) ------ Week 9 (Nov 16) ---
   enable iterative code review and grading before the end of the term on Friday, December 11:
   1. **Initial Pull Request (Monday, 12/7 by 11:59 PM)**: You must submit your complete application
      as an initial pull request against `main`, tag instructor **Eric Artzt** (`artzte`) as
-     reviewer, and ensure your preview app is running live in the designated deployment environment
-     (GitHub Pages or Netlify).
+     reviewer, and ensure your preview app is running live in the designated deployment environment.
   2. **Instructor Initial Comments (Wednesday, 12/9)**: The instructor commits to returning
      structured initial code review comments on your pull request by Wednesday, December 9.
   3. **Revisions & Final PR Approval (Friday, 12/11)**: You must address all review feedback, push
@@ -127,9 +113,10 @@ As stated in our course syllabus:
 - You are encouraged to use GitHub Copilot to review and lint your pull requests. However, you may
   not use generative AI tools to wholesale generate application features or bypass the learning
   objectives.
+- You may use AI tools to solve IT-related problems on your workstation, such as difficulties with
+  Git
 - If you have questions regarding architecture, API choice, or debugging, reach out to **Eric
-  Artzt** ([eartzt2@cocc.edu](mailto:eartzt2@cocc.edu)) during office hours or schedule a 1:1
-  consultation.
+  Artzt** ([eartzt2@cocc.edu](mailto:eartzt2@cocc.edu)) to schedule a 1:1 consultation.
 
 For details on submitting this week's first milestone, refer to
 [Final Project Milestone 1: Project Proposal](week4-assignment-project-proposal.md).

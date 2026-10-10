@@ -66,9 +66,10 @@ By the end of this module you will be able to:
    - Complete [Week 4 Quiz](week4-quiz.md) on Canvas, testing comprehension of array methods, loop
      constructs, the iterator protocol, higher-order functions, and code organization patterns.
 5. **Programming Assignment — Filterable Item List**:
-   - Create your project workspace using `scripts/mpf.sh week4`.
+   - Create your `week4` branch and scaffold your project workspace using `scripts/mpf.sh week4`.
    - Complete [Week 4 Assignment: Filterable Item List](week4-assignment-filterable-item-list.md),
-     write unit tests in `test/week4.test.js`, and submit a pull request on GitHub to **artzte**.
+     verify your solution with `npm run dev` and `npm test`, and submit your pull request on GitHub
+     to **artzte** by **Monday, October 19 at 11:59 PM**.
 6. **Additional Deliverable — Final Project Milestone 1 (Proposal)**:
    - Review the [Final Project Milestone 1 Proposal Guide](week4-assignment-project-proposal.md) and
      the curated list of public APIs.
@@ -83,8 +84,8 @@ By the end of this module you will be able to:
    the reading summary.
 2. Review the concept lecture notes and run the DevTools iteration snippet and organization demo.
 3. Complete and submit **Quiz 4**.
-4. Complete the **Week 4 Programming Assignment: Filterable Item List**, verify all tests pass with
-   `npm test`, and open your Pull Request.
+4. Complete the **Week 4 Programming Assignment: Filterable Item List**, verify everything works
+   with `npm run dev` and `npm test`, and open your Pull Request.
 5. Review the recommended public APIs, select your project concept, write your **Final Project
    Proposal** in `projects/final/README.md`, and submit your PR on GitHub by **Monday, October 19**.
 6. Read the **Exam Writeup** to ensure you understand the milestone progression toward Finals Week.

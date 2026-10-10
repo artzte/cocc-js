@@ -51,5 +51,6 @@ including what each method returns. How does chaining these methods together (e.
 ### Question 5: Organizing Code at Scale (Classes, Modules, and Closures)
 
 As applications grow beyond simple scripts, managing variable scope and state becomes essential.
-Pick one of **ES6 Classes**, **ES Modules**, and **Functional Closures**, explain how it packages data and behavior, and handles encapsulation (keeping private data private). Why did you pick this
+Pick one of **ES6 Classes**, **ES Modules**, and **Functional Closures**, explain how it packages
+data and behavior, and handles encapsulation (keeping private data private). Why did you pick this
 one to write about?

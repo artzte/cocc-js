@@ -10,11 +10,11 @@ export class CourseFilter {
 
   getFilteredCourses(filterString) {
     const lowercasedFilterString = filterString.toLowerCase().trim()
-    const { data } = this
+    const { data, normalizedData } = this
 
     if (!lowercasedFilterString) return data
 
-    const filteredCourses = this.normalizedData.map((item, i) =>
+    const filteredCourses = normalizedData.map((item, i) =>
       item.includes(lowercasedFilterString) ? data[i] : null,
     )
 
