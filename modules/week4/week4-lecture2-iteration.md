@@ -5,7 +5,7 @@ mutation vs. non-mutating copying**, core **looping constructs** (`for`, `while`
 underlying **ES6 Iterator Protocol**, and declarative pipelines using **higher-order array methods**
 (`forEach`, `filter`, `map`, `reduce`). While our readings from _You Don't Know JS Yet: Get Started_
 (Chapter 2: _Arrays_ and Chapter 3: _Iteration_) provide deep conceptual background, this lecture
-connects those fundamentals directly to live DOM filtering and responsive search UI.
+connects those fundamentals directly to live coding examples.
 
 ---
 
