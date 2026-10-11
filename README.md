@@ -57,9 +57,14 @@ If you have questions or concerns about any of this, I'm glad to talk about it.
 
 ## Student Use of Generative AI
 
-**Allowed:** You may use generative AI tools to solve IT problems on your own computer. That
-includes trouble with Git, Node and npm, nodenv, WSL, your editor, and other setup and environment
-issues. Getting your tools working isn't what this course is assessing, so don't stay stuck on it.
+**Allowed:**
+
+- **IT problems on your own computer.** You may use generative AI to solve trouble with Git, Node
+  and npm, nodenv, WSL, your editor, and other setup and environment issues. Getting your tools
+  working isn't what this course is assessing, so don't stay stuck on it.
+- **GitHub Copilot pull request reviews.** I encourage you to have GitHub Copilot review your pull
+  requests before you submit them. Use its feedback to improve your own code; don't have it write
+  the code for you.
 
 **Not allowed:** You may not use generative AI to answer quiz questions or to build your assignments
 or final project, in whole or in part. The work you submit must be your own.

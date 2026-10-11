@@ -180,6 +180,11 @@ your own original work done specifically for this course and without substantive
 others, including GenAI. Work you've completed for previous courses or are developing for other
 courses this term also should not be submitted for this course.
 
+There are two exceptions. First, as described under Help on Assignments, you may use GitHub Copilot
+to review your pull requests before submitting. Second, you may use GenAI tools to solve IT problems
+on your own computer, such as trouble with Git, Node and npm, nodenv, WSL, or other setup issues.
+You may not use GenAI to answer quiz questions or to build your assignments or final project.
+
 **Instructor use of AI.** In the interest of transparency: this course's materials, including this
 syllabus, the course outline, reading summaries, lectures, assignments, quizzes, and code examples,
 were built in partnership with generative AI coding agents (Google's Antigravity CLI and Anthropic's
