@@ -29,9 +29,12 @@ coursework.
 
 **What was built with AI.** Everything in this repository was built in partnership with generative
 AI coding agents, specifically Google's Antigravity CLI and Anthropic's Claude Code. That includes
-the course outline, syllabus, reading summaries, lectures, assignments, quizzes, code examples,
+the course outline, syllabus, reading summaries, lecture notes, assignments, quizzes, code examples,
 starter kit, and supporting tools and scripts. In each case, the AI agents produced the first
 version, and I then reviewed and edited it.
+
+**What was not built with AI.** My recorded lecture videos are entirely my own. I use the lecture
+notes and code examples as rough outlines, but what I say and demonstrate in the videos is mine.
 
 The `CLAUDE.md` file at the root of this repository is the set of instructions I gave Claude Code
 about the course's goals and design decisions. It's included so you can see exactly what the agent

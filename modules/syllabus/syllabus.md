@@ -186,11 +186,13 @@ on your own computer, such as trouble with Git, Node and npm, nodenv, WSL, or ot
 You may not use GenAI to answer quiz questions or to build your assignments or final project.
 
 **Instructor use of AI.** In the interest of transparency: this course's materials, including this
-syllabus, the course outline, reading summaries, lectures, assignments, quizzes, and code examples,
-were built in partnership with generative AI coding agents (Google's Antigravity CLI and Anthropic's
-Claude Code). The agents produced first drafts, which I then reviewed and edited. I am responsible
-for all of the content. The reason for the different rules is that the purpose of your assignments
-is for you to build skills by doing the work yourself. For details, see
+syllabus, the course outline, reading summaries, lecture notes, assignments, quizzes, and code
+examples, were built in partnership with generative AI coding agents (Google's Antigravity CLI and
+Anthropic's Claude Code). The agents produced first drafts, which I then reviewed and edited. I am
+responsible for all of the content. My recorded lecture videos are entirely my own; I use the
+lecture notes and code examples only as rough outlines. The reason for the different rules is that
+the purpose of your assignments is for you to build skills by doing the work yourself. For details,
+see
 ["How AI Was Used to Build This Course"](https://github.com/artzte/cocc-js#how-ai-was-used-to-build-this-course)
 in the course repository README.
 
