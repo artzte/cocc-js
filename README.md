@@ -55,6 +55,20 @@ was.
 
 If you have questions or concerns about any of this, I'm glad to talk about it.
 
+## Student Use of Generative AI
+
+**Allowed:** You may use generative AI tools to solve IT problems on your own computer. That
+includes trouble with Git, Node and npm, nodenv, WSL, your editor, and other setup and environment
+issues. Getting your tools working isn't what this course is assessing, so don't stay stuck on it.
+
+**Not allowed:** You may not use generative AI to answer quiz questions or to build your assignments
+or final project, in whole or in part. The work you submit must be your own.
+
+Submitting AI-generated work as your own is a violation of academic honesty under COCC's
+[Student Rights and Responsibilities](https://cocc.edu/policies/general-policy-manual/student/student-rights-and-responsibilities).
+If you're not sure whether a particular use is allowed, ask me first. If you're stuck on an
+assignment, reach out to me for help rather than turning to AI.
+
 # Getting started
 
 First step: if you don't already have a GitHub account, create one for yourself, using your COCC
