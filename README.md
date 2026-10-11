@@ -1,3 +1,82 @@
+# CIS 133JS — Introduction to JavaScript
+
+Course materials for CIS 133JS at Central Oregon Community College.
+
+## Credits and Acknowledgments
+
+This course is built on Kyle Simpson's
+[_You Don't Know JS Yet_](https://github.com/getify/You-Dont-Know-JS) book series (2nd Edition),
+specifically _Get Started_ and _Scope & Closures_. The books shaped the course's structure, topic
+sequence, and much of its conceptual framing, and they are our assigned textbook. They are free to
+read online, and bound copies are available from the links on the book's site. Please consider
+supporting the author if you find the books valuable.
+
+_You Don't Know JS Yet_ is © 2019–2025 Kyle Simpson and is licensed under
+[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). This repository does not
+contain the book's text. The reading summaries, lecture notes, and examples here were built for this
+course in partnership with AI coding agents (see
+[How AI Was Used to Build This Course](#how-ai-was-used-to-build-this-course)) and point students to
+the relevant chapters. They are study aids, not substitutes for the book or adaptations of it. Ideas
+attributed to the author are credited to him where they appear.
+
+Supplementary readings for the DOM, events, and async units come from the
+[MDN Web Docs](https://developer.mozilla.org/).
+
+## How AI Was Used to Build This Course
+
+I want to be upfront about this, because I'm asking you not to use generative AI for your
+coursework.
+
+**What was built with AI.** Everything in this repository was built in partnership with generative
+AI coding agents, specifically Google's Antigravity CLI and Anthropic's Claude Code. That includes
+the course outline, syllabus, reading summaries, lecture notes, assignments, quizzes, code examples,
+starter kit, and supporting tools and scripts. In each case, the AI agents produced the first
+version, and I then reviewed and edited it.
+
+**What was not built with AI.** My recorded lecture videos are entirely my own. I use the lecture
+notes and code examples as rough outlines, but what I say and demonstrate in the videos is mine.
+
+The `CLAUDE.md` file at the root of this repository is the set of instructions I gave Claude Code
+about the course's goals and design decisions. It's included so you can see exactly what the agent
+was told.
+
+**What I did.** I directed the work and made the course's key decisions: the textbook, the topic
+sequence, the tools, and the final project requirements. I reviewed every file the agents produced
+and edited it as needed. I'm responsible for everything here. If you find a mistake, please tell me;
+it's my mistake to fix.
+
+**Why I can use AI and you can't.** The goal of this course is for _you_ to learn to think and write
+in JavaScript. That only happens when you do the work yourself. My goal in building the course was
+different: to produce clear, accurate teaching materials. I already know the material, so AI helped
+me draft faster without replacing the learning. If AI wrote your assignments, it would replace the
+very learning the assignments exist for. See the AI policy in the
+[syllabus](modules/syllabus/syllabus.md).
+
+**A note on the commit history.** Only some commits in this repository are marked as AI co-authored.
+Don't read the commit history as a record of what was AI-assisted. As described above, all of it
+was.
+
+If you have questions or concerns about any of this, I'm glad to talk about it.
+
+## Student Use of Generative AI
+
+**Allowed:**
+
+- **IT problems on your own computer.** You may use generative AI to solve trouble with Git, Node
+  and npm, nodenv, WSL, your editor, and other setup and environment issues. Getting your tools
+  working isn't what this course is assessing, so don't stay stuck on it.
+- **GitHub Copilot pull request reviews.** I encourage you to have GitHub Copilot review your pull
+  requests before you submit them. Use its feedback to improve your own code; don't have it write
+  the code for you.
+
+**Not allowed:** You may not use generative AI to answer quiz questions or to build your assignments
+or final project, in whole or in part. The work you submit must be your own.
+
+Submitting AI-generated work as your own is a violation of academic honesty under COCC's
+[Student Rights and Responsibilities](https://cocc.edu/policies/general-policy-manual/student/student-rights-and-responsibilities).
+If you're not sure whether a particular use is allowed, ask me first. If you're stuck on an
+assignment, reach out to me for help rather than turning to AI.
+
 # Getting started
 
 First step: if you don't already have a GitHub account, create one for yourself, using your COCC
