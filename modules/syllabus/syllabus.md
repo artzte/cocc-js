@@ -58,7 +58,12 @@ I will review and grade assignments within three business days of submission.
 
 ## Class Materials
 
-- **Textbook Title:** You Don't Know JS (Yet) Book Series - 2nd Edition
+- **Textbook Title:** _You Don't Know JS Yet_ book series, 2nd Edition (_Get Started_ and _Scope &
+  Closures_)
+- **Author:** Kyle Simpson
+- **Cost:** Free to read online. Bound copies are optional.
+- **License:** © 2019–2025 Kyle Simpson,
+  [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 - **Online Link:**
   [https://github.com/getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS)
 - **Class assignment repository:**

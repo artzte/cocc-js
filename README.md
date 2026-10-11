@@ -1,3 +1,25 @@
+# CIS 133JS — Introduction to JavaScript
+
+Course materials for CIS 133JS at Central Oregon Community College.
+
+## Credits and Acknowledgments
+
+This course is built on Kyle Simpson's
+[_You Don't Know JS Yet_](https://github.com/getify/You-Dont-Know-JS) book series (2nd Edition),
+specifically _Get Started_ and _Scope & Closures_. The books shaped the course's structure, topic
+sequence, and much of its conceptual framing, and they are our assigned textbook. They are free to
+read online, and bound copies are available from the links on the book's site. Please consider
+supporting the author if you find the books valuable.
+
+_You Don't Know JS Yet_ is © 2019–2025 Kyle Simpson and is licensed under
+[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). This repository does not
+contain the book's text. The reading summaries, lecture notes, and examples here were written for
+this course and point students to the relevant chapters. They are study aids, not substitutes for
+the book or adaptations of it. Ideas attributed to the author are credited to him where they appear.
+
+Supplementary readings for the DOM, events, and async units come from the
+[MDN Web Docs](https://developer.mozilla.org/).
+
 # Getting started
 
 First step: if you don't already have a GitHub account, create one for yourself, using your COCC
