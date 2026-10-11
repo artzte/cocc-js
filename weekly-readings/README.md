@@ -6,10 +6,13 @@ assignments for CIS 133JS (Introduction to JavaScript).
 The primary reading assignments are selected chapters from the _You Don't Know JS Yet_ (YDKJSY) book
 series by Kyle Simpson, along with student-directed readings from the MDN Web Docs.
 
-These summaries are study aids written for this course. They are not excerpts from or adaptations of
-the books, and they do not replace the assigned reading. Please read the chapters themselves; the
-summaries are meant to help you review. _You Don't Know JS Yet_ is © 2019–2025 Kyle Simpson and
-licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+These summaries are study aids built for this course in partnership with AI coding agents. The
+agents drafted them, and I reviewed and edited each one (see
+[How AI Was Used to Build This Course](../README.md#how-ai-was-used-to-build-this-course)). They are
+not excerpts from or adaptations of the books, and they do not replace the assigned reading. Please
+read the chapters themselves; the summaries are meant to help you review. _You Don't Know JS Yet_ is
+© 2019–2025 Kyle Simpson and licensed under
+[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 ## Table of Contents
 

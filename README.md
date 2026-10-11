@@ -13,12 +13,47 @@ supporting the author if you find the books valuable.
 
 _You Don't Know JS Yet_ is © 2019–2025 Kyle Simpson and is licensed under
 [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/). This repository does not
-contain the book's text. The reading summaries, lecture notes, and examples here were written for
-this course and point students to the relevant chapters. They are study aids, not substitutes for
-the book or adaptations of it. Ideas attributed to the author are credited to him where they appear.
+contain the book's text. The reading summaries, lecture notes, and examples here were built for this
+course in partnership with AI coding agents (see
+[How AI Was Used to Build This Course](#how-ai-was-used-to-build-this-course)) and point students to
+the relevant chapters. They are study aids, not substitutes for the book or adaptations of it. Ideas
+attributed to the author are credited to him where they appear.
 
 Supplementary readings for the DOM, events, and async units come from the
 [MDN Web Docs](https://developer.mozilla.org/).
+
+## How AI Was Used to Build This Course
+
+I want to be upfront about this, because I'm asking you not to use generative AI for your
+coursework.
+
+**What was built with AI.** Everything in this repository was built in partnership with generative
+AI coding agents, specifically Google's Antigravity CLI and Anthropic's Claude Code. That includes
+the course outline, syllabus, reading summaries, lectures, assignments, quizzes, code examples,
+starter kit, and supporting tools and scripts. In each case, the AI agents produced the first
+version, and I then reviewed and edited it.
+
+The `CLAUDE.md` file at the root of this repository is the set of instructions I gave Claude Code
+about the course's goals and design decisions. It's included so you can see exactly what the agent
+was told.
+
+**What I did.** I directed the work and made the course's key decisions: the textbook, the topic
+sequence, the tools, and the final project requirements. I reviewed every file the agents produced
+and edited it as needed. I'm responsible for everything here. If you find a mistake, please tell me;
+it's my mistake to fix.
+
+**Why I can use AI and you can't.** The goal of this course is for _you_ to learn to think and write
+in JavaScript. That only happens when you do the work yourself. My goal in building the course was
+different: to produce clear, accurate teaching materials. I already know the material, so AI helped
+me draft faster without replacing the learning. If AI wrote your assignments, it would replace the
+very learning the assignments exist for. See the AI policy in the
+[syllabus](modules/syllabus/syllabus.md).
+
+**A note on the commit history.** Only some commits in this repository are marked as AI co-authored.
+Don't read the commit history as a record of what was AI-assisted. As described above, all of it
+was.
+
+If you have questions or concerns about any of this, I'm glad to talk about it.
 
 # Getting started
 
