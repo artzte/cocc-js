@@ -366,12 +366,18 @@ So that, when you leave your active tab, the editor will automatically save your
 # Add a remote reference to my repo
 git remote add template git@github.com:artzte/cocc-js.git
 
+# Handy setting to tell Git to default to your origin remote
+git config set checkout.defaultRemote origin
+
 # Check out the main branch
 git checkout main
 
 # Confirm no changes locally
 git status
 
-# Merge template updates
-git merge template/main --allow-unrelated-histories -X theirs
+# Pull down template updates
+git merge template/main --allow-unrelated-histories -X theirs --squash
+
+# Commit the template updates as one squashed commit
+git commit -m"updates from course template"
 ```
