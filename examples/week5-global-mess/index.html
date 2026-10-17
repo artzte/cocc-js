@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Week 5: The Global Mess</title>
+    <link rel="stylesheet" href="../../starter/src/common/style.css" />
+    <style>
+      label,
+      input,
+      textarea {
+        display: block;
+      }
+
+      label {
+        margin: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Study Desk</h1>
+
+      <section>
+        <h2>Tip Splitter</h2>
+        <label
+          >Bill amount <input id="bill" type="number" value="84.50"
+        /></label>
+        <label>Tip % <input id="tip" type="number" value="20" /></label>
+        <label>People <input id="people" type="number" value="3" /></label>
+        <button id="split-btn" type="button">Split</button>
+        <p id="tip-result"></p>
+      </section>
+
+      <section>
+        <h2>Word Counter</h2>
+        <label>
+          Text
+          <textarea id="words" rows="4">
+the quick brown fox jumps over the lazy dog</textarea>
+        </label>
+        <button id="count-btn" type="button">Count</button>
+        <p id="word-result"></p>
+      </section>
+    </div>
+
+    <!-- A classic script: no type="module", so it runs in the global scope -->
+    <script src="global-mess.js"></script>
+  </body>
+</html>

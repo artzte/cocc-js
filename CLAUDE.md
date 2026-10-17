@@ -19,6 +19,73 @@ Learn programming fundamentals and object-oriented concepts using vanilla JavaSc
 interactivity and custom behaviors to web applications by employing front-end JavaScript techniques
 combined with HTML and CSS.
 
+### Course textbook
+
+- **Title:** You Don't Know JS Yet (book series), 2nd Edition
+- **Author:** Kyle Simpson
+- **Location:** https://github.com/getify/You-Dont-Know-JS (branch `2nd-ed`)
+
+Volumes used in this course:
+
+- _Get Started_: Ch1–4 (Ch4 as bridge reading into the scope unit)
+- _Scope & Closures_: Ch1–3, 5–8; appendices are optional
+
+#### Linking to the book
+
+These rules apply to **all Markdown in this repo** (lectures, modules, quizzes, weekly readings,
+examples, docs):
+
+- Every reference to a _You Don't Know JS Yet_ book or chapter MUST be a working Markdown link to
+  the chapter's GitHub blob URL, taken from the list below.
+- Always use the full reference as the link text: book title, edition, chapter number, and chapter
+  title. No short forms like "S&C Ch2" or "Get Started Ch2 & Ch3", even in tables. For example:
+
+  [Get Started (2nd Edition), Chapter 1: What Is JavaScript?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch1.md)
+
+- Never link to the local `book/` folder. It is a git-ignored copy kept for convenience; read
+  chapters from it, but links into it will not work.
+- Whenever you edit a file, also convert any existing unlinked or short-form book references in that
+  file to full links.
+
+Following is a full list of books and chapters.
+
+#### Get Started (2nd Edition)
+
+- [Chapter 1: What Is JavaScript?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch1.md)
+- [Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md)
+- [Chapter 3: Digging to the Roots of JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch3.md)
+- [Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)
+- [Appendix A: Exploring Further](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/apA.md)
+- [Appendix B: Practice, Practice, Practice!](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/apB.md)
+
+#### Scope & Closures (2nd Edition)
+
+- [Chapter 1: What's the Scope?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)
+- [Chapter 2: Illustrating Lexical Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch2.md)
+- [Chapter 3: The Scope Chain](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch3.md)
+- [Chapter 4: Around the Global Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch4.md)
+- [Chapter 5: The (Not So) Secret Lifecycle of Variables](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch5.md)
+- [Chapter 6: Limiting Scope Exposure](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch6.md)
+- [Chapter 7: Using Closures](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch7.md)
+- [Chapter 8: The Module Pattern](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch8.md)
+- [Appendix A: Exploring Further](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/apA.md)
+- [Appendix B: Practice](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/apB.md)
+
+#### Objects & Classes (2nd Edition Draft)
+
+- [Chapter 1: Object Foundations](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/objects-classes/ch1.md)
+- [Chapter 2: How Objects Work](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/objects-classes/ch2.md)
+- [Chapter 3: Classy Objects](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/objects-classes/ch3.md)
+- [Chapter 4: This Works](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/objects-classes/ch4.md)
+- [Chapter 5: Delegation](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/objects-classes/ch5.md)
+
+#### Types & Grammar (2nd Edition Draft)
+
+- [Chapter 1: Primitive Values](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/ch1.md)
+- [Chapter 2: Primitive Behaviors](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/ch2.md)
+- [Chapter 3: Object Values](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/ch3.md)
+- [Chapter 4: Coercing Values](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/ch4.md)
+
 ### Outcomes
 
 1. Implement scripts that rely on knowledge of Document Object Model (DOM) architecture and includes
@@ -81,18 +148,3 @@ combined with HTML and CSS.
 - Requirements: vanilla JS, ≥4 ES modules, ≥1 `fetch` call to a real public API, ≥3 user
   interactions, ≥1 ES6 class, Vitest tests for all non-DOM logic, deployed to GitHub Pages or
   Netlify
-
-## Book Source
-
-The YDKJSY books are in `book/`. Relevant volumes:
-
-- `book/get-started/` — Ch1–4 used (ch4 as bridge reading into scope unit)
-- `book/scope-closures/` — Ch1–3, 5–8 used; appendices are optional
-
-## What Still Needs To Be Built
-
-- Course starter kit repo (Vite + Vitest scaffold)
-- Week-by-week lecture notes / slide decks
-- Weekly quiz question banks
-- Weekly programming challenge specs (problem statement, starter HTML, grading rubric)
-- Final project rubric
