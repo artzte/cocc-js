@@ -1,10 +1,14 @@
 # Week 5 Lecture Guide: Lexical Scope
 
-**Reading**: _You Don't Know JS Yet: Scope & Closures_ (2nd Edition) — Chapter 1: _What's the
-Scope?_ & Chapter 2: _Illustrating Lexical Scope_; bridge reading: _Get Started_ Chapter 4: _The
-Bigger Picture_  
-**Format**: Interactive Lecture & Chrome DevTools Snippet Walkthrough
-([`examples/week5-lexical-scope.js`](../examples/week5-lexical-scope.js)), plus a tour of
+**Reading**:
+[Scope & Closures (2nd Edition), Chapter 1: What's the Scope?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)
+and
+[Scope & Closures (2nd Edition), Chapter 2: Illustrating Lexical Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch2.md);
+bridge reading:
+[Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)  
+**Format**:
+Interactive Lecture & Chrome DevTools Snippet Walkthrough
+([`examples/week5-lexical-scope/`](../examples/week5-lexical-scope/README.md)), plus a tour of
 [`examples/week5-global-mess/`](../examples/week5-global-mess/)  
 **Duration**: ~20 Minutes  
 **Prereq Context**: Weeks 2–4 (`let`/`const`/`var`, function forms, ES modules)
@@ -13,15 +17,15 @@ Bigger Picture_
 
 ## Pacing & Timeline
 
-| Time              | Section                              | Focus / Snippet Function                                               |
-| :---------------- | :----------------------------------- | :--------------------------------------------------------------------- |
-| **00:00 - 02:30** | **1. The Bigger Picture**            | _Get Started_ Ch4: three pillars; why scope comes first                |
-| **02:30 - 06:00** | **2. Compile First, Then Execute**   | Syntax errors, early errors, TDZ as evidence (`twoPhasesDemo`)         |
-| **06:00 - 09:00** | **3. Targets and Sources**           | Which references receive vs. supply (`targetsAndSourcesDemo`)          |
-| **09:00 - 13:00** | **4. Marbles, Buckets, and Bubbles** | Nested scopes, outward-only lookup (`scopeBucketsDemo`)                |
-| **13:00 - 15:30** | **5. Lookup Failures**               | ReferenceError, accidental globals, strict mode (`lookupFailuresDemo`) |
-| **15:30 - 19:00** | **6. Scope in the Browser**          | Nested handlers (`nestedHandlersDemo`); the Global Mess tour           |
-| **19:00 - 20:00** | **7. Wrap-Up & Deliverables**        | Quiz 5, Scope Refactor challenge                                       |
+| Time              | Section                              | Focus / Snippet Function                                                                                                                                                    |
+| :---------------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **00:00 - 02:30** | **1. The Bigger Picture**            | [Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md): three pillars; why scope comes first |
+| **02:30 - 06:00** | **2. Compile First, Then Execute**   | Syntax errors, early errors, TDZ as evidence (`twoPhasesDemo`)                                                                                                              |
+| **06:00 - 09:00** | **3. Targets and Sources**           | Which references receive vs. supply (`targetsAndSourcesDemo`)                                                                                                               |
+| **09:00 - 13:00** | **4. Marbles, Buckets, and Bubbles** | Nested scopes, outward-only lookup (`scopeBucketsDemo`)                                                                                                                     |
+| **13:00 - 15:30** | **5. Lookup Failures**               | ReferenceError, accidental globals, strict mode (`lookupFailuresDemo`)                                                                                                      |
+| **15:30 - 19:00** | **6. Scope in the Browser**          | Nested handlers (`nestedHandlersDemo`); the Global Mess tour                                                                                                                |
+| **19:00 - 20:00** | **7. Wrap-Up & Deliverables**        | Quiz 5, Scope Refactor challenge                                                                                                                                            |
 
 ---
 
@@ -29,9 +33,16 @@ Bigger Picture_
 
 ### Talking Points & Concept Cues
 
-- **Where we are**: Weeks 1–4 surveyed the language (_Get Started_ Ch1–3). Now we start going deep,
-  with _Scope & Closures_ as the main text through week 9.
-- **Kyle Simpson's three pillars of JS** (_Get Started_ Ch4):
+- **Where we are**: Weeks 1–4 surveyed the language
+  ([Get Started (2nd Edition), Chapter 1: What Is JavaScript?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch1.md),
+  [Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md),
+  and
+  [Get Started (2nd Edition), Chapter 3: Digging to the Roots of JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch3.md)).
+  Now we start going deep, with
+  [Scope & Closures (2nd Edition)](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/README.md)
+  as the main text through week 9.
+- **Kyle Simpson's three pillars of JS**
+  ([Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)):
   1. **Scope and closure**: how variables are organized and found. Weeks 5–7, and modules in week 9.
   2. **Prototypes**: how objects link to each other. Week 8, at the awareness level, under classes.
   3. **Types and coercion**: we touched this in weeks 2–3 (`typeof`, `==` vs. `===`).
@@ -50,9 +61,11 @@ Bigger Picture_
   whole program in two phases: parsing/compilation, then execution.
 - **Python bridge (CIS 122)**: Python also compiles to bytecode before running. A Python file with a
   syntax error on line 50 doesn't run lines 1–49 either.
-- **Three pieces of evidence** (_S&C_ Ch1):
+- **Three pieces of evidence**
+  ([Scope & Closures (2nd Edition), Chapter 1: What's the Scope?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)):
   1. **Syntax errors**: a bad token at the end of a file means nothing at the top runs. (Show the
-     bonus two-line snippet from `week5-lexical-scope.md`.)
+     bonus two-line snippet in
+     [`examples/week5-lexical-scope/README.md`](../examples/week5-lexical-scope/README.md).)
   2. **Early errors**: strict mode rejects things like duplicate parameter names before anything
      runs.
   3. **Hoisting / TDZ**: reading a `let` variable before its declaration line throws
@@ -100,8 +113,10 @@ function twoPhasesDemo() {
 
 ### Talking Points & Concept Cues
 
-- **Simpson's metaphor** (_S&C_ Ch2): variables are marbles; scopes are colored buckets. Each
-  marble's color is set by the bucket it was _declared_ in, at compile time.
+- **Simpson's metaphor**
+  ([Scope & Closures (2nd Edition), Chapter 2: Illustrating Lexical Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch2.md)):
+  variables are marbles; scopes are colored buckets. Each marble's color is set by the bucket it was
+  _declared_ in, at compile time.
 - **What makes a bucket**: the global scope, each function, and (for `let`/`const`) each `{ }`
   block.
 - **Scope bubbles nest**: a function written inside another function sits in a bubble inside the
@@ -132,9 +147,10 @@ function scopeBucketsDemo() {
 }
 ```
 
-- **The conversation** (_S&C_ Ch2): if time permits, narrate `teach('lexical scope')` as Engine
-  asking Scope Manager: "I have a source reference for `course`. Ever heard of it?" GREEN says no,
-  BLUE says yes.
+- **The conversation**
+  ([Scope & Closures (2nd Edition), Chapter 2: Illustrating Lexical Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch2.md)):
+  if time permits, narrate `teach('lexical scope')` as Engine asking Scope Manager: "I have a source
+  reference for `course`. Ever heard of it?" GREEN says no, BLUE says yes.
 
 ---
 

@@ -40,7 +40,7 @@ function twoPhasesDemo() {
   console.log('After declaration:', greeting)
 
   // To see a syntax error stop a whole program before ANY of it runs,
-  // try the separate two-line snippet in week5-lexical-scope.md.
+  // try the separate two-line snippet in README.md.
 }
 
 // --------------------------------------------------------------------
