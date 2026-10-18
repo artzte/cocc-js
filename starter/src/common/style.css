@@ -295,6 +295,12 @@ button:hover {
   background-color: var(--color-surface-hover);
 }
 
+label,
+input,
+textarea {
+  display: block;
+}
+
 input[type='text'],
 input[type='search'],
 input[type='number'],

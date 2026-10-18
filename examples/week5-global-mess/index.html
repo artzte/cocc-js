@@ -6,14 +6,8 @@
     <title>Week 5: The Global Mess</title>
     <link rel="stylesheet" href="../../starter/src/common/style.css" />
     <style>
-      label,
-      input,
-      textarea {
-        display: block;
-      }
-
-      label {
-        margin: 1rem 0;
+      .result {
+        color: darkgreen;
       }
     </style>
   </head>
@@ -23,24 +17,31 @@
 
       <section>
         <h2>Tip Splitter</h2>
-        <label
-          >Bill amount <input id="bill" type="number" value="84.50"
-        /></label>
-        <label>Tip % <input id="tip" type="number" value="20" /></label>
-        <label>People <input id="people" type="number" value="3" /></label>
+        <label for="bill">Bill amount</label>
+        <input id="bill" type="number" value="84.50" />
+
+        <label for="tip">Tip %</label>
+        <input id="tip" type="number" value="20" />
+
+        <label for="people">People</label>
+        <input id="people" type="number" value="3" />
+
         <button id="split-btn" type="button">Split</button>
-        <p id="tip-result"></p>
+
+        <p id="tip-result" class="result"></p>
       </section>
 
       <section>
         <h2>Word Counter</h2>
-        <label>
-          Text
-          <textarea id="words" rows="4">
-the quick brown fox jumps over the lazy dog</textarea>
-        </label>
+        <label for="words">Text</label>
+
+        <textarea id="words" rows="4">
+the quick brown fox jumps over the lazy dog
+        </textarea>
+
         <button id="count-btn" type="button">Count</button>
-        <p id="word-result"></p>
+
+        <p id="word-result" class="result"></p>
       </section>
     </div>
 

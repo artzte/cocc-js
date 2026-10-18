@@ -4,15 +4,10 @@
 // ====================================================================
 
 // --------------------------------------------------------------------
-// Setup for Chrome DevTools Snippets:
-// 1. Open Google Chrome to a blank tab (about:blank).
-// 2. Open DevTools (F12 or Ctrl+Shift+I / Cmd+Option+I).
-// 3. Switch to the "Sources" tab.
-// 4. In the left panel, click "Snippets" (or press Ctrl+Shift+P / Cmd+Shift+P
-//    and type "Create snippet").
-// 5. Name the snippet "week5-lexical-scope.js".
-// 6. Paste this code into the editor.
-// 7. Press Ctrl+S (Cmd+S) to save, and Ctrl+Enter (Cmd+Enter) to run.
+// Setup for this week's snippet is a little different. Rather than
+// using a snippet, we will just open the adjacent index.html in our
+// browser. Use your file manager app to open index.html, then open
+// the browser Inspector to examine the behaviors.
 //
 // Demo 5 adds a small panel of buttons to the page. Click them and
 // watch the console.

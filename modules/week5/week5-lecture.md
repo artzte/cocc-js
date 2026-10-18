@@ -86,8 +86,7 @@ so you get the safer behavior automatically.
     (bridge reading)
   - [Week 5 Reading Summary](../../weekly-readings/week-05.md)
 - **Interactive Code & Demos**:
-  - [Week 5 Lexical Scope DevTools Snippet Guide](../../examples/week5-lexical-scope.md)
-  - [Week 5 Lexical Scope Source Snippet (`week5-lexical-scope.js`)](../../examples/week5-lexical-scope.js)
+  - [Week 5 Lexical Scope Example](../../examples/week5-lexical-scope/README.md)
   - [The Global Mess (`examples/week5-global-mess/`)](../../examples/week5-global-mess/global-mess.js)
 - **Programming Assignment**:
   - [Week 5 Assignment: Scope Refactor](week5-assignment-scope-refactor.md)

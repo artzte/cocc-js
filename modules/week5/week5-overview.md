@@ -82,10 +82,7 @@ By the end of this module you will be able to:
    - [Week 5 Lecture: Lexical Scope](week5-lecture.md)
    - [Lecture Guide: Lexical Scope](../../lectures/week5-lexical-scope.md)
 3. **Hands-On Practice & Code Exploration**:
-   - Run the [Week 5 Lexical Scope Snippet](../../examples/week5-lexical-scope.md)
-     ([`examples/week5-lexical-scope.js`](../../examples/week5-lexical-scope.js)) in Chrome
-     DevTools. Demo 5 adds buttons to the page; click them and trace which variables each handler
-     can see.
+   - Open the [Week 5 Lexical Scope example](../../examples/week5-lexical-scope/README.md)
    - Open [`examples/week5-global-mess/index.html`](../../examples/week5-global-mess/index.html) in
      Chrome and try both widgets.
 4. **Assessment — Quiz 5**:

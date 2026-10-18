@@ -8,16 +8,11 @@ The full snippet is in [`week5-lexical-scope.js`](week5-lexical-scope.js).
 
 ---
 
-## Setup for Chrome DevTools Snippets
+## Setup
 
-1. Open Google Chrome to a blank tab (`about:blank`).
+1. Open `index.html` in this folder, in your browser.
 2. Open DevTools (`F12` or `Ctrl+Shift+I` on Windows/Linux, `Cmd+Option+I` on macOS).
-3. Switch to the **Sources** tab.
-4. In the left panel, click **Snippets** (or press `Ctrl+Shift+P` / `Cmd+Shift+P` and type
-   `Create snippet`).
-5. Name the snippet `week5-lexical-scope.js`.
-6. Paste in the contents of [`week5-lexical-scope.js`](week5-lexical-scope.js), press `Ctrl+S`
-   (`Cmd+S`) to save, and `Ctrl+Enter` (`Cmd+Enter`) to run.
+3. Switch to the **Sources** tab, and find the source files here.
 
 ---
 
