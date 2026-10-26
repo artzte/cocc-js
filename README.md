@@ -383,7 +383,7 @@ git status
 git fetch template
 
 # 4. Pull in template updates
-git merge template/main --allow-unrelated-histories -X theirs --squash
+git merge template/main -X theirs --squash
 
 # 5. Commit the template updates as one squashed commit
 git commit -m"updates from course template"
