@@ -54,6 +54,64 @@ distortion.
 
 ---
 
+## OBS Studio "Set and Forget" Config (`obs-config`)
+
+Your full OBS Studio configuration—including the **Output Profile** (`1920 × 1080` canvas, encoders,
+and `~/Videos/Screencasts` output path), **Scene Collection** (`Screen Capture (PipeWire)` cropped
+to the screencast zone and locked, plus `Video Capture Device (V4L2)` scaled to `279 × 210` with
+Background Blur and pinned/locked at the bottom-left corner `x: 0, y: 870`), and startup selection
+(`user.ini`)—is centrally tracked in `~/src/artzt-config/dot.config/obs-studio/`.
+
+A helper CLI (`obs-config`, symlinked to `~/.local/bin/obs-config` from
+`~/src/artzt-config/obs-config.sh`) manages restoring and updating these settings.
+
+> **Important**: Always **close OBS Studio first** before running `obs-config restore` or
+> `obs-config save`, because OBS Studio overwrites its configuration files in
+> `~/.config/obs-studio/` when it exits.
+
+### 1. Restoring Your Saved OBS Config
+
+If your OBS layout, sources, or profile settings ever get bumped or lost, close OBS Studio and run:
+
+```bash
+obs-config restore
+```
+
+- Restores `user.ini`, the `cocc-lecture-secondary-window-1920x1080` profile (`basic.ini`), and the
+  `Untitled.json` scene collection from `~/src/artzt-config/dot.config/obs-studio/`.
+- Automatically preserves your active PipeWire `RestoreToken` so GNOME does not re-prompt you to
+  select the monitor on next launch.
+- Running `~/src/artzt-config/symlink.sh` (or `migration/restore.sh` on a fresh machine) also runs
+  `obs-config restore` automatically when OBS is closed.
+
+### 2. Updating the Saved Config in the Future
+
+Whenever you intentionally adjust a setting, filter, audio source, or camera position in OBS Studio
+and want to make that the new permanent default:
+
+1. **Close OBS Studio** (so OBS flushes your changes from memory to `~/.config/obs-studio/`).
+2. Save the live config back into `artzt-config`:
+   ```bash
+   obs-config save
+   ```
+3. Commit and push the update in `~/src/artzt-config`:
+   ```bash
+   git -C ~/src/artzt-config add dot.config/obs-studio
+   git -C ~/src/artzt-config commit -m "chore(obs): update OBS Studio screencast config"
+   git -C ~/src/artzt-config push
+   ```
+
+### 3. Checking for Configuration Drift
+
+To see what (if anything) in your live `~/.config/obs-studio/` differs from the saved config in
+`~/src/artzt-config`:
+
+```bash
+obs-config status
+```
+
+---
+
 ## Prerequisites
 
 - Python 3
