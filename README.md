@@ -331,16 +331,29 @@ npm test
 I will periodically update this repo during the term. You can retrieve these updates to your own
 repository by setting up a Git remote to your local repo (do this once):
 
-```
+```bash
+# 1. Add a remote reference to the course template repo
 git remote add template git@github.com:artzte/cocc-js.git
+
+# 2. Handy setting to tell Git to default to your origin remote
+git config set checkout.defaultRemote origin
 ```
 
 Then, to retrieve the updates (do this every time you want to fetch updates):
 
-```
-# make sure you have a clean repo - no changes to commit
+```bash
+# 1. Switch to your main branch and confirm no uncommitted changes locally
+git checkout main
+git status
+
+# 2. Retrieve updates from the course template repo
 git fetch template
-git merge template/main --allow-unrelated-histories -X theirs -m"course update"
+
+# 3. Overwrite template files from the repo root (leaves your projects/ folder intact)
+git checkout template/main -- :/
+
+# 4. Commit the template updates as a single commit
+git commit -m "updates from course template"
 ```
 
 # Visual Studio notes
@@ -359,32 +372,3 @@ So that, when you leave your active tab, the editor will automatically save your
 
 1. Ctrl+Shift+P (to open the command palette)
 2. Type "Toggle autosave"
-
-# Pulling in cocc-js template updates
-
-```
-# One-Time Setup Steps
-# 1. Add a remote reference to my repo
-git remote add template git@github.com:artzte/cocc-js.git
-
-# 2. Handy setting to tell Git to default to your origin remote
-git config set checkout.defaultRemote origin
-
-
-
-# Weekly update of updated course materials
-# 1. Check out the main branch
-git checkout main
-
-# 2. Confirm no changes locally
-git status
-
-# 3. Retrieve updates
-git fetch template
-
-# 4. Pull in template updates
-git merge template/main -X theirs --squash
-
-# 5. Commit the template updates as one squashed commit
-git commit -m"updates from course template"
-```
