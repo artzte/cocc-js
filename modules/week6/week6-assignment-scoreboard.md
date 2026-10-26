@@ -32,8 +32,8 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
    (4)"_). If every score is `0`, show _"No points yet"_. Add a **Reset** button that sets every
    score to `0`.
 6. **Pure, exported helper**: Export a pure function `getLeaders(players, scores)` that returns an
-   array of the leading players' names (an empty array if every score is `0`). Your leader message
-   should use it.
+   array of the leading players' names and scores (an empty array if every score is `0`). Your
+   leader message should use it.
 7. **Tests**: Write Vitest tests for `getLeaders`, plus DOM tests that click buttons and check the
    rendered scores (see the example below).
 8. **Demonstrate the bug, then fix it** (see _The `var` Bug, Step by Step_ below). Your commit
