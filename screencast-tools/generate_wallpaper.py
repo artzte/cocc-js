@@ -69,6 +69,10 @@ def create_dell_wallpaper():
     CYAN_MAIN       = (56, 189, 248, 255)       # #38bdf8
     CYAN_BRIGHT     = (125, 211, 252, 255)      # #7dd3fc
     CYAN_GLOW       = (56, 189, 248, 50)
+    BLUE_DEEP       = (37, 99, 235, 255)        # #2563eb (deeper blue for video reference box)
+    BLUE_LABEL      = (96, 165, 250, 230)       # #60a5fa
+    BLUE_GLOW       = (37, 99, 235, 65)
+    BLUE_FILL       = (29, 78, 216, 24)
     WHITE_BRIGHT    = (255, 255, 255, 255)
     WHITE_DIM       = (241, 245, 249, 210)
     SLATE_LIGHT     = (203, 213, 225, 200)
@@ -113,6 +117,36 @@ def create_dell_wallpaper():
     for y in range(hd_y, GUIDE_Y + GUIDE_H - 10, 16):
         draw.line([(hd_x, y), (hd_x, y + 8)], fill=(148, 163, 184, 55), width=1)
     draw.text((hd_x - 170, hd_y + 8), "720p HD (1280 × 720)", font=font_mono_sm, fill=(148, 163, 184, 110))
+
+    # 3b. Video Window Reference Box in bottom-left corner of screencast zone
+    # OBS offsets: 870px from top of zone, 1641px from right of zone -> 279 × 210 px
+    vid_top_offset = 870
+    vid_right_offset = 1641
+    vid_w = GUIDE_W - vid_right_offset          # 279
+    vid_h = GUIDE_H - vid_top_offset            # 210
+    vid_x1 = GUIDE_X                            # 150
+    vid_y1 = GUIDE_Y + vid_top_offset           # 1240
+    vid_x2 = GUIDE_X + vid_w                    # 429
+    vid_y2 = GUIDE_Y + GUIDE_H                  # 1450
+
+    draw.rectangle([(vid_x1, vid_y1), (vid_x2, vid_y2)], fill=BLUE_FILL)
+    draw.rectangle(
+        [(vid_x1 - 1, vid_y1 - 1), (vid_x2 + 1, vid_y2 + 1)],
+        outline=BLUE_GLOW,
+        width=2
+    )
+    draw.rectangle(
+        [(vid_x1, vid_y1), (vid_x2, vid_y2)],
+        outline=BLUE_DEEP,
+        width=3
+    )
+    # Corner accent ticks on top-right of video reference box
+    vid_arm = 18
+    draw.line([(vid_x2 - vid_arm, vid_y1), (vid_x2, vid_y1)], fill=BLUE_LABEL, width=3)
+    draw.line([(vid_x2, vid_y1), (vid_x2, vid_y1 + vid_arm)], fill=BLUE_LABEL, width=3)
+
+    draw.text((vid_x1 + 14, vid_y1 + 10), f"VIDEO ({vid_w} × {vid_h})", font=font_mono_b, fill=BLUE_LABEL)
+    draw.text((vid_x1 + 14, vid_y1 + 32), f"top: {vid_top_offset}px • right: {vid_right_offset}px", font=font_mono_sm, fill=(96, 165, 250, 175))
 
     # 4. Center Reticle (x = 960, y = 540 inside frame)
     cx = GUIDE_X + (GUIDE_W // 2)

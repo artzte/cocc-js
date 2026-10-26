@@ -26,6 +26,9 @@ U3818DW)** ultrawide monitor.
     - Faint rule-of-thirds dashed guidelines and intersection crosses.
     - Nested `1280 × 720` (720p HD) alignment outline anchored in the bottom-left corner of the
       zone.
+    - Deeper-blue `279 × 210` video window reference box anchored in the bottom-left corner of the
+      zone (`870px` from top of zone, `1641px` from right of zone; screen `x: 150 → 429`,
+      `y: 1240 → 1450`).
     - Dedicated badge pills indicating exclusion buffers and aspect ratio.
 - **Staging / Notes Zone**: `1920 × 370` (top, `x: 150 → 2070`, `y: 0 → 370`)
   - Safe area outside the recording frame for teleprompters, lecture notes, and OBS controls.
