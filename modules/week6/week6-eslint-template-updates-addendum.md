@@ -8,12 +8,12 @@ your code).
 The JS ecosystem is wide and wonderful, which is why I have put you all through the trouble of
 learning npm etc.
 
-Here's a link to the ESLint website: (https://eslint.org/)[https://eslint.org/]
+Here's a link to the ESLint website: [https://eslint.org/](https://eslint.org/)
 
 To summarize,
 
-1. Pull in your template updates using the (instructions on our course
-   README.md)[https://github.com/artzte/cocc-js#setting-up-to-receive-course-updates].
+1. Pull in your template updates using the [instructions on our course
+   README.md](https://github.com/artzte/cocc-js#setting-up-to-receive-course-updates).
 2. If you have an active project in play that you want to update with the ESLint features, then run
    this command:
 
