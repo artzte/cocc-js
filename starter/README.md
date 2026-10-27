@@ -26,6 +26,8 @@ Don't have a GitHub account? Sign up at [github.com](https://github.com) and cla
 | `npm test`             | Run all tests once                              |
 | `npm run test:watch`   | Run tests in watch mode                         |
 | `npm run test:ui`      | Run tests with browser-based Vitest UI          |
+| `npm run lint`         | Check code for syntax and logic errors (ESLint) |
+| `npm run lint:fix`     | Auto-fix ESLint warnings/errors where safe      |
 | `npm run format`       | Format code with Prettier                       |
 | `npm run format:check` | Check code formatting with Prettier             |
 
@@ -35,6 +37,7 @@ Don't have a GitHub account? Sign up at [github.com](https://github.com) and cla
 starter/
 ├── index.html          # Entry HTML page (loads style.css and main.js)
 ├── package.json        # Dependencies and scripts
+├── eslint.config.js    # ESLint configuration (catches syntax/scope errors)
 ├── vite.config.js      # Vite and Vitest configuration
 ├── src/
 │   ├── app.js          # Student anchor file (exports renderApp)
