@@ -2,8 +2,8 @@
 
 **Sources**:
 
-- _You Don't Know JS Yet: Scope & Closures_ — Chapter 6: Limiting Scope Exposure
-- _You Don't Know JS Yet: Scope & Closures_ — Chapter 7: Using Closures
+- [Scope & Closures (2nd Edition), Chapter 6: Limiting Scope Exposure](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch6.md)
+- [Scope & Closures (2nd Edition), Chapter 7: Using Closures](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch7.md)
 
 ---
 
