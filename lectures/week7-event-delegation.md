@@ -74,9 +74,12 @@ Side Lecture & Code Refactoring Walkthrough
 - Inside our single `#app` click listener:
   - Use `const button = event.target.closest('button')` so clicks on empty space (or inner spans)
     are handled safely.
-  - Read `const { type, index } = button.dataset`.
-  - Remember: all `dataset` values are strings, so pass `Number(index)` to `addPoint` /
-    `removePoint`.
+  - Convert the index: `const i = parseInt(button.dataset.index, 10)`. All `dataset` values are
+    strings, so we need a number before calling `addPoint` / `removePoint`.
+  - `switch (button.dataset.type)` with `'add'`, `'subtract'`, and `'reset'` cases; each updates
+    `scores` and calls `render()`. A `default` case ignores unknown buttons.
+  - Reset has no `data-index`, so `i` is `NaN` there, which is harmless because the `'reset'` case
+    never uses it.
 
 ---
 
@@ -90,6 +93,8 @@ Side Lecture & Code Refactoring Walkthrough
   - `render()` is now a pure "state in, HTML out" function.
   - And remember the test hint from Week 6 (_"Query for the buttons after each click..."_)? Our
     event wiring no longer cares how many times `render()` rebuilds the DOM.
+  - `renderApp()` now ends with `return app`, so the tests can do `app = renderApp()` and click
+    buttons with a fresh `app.querySelector(...)` after every render.
 - **Bridge to Week 7 Assignment**: In the **Color Theme Switcher**, you will render buttons for 6
   community color themes plus **Previous**, **Next**, and **Reset** controls. Instead of attaching 9
   separate event listeners every time the UI re-renders, you'll attach **one** delegated click

@@ -54,8 +54,8 @@ export function renderApp() {
         <td data-test-score>${scores[i]}</td>
         <td>
           <div class="buttons">
-            <button data-type="add" data-index="${i}">+1</button>
-            <button data-type="subtract" data-index="${i}">-1</button>
+            <button data-type='add' data-index='${i}'>+1</button>
+            <button data-type='subtract' data-index='${i}'>-1</button>
           </div>
         </td>
       </tr>
@@ -69,10 +69,12 @@ export function renderApp() {
 
       const leader = leaders.shift()
 
+      // no remainders
       if (leaders.length === 0) {
         return `Leader: ${leader.name} (${leader.score})`
       }
 
+      // a tie
       return `Tied: ${[leader, ...leaders].map((player) => player.name).join(', ')} (${leader.score})`
     }
 
@@ -82,7 +84,7 @@ export function renderApp() {
           display: flex;
           gap: 10px;
         }
-        
+
         .buttons > button {
           display: block;
           width: 5rem;
@@ -105,21 +107,34 @@ export function renderApp() {
       <p><button id="reset" data-type="reset">Reset scores</button></p>`
   }
 
+  render()
+
   // Single delegated event listener on `#app`:
   // Survives every `app.innerHTML` rebuild without re-attaching listeners!
   app.addEventListener('click', (event) => {
     const button = event.target.closest('button')
     if (!button) return
 
-    const { type, index } = button.dataset
-    if (!type) return
+    const i = parseInt(button.dataset.index, 10)
 
-    if (type === 'add') scores = addPoint(Number(index))
-    if (type === 'subtract') scores = removePoint(Number(index))
-    if (type === 'reset') scores = resetScores()
-
-    render()
+    switch (button.dataset.type) {
+      case 'add':
+        scores = addPoint(i)
+        render()
+        break
+      case 'subtract':
+        scores = removePoint(i)
+        render()
+        break
+      case 'reset':
+        scores = resetScores()
+        render()
+        break
+      default:
+        console.log('Unknown button')
+        break
+    }
   })
 
-  render()
+  return app
 }

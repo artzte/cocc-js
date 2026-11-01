@@ -84,8 +84,8 @@ function render() {
 
 Look at what `render()` is doing:
 
-1. **Lines 1–33**: Builds the HTML string and writes it to `app.innerHTML`.
-2. **Lines 35–53**: Queries the DOM for `.buttons` and `#reset`, loops over the players, and creates
+1. **Lines 2–59**: Builds the HTML string and writes it to `app.innerHTML`.
+2. **Lines 61–81**: Queries the DOM for `.buttons` and `#reset`, loops over the players, and creates
    `2 * players.length + 1` new arrow functions and attaches them to the newly created buttons.
 
 While modern browsers are very good at garbage-collecting the old detached buttons and their old
@@ -139,13 +139,13 @@ In HTML, any attribute starting with `data-` is valid and exposed by the browser
 
 - `data-type="add"` becomes `element.dataset.type` (`"add"`)
 - `data-index="1"` becomes `element.dataset.index` (`"1"` — always a string, so convert with
-  `Number(index)` when you need a number!)
+  `parseInt(button.dataset.index, 10)` when you need a number!)
 
 #### Step 2: Attach ONE listener to `app` outside `render()`
 
-When any click happens inside `app`, the browser passes an `event` object to our handler. We can use
-`event.target.closest('button')` (or check `event.target.dataset`) to see if a button with a
-`data-type` was clicked:
+When any click happens inside `app`, the browser passes an `event` object to our handler. We use
+`event.target.closest('button')` to find the button that was clicked, then `switch` on its
+`data-type` to decide what to do:
 
 ```javascript
 // Attached ONCE inside renderApp(), outside render()!
@@ -153,16 +153,31 @@ app.addEventListener('click', (event) => {
   const button = event.target.closest('button')
   if (!button) return
 
-  const { type, index } = button.dataset
-  if (!type) return
+  const i = parseInt(button.dataset.index, 10)
 
-  if (type === 'add') scores = addPoint(Number(index))
-  if (type === 'subtract') scores = removePoint(Number(index))
-  if (type === 'reset') scores = resetScores()
-
-  render()
+  switch (button.dataset.type) {
+    case 'add':
+      scores = addPoint(i)
+      render()
+      break
+    case 'subtract':
+      scores = removePoint(i)
+      render()
+      break
+    case 'reset':
+      scores = resetScores()
+      render()
+      break
+    default:
+      console.log('Unknown button')
+      break
+  }
 })
 ```
+
+> 💡 **What about the Reset button?** It has no `data-index`, so `parseInt(undefined, 10)` gives
+> `NaN`. That's fine: the `'reset'` case never uses `i`. Any button without a recognized `data-type`
+> falls through to `default` and is ignored.
 
 > 💡 **Why `event.target.closest('button')`?** If a button ever contains child HTML (like an icon
 > `<span>+1</span>` or a color swatch), `event.target` might be that inner `<span>`. Calling
@@ -208,8 +223,8 @@ export function renderApp() {
         <td data-test-score>${scores[i]}</td>
         <td>
           <div class="buttons">
-            <button data-type="add" data-index="${i}">+1</button>
-            <button data-type="subtract" data-index="${i}">-1</button>
+            <button data-type='add' data-index='${i}'>+1</button>
+            <button data-type='subtract' data-index='${i}'>-1</button>
           </div>
         </td>
       </tr>
@@ -220,15 +235,32 @@ export function renderApp() {
     const leaders = getLeaders(players, scores)
     function leadersReport() {
       if (leaders.length === 0) return 'No points yet'
+
       const leader = leaders.shift()
+
+      // no remainders
       if (leaders.length === 0) {
         return `Leader: ${leader.name} (${leader.score})`
       }
-      return `Tied: ${[leader, ...leaders].map((p) => p.name).join(', ')} (${leader.score})`
+
+      // a tie
+      return `Tied: ${[leader, ...leaders].map((player) => player.name).join(', ')} (${leader.score})`
     }
 
     // `render()` ONLY renders HTML! No loops, no addEventListener calls.
     app.innerHTML = `
+      <style>
+        .buttons {
+          display: flex;
+          gap: 10px;
+        }
+
+        .buttons > button {
+          display: block;
+          width: 5rem;
+          text-align: center;
+        }
+      </style>
       <table>
         <thead>
           <tr>
@@ -245,24 +277,43 @@ export function renderApp() {
       <p><button id="reset" data-type="reset">Reset scores</button></p>`
   }
 
+  render()
+
   // ONE listener on the persistent `#app` container handles every click!
   app.addEventListener('click', (event) => {
     const button = event.target.closest('button')
     if (!button) return
 
-    const { type, index } = button.dataset
-    if (!type) return
+    const i = parseInt(button.dataset.index, 10)
 
-    if (type === 'add') scores = addPoint(Number(index))
-    if (type === 'subtract') scores = removePoint(Number(index))
-    if (type === 'reset') scores = resetScores()
-
-    render()
+    switch (button.dataset.type) {
+      case 'add':
+        scores = addPoint(i)
+        render()
+        break
+      case 'subtract':
+        scores = removePoint(i)
+        render()
+        break
+      case 'reset':
+        scores = resetScores()
+        render()
+        break
+      default:
+        console.log('Unknown button')
+        break
+    }
   })
 
-  render()
+  return app
 }
 ```
+
+> 💡 **Why `return app`?** Returning the `#app` element lets the Vitest suite grab it directly
+> (`app = renderApp()`) and click buttons with a live query such as
+> ``app.querySelector(`button[data-type="add"][data-index="${i}"]`).click()``. Because `render()`
+> replaces every button on each click, tests must re-query after every click rather than holding on
+> to old button references.
 
 ### Why This Pattern Wins
 
