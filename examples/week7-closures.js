@@ -36,13 +36,16 @@ function poleDemo() {
 
     return function factorial(n) {
       if (n < 2) return 1
-      if (!(n in cache)) {
-        console.log(`  computing ${n}! ...`)
-        cache[n] = n * factorial(n - 1)
-      } else {
+
+      if (n in cache) {
         console.log(`  cache hit for ${n}!`)
+        return cache[n]
       }
-      return cache[n]
+
+      console.log(`  computing ${n}! ...`)
+      const factorialOfN = (cache[n] = n * factorial(n - 1))
+
+      return factorialOfN
     }
   }
 

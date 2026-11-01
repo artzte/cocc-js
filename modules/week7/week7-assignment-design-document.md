@@ -35,14 +35,12 @@ proposal (and incorporating any feedback you received on Milestone 1):
 Provide one or more wireframes or layout sketches showing the primary states of your interface (for
 example: initial/search view, results view, and detail/empty/error states).
 
-- You may include:
-  - **ASCII/Markdown box wireframes** directly in `README.md` (similar to the wireframe in the Week
-    7 Theme Switcher assignment), **or**
-  - **Embedded images** (`![Main View](./wireframe-main.png)`) saved in your `projects/final/`
-    folder (drawn with Excalidraw, Figma, pen-and-paper photo, etc.).
-- **Color Palette / Theme Choice**: Note which color palette you plan to use (you are welcome to
-  adopt one of the community palettes from the Week 7 Theme Switcher—such as Catppuccin, Nord, Rosé
-  Pine, Dracula, or Solarized—or even include a theme toggle in your app!).
+You can create a wireframe in markdown, or (my preferred method) just create a pencil sketch of your
+user interface, and take a picture of it, and save the picture under your `final` project folder.
+You can link to your picture e.g.: `![Main View](./wireframe-main.jpg)`
+
+Think about the color palette for your application. You're encouraged to use one of the color
+palettes from this week's project assignment.
 
 ### 2. Data Model & State Management
 
@@ -66,7 +64,6 @@ example:
 | :------------- | :----------------------------------------------------- | :-------------------------------------------------- |
 | `src/api.js`   | Fetches data from the public API and parses JSON       | `fetchItems(query)`, `buildEndpointUrl(params)`     |
 | `src/model.js` | Defines the core ES6 class and pure data helpers       | `class ItemCard`, `filterItems(items, filterState)` |
-| `src/state.js` | Encapsulates app state using closure or state manager  | `createAppState(initialData)`                       |
 | `src/ui.js`    | Pure HTML template builders and DOM rendering helpers  | `renderResults(items)`, `renderError(msg)`          |
 | `src/app.js`   | Coordinates initialization and delegated event handler | `renderApp()`                                       |
 
@@ -111,5 +108,5 @@ example:
 | :------------------------------- | :----- | :----------------------------------------------------------------------------------------------- |
 | **UI Wireframes & Layout**       | 25 pts | Clear wireframe(s) showing controls, data display, and loading/error areas.                      |
 | **Data Model & Class Plan**      | 25 pts | Well-defined application state and planned ES6 `class` (properties + methods).                   |
-| **Module Breakdown (≥4 files)**  | 25 pts | At least 4 ES modules listed with clear separation of concerns and planned exports.              |
+| **Module Breakdown (≥4 files)**  | 25 pts | ES modules listed with clear separation of concerns and planned exports.                         |
 | **API Endpoints & Interactions** | 25 pts | Concrete endpoint URLs, error/loading state plan, and ≥3 user interactions mapped to DOM events. |

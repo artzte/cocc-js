@@ -110,3 +110,30 @@ export const themes = [
     },
   },
 ]
+
+// --------------------------------------------------------------------
+// Optional Sample Preview Markup:
+// Feel free to drop this into your rendered template so you can see
+// how the starter kit's CSS custom properties style headings, text,
+// blockquotes, inline code, and links across every theme.
+// --------------------------------------------------------------------
+export const previewMarkup = `
+  <section class="theme-preview">
+    <h3>Sample Elements Preview</h3>
+    <p>
+      Every element in this preview is styled automatically by the semantic
+      <code>--color-*</code> custom properties in <code>src/common/style.css</code>.
+      For a deeper dive into scope and closures, explore Kyle Simpson's
+      <a href="https://github.com/getify/You-Dont-Know-JS" target="_blank" rel="noopener noreferrer">
+        You Don't Know JS Yet (GitHub repository)
+      </a>.
+    </p>
+    <blockquote>
+      <p>
+        "Closure is observed when a function uses variable(s) from outer
+        scope(s) even while running in a scope where those variables wouldn't
+        be accessible."
+      </p>
+    </blockquote>
+  </section>
+`

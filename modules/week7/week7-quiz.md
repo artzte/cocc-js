@@ -13,9 +13,8 @@ your reasoning.
 In
 [Scope & Closures (2nd Edition), Chapter 6: Limiting Scope Exposure](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch6.md),
 Kyle Simpson introduces the **Principle of Least Exposure (POLE)**. Explain what POLE means and
-describe the three main problems that happen when variables are left exposed in broader scopes than
-necessary. How can you use either a function scope or an explicit `{ ... }` block scope with `let` /
-`const` to apply POLE?
+describe one of the three main problems that happen when variables are left exposed in broader
+scopes than necessary.
 
 ---
 
@@ -23,26 +22,8 @@ necessary. How can you use either a function scope or an explicit `{ ... }` bloc
 
 Define **closure** in your own words, based on
 [Scope & Closures (2nd Edition), Chapter 7: Using Closures](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch7.md).
-Why is it important to understand that closure is a **live link** to a variable rather than a
-one-time snapshot of its value? Predict the output of the following code and explain why `first()`
-and `second()` behave the way they do:
-
-```javascript
-function makeStepper(start) {
-  let step = start
-  return function () {
-    step += 2
-    return step
-  }
-}
-
-const first = makeStepper(0)
-const second = makeStepper(10)
-
-console.log(first())
-console.log(first())
-console.log(second())
-```
+Be sure to include the concept of the **live link** to closure-scoped variables, as discussed in the
+text.
 
 ---
 
