@@ -1,7 +1,6 @@
 # Syllabus: CIS-133JS Introduction to JavaScript
 
-This is an online class. Here is a
-[link to this syllabus in PDF format](modules/syllabus/syllabus.pdf).
+This is an online class. Here is a [link to this syllabus in PDF format](./syllabus.pdf).
 
 ## Instructor
 
