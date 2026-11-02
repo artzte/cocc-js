@@ -4,21 +4,21 @@
 
 /* 1. Reset & Inheritance */
 body {
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   background-color: transparent;
   color: inherit;
 }
 
-/* 2. Initial Page Title Banner */
+/* 2. Initial Page Title Banner
+ * Only the document's title gets the banner: the first h1, or the first h2 when
+ * no h1 precedes it. `:not(h1 ~ h2)` keeps the first h2 under an h1 title plain.
+ */
 .kerplunk > section:first-of-type > h1,
 .kerplunk > section:first-of-type > h2:first-child,
-.kerplunk > section:first-of-type > h2:first-of-type,
+.kerplunk > section:first-of-type > h2:first-of-type:not(h1 ~ h2),
 .kerplunk > h1:first-of-type,
-.kerplunk > h2:first-of-type,
+.kerplunk > h2:first-of-type:not(h1 ~ h2),
 section:first-of-type > h1:first-child,
 section:first-of-type > h2:first-child {
   background-color: #2c5367;
@@ -28,30 +28,17 @@ section:first-of-type > h2:first-child {
 }
 
 /* 3. Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   margin-bottom: 12px;
   margin-top: 24px;
   font-weight: 600;
   color: inherit;
 }
 
-h1 {
-  font-size: 2.2em;
-}
-h2 {
-  font-size: 1.7em;
-}
-h3 {
-  font-size: 1.3em;
-}
-h4 {
-  font-size: 1.1em;
-}
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.7em; }
+h3 { font-size: 1.3em; }
+h4 { font-size: 1.1em; }
 
 /* 4. Links */
 a {
@@ -72,9 +59,7 @@ blockquote {
   background: rgba(127, 127, 127, 0.08);
 }
 
-code,
-samp,
-kbd {
+code, samp, kbd {
   background: rgba(127, 127, 127, 0.15);
   padding: 2.5px 5px;
   border-radius: 4px;
@@ -103,8 +88,7 @@ table {
   width: 100%;
 }
 
-td,
-th {
+td, th {
   padding: 8px 12px;
   text-align: left;
   border-bottom: 1px solid rgba(127, 127, 127, 0.3);
@@ -120,8 +104,7 @@ tr:nth-child(even) {
 }
 
 /* 7. Buttons */
-button,
-input[type='submit'] {
+button, input[type='submit'] {
   background-color: rgba(127, 127, 127, 0.15);
   color: inherit;
   padding: 10px 30px;
