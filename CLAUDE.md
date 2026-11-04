@@ -148,3 +148,74 @@ Following is a full list of books and chapters.
 - Requirements: vanilla JS, ≥4 ES modules, ≥1 `fetch` call to a real public API, ≥3 user
   interactions, ≥1 ES6 class, Vitest tests for all non-DOM logic, deployed to GitHub Pages or
   Netlify
+
+## Authoring Conventions for Weekly Content
+
+These conventions come from the instructor's edits to the Week 7 materials. Apply them to every new
+week, and use `modules/week7/` as the reference module.
+
+### Weekly Module Layout
+
+Each week has a `modules/weekN/` folder with an overview, module lecture page(s), a quiz, and an
+assignment. The matching lecture guide goes in `lectures/`, and DevTools snippets and fixtures go in
+`examples/` (a `.js` snippet plus a `.md` guide). Update `weekly-readings/week-NN.md` as needed.
+Don't create or commit the generated `.html`, `.pdf`, or `.qti.zip` files; they are build output.
+
+### Quizzes
+
+- Five short-essay questions. Each one asks for **one thing**: one definition, one comparison, or
+  one explanation.
+- Don't stack sub-questions. When the reading lists several items (such as three hazards), ask for
+  **one** of them.
+- Don't use predict-the-output puzzles or long code listings. A short snippet is fine if the
+  question depends on it, but explaining a concept in the student's own words is the default.
+- Point students to the text with phrasing like "as discussed in the text", and link the chapter.
+- At most one question should be about the assignment. Ask about the idea behind it, not about the
+  student's own code.
+
+### Assignments
+
+- **Keep the scope small.** It should be one focused app that exercises the week's concept. Leave
+  out stretch requirements, reflection write-ups, and README essays. The quiz covers reflection.
+- **Hand over the busywork.** Put datasets, fixtures, and sample markup in an `examples/` file and
+  link to it. In the assignment, show a short excerpt with a comment like
+  `// retrieve these from the file linked above`, not the full listing.
+- **Don't prescribe the file layout.** Name the functions and classes students must write, but let
+  them choose their module files and exports. Use "create" rather than "export" unless an export is
+  actually required.
+- **Prefer simple behavior over clever behavior.** When an action doesn't make sense, it should do
+  nothing. For example, clicking **Previous** on the first theme stays on the first theme rather
+  than jumping to the last one, and selecting an index that doesn't exist leaves the selection
+  unchanged. State the rule ("handle invalid situations, such as moving before the first item") and
+  let students implement it.
+- **Accept more than one way to meet a UI requirement.** For example, the active item can be marked
+  with a class, `aria-pressed`, or `[disabled]`.
+- **Write requirements as nested bullet lists**, not dense paragraphs.
+- **Label example tests as starters.** Introduce them with something like: "These are starter tests
+  from my own attempt at this project. You will likely need to change them to match your own naming,
+  exports, and so on." Tests should import from several modules and use `expect` messages, e.g.
+  `expect(value, 'prev ignores retreat behind first item').toBe(0)`.
+- Keep the standard submission steps from Week 7: branch, `scripts/mpf.sh weekN`, scaffold commit,
+  `npm start` / `npm test` / `npm run lint` / `npm run format`, PR with **artzte** as reviewer, and
+  the PR URL submitted on Canvas.
+
+### Code Style in Examples and Solutions
+
+- Use early returns, not nested `if`/`else`. Handle the special case first and return.
+- Use descriptive names (`player`, not `p`), and add short comments on non-obvious branches
+  (`// a tie`).
+- For delegated click handlers, find the button with `event.target.closest('button')`, convert
+  indices with `parseInt(button.dataset.index, 10)`, and dispatch with a `switch` on the `data-*`
+  value. Include a `default` case.
+- Call `render()` once, then attach the single delegated listener.
+- `renderApp()` doesn't return anything. Tests call `renderApp()` and then find elements with
+  `document.querySelector(...)`, querying again after each click because `render()` replaces the
+  buttons.
+- When prose cites line numbers in a code listing, check that they're correct.
+
+### Voice
+
+- Write in a plain, direct, first-person instructor voice ("my preferred method is…"). Go easy on
+  bold text and marketing language.
+- Keep instructions short and practical. A pencil sketch photographed and linked in the README is a
+  perfectly good wireframe.

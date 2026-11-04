@@ -93,8 +93,6 @@ Side Lecture & Code Refactoring Walkthrough
   - `render()` is now a pure "state in, HTML out" function.
   - And remember the test hint from Week 6 (_"Query for the buttons after each click..."_)? Our
     event wiring no longer cares how many times `render()` rebuilds the DOM.
-  - `renderApp()` now ends with `return app`, so the tests can do `app = renderApp()` and click
-    buttons with a fresh `app.querySelector(...)` after every render.
 - **Bridge to Week 7 Assignment**: In the **Color Theme Switcher**, you will render buttons for 6
   community color themes plus **Previous**, **Next**, and **Reset** controls. Instead of attaching 9
   separate event listeners every time the UI re-renders, you'll attach **one** delegated click

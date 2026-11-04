@@ -304,16 +304,8 @@ export function renderApp() {
         break
     }
   })
-
-  return app
 }
 ```
-
-> 💡 **Why `return app`?** Returning the `#app` element lets the Vitest suite grab it directly
-> (`app = renderApp()`) and click buttons with a live query such as
-> ``app.querySelector(`button[data-type="add"][data-index="${i}"]`).click()``. Because `render()`
-> replaces every button on each click, tests must re-query after every click rather than holding on
-> to old button references.
 
 ### Why This Pattern Wins
 

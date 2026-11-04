@@ -135,6 +135,4 @@ export function renderApp() {
         break
     }
   })
-
-  return app
 }
