@@ -2,10 +2,15 @@
 
 **Sources**:
 
-- _You Don't Know JS Yet: Get Started_ — Chapter 2: Surveying JS (Classes portion)
-- _You Don't Know JS Yet: Get Started_ — Chapter 3: Digging to the Roots of JS (`this` Keyword &
-  Prototypes portion)
-- _You Don't Know JS Yet: Get Started_ — Chapter 4: The Bigger Picture (Pillar 2: Prototypes)
+- [Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md)
+  ("Classes" and "Class Inheritance")
+- [Get Started (2nd Edition), Chapter 3: Digging to the Roots of JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch3.md)
+  ("`this` Keyword" and "Prototypes")
+- Optional:
+  [Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)
+  ("Pillar 2: Prototypes")
+- [MDN: `static`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static)
+  (static members aren't covered in _Get Started_)
 
 ---
 
