@@ -9,8 +9,14 @@
 - Optional:
   [Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)
   ("Pillar 2: Prototypes")
-- [MDN: `static`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static)
-  (static members aren't covered in _Get Started_)
+- Optional, for going deeper:
+  [Objects & Classes (2nd Edition Draft), Chapter 3: Classy Objects](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/objects-classes/ch3.md)
+  (static members, private fields, getters)
+- MDN: [`static`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static),
+  [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties),
+  [`get`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get), and
+  [`toJSON()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior)
+  (none of these are covered in _Get Started_)
 
 ---
 
@@ -70,3 +76,21 @@
   - If `child` delegates a method call to `parent.method()`, the invocation `child.method()` ensures
     `this` inside the method still refers to `child`. This allows sharing a single method across
     multiple linked instances while operating on their unique data.
+
+---
+
+### 4. Private Fields, Getters, and `toJSON()` (from MDN)
+
+- **Private Fields**: A field whose name starts with `#` (`#done`) can only be read or written by
+  code inside the class body. Outside the class, even writing `task.#done` is a `SyntaxError`.
+  Private fields give a class the kind of privacy that Week 7 got from closures.
+- **Getters**: `get done() { return this.#done }` is read like a property (`task.done`, no
+  parentheses). A getter with no matching setter is read-only; in strict mode, assigning to it
+  throws a `TypeError`.
+- **Computed Getters**: A getter doesn't have to return a stored field. It can calculate its value
+  on each read, like `get remainingCount()`.
+- **`toJSON()`**: `JSON.stringify()` only includes an object's own public properties, so an object
+  whose data is all in private fields comes out as `'{}'`. If the object has a `toJSON()` method,
+  `JSON.stringify()` calls it automatically and serializes what it returns.
+- **`static fromJSON(data)`**: A common companion to `toJSON()`. It takes the plain object and
+  builds a new instance from it.

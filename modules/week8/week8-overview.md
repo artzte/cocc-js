@@ -33,11 +33,14 @@ to recognize it; we won't go deep.
 - **Losing `this` in a callback**: Why `addEventListener('click', this.handleClick)` breaks, and how
   an arrow function fixes it.
 
-### Part 3: Inheritance and Prototypes
+### Part 3: Inheritance, Privacy, and Prototypes
 
 - **`extends`, `super()`, and overriding**: Building `Card` and `List` components on a shared
   `Component` base class.
 - **Classes vs. closures vs. plain objects**: Choosing the right tool.
+- **Private fields and getters**: `#done` can't be touched from outside the class; `get done()` lets
+  outside code read it. `toJSON()` and `static fromJSON()` turn an instance into plain data and
+  back.
 - **Prototypes (awareness only)**: Methods live once on the class's prototype and are shared by
   every instance.
 
@@ -52,6 +55,8 @@ By the end of this module you will be able to:
 - Explain how the way a function is called determines `this`, and fix a lost `this` in an event
   listener.
 - Use `extends` and `super` to create a child class that overrides a parent method.
+- Keep instance data private with `#` fields, expose it with getters, and convert an instance to and
+  from JSON with `toJSON()` and `static fromJSON()`.
 - Describe, at a high level, how classes share methods through the prototype chain.
 - Build a small DOM app from two cooperating classes with one delegated click listener.
 

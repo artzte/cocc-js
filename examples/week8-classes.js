@@ -1,7 +1,8 @@
 // ====================================================================
 // CIS 133JS — Week 8: Classes and Object-Oriented Programming
 // class syntax, `this` binding, inheritance with extends/super,
-// static members, and a peek at the prototype underneath
+// static members, private fields and getters, toJSON(), and a peek at
+// the prototype underneath
 // ====================================================================
 
 // --------------------------------------------------------------------
@@ -224,33 +225,96 @@ function staticDemo() {
 }
 
 // --------------------------------------------------------------------
-// DEMO 6: Under the Hood — Classes Are Built on Prototypes
+// DEMO 6: Private Fields, Getters, and toJSON() (plus the Prototype)
 // --------------------------------------------------------------------
-function prototypeDemo() {
-  header('6. Under the Hood: Prototypes')
+function privateFieldsDemo() {
+  // Strict mode, like class bodies and ES modules (see Week 1)
+  'use strict'
 
-  class Dog {
-    constructor(name) {
-      this.name = name
+  header('6. Private Fields, Getters, and toJSON()')
+
+  class Note {
+    #id
+    #text
+    #starred = false
+
+    static fromJSON(data) {
+      const note = new Note(data.id, data.text)
+      if (data.starred) note.star()
+      return note
     }
 
-    speak() {
-      return `${this.name} says woof`
+    constructor(id, text) {
+      this.#id = id
+      this.#text = text
+    }
+
+    // Getters: read like properties, but there is no way to assign them
+    get id() {
+      return this.#id
+    }
+
+    get text() {
+      return this.#text
+    }
+
+    get starred() {
+      return this.#starred
+    }
+
+    // A computed getter: nothing is stored, it's worked out on each read
+    get preview() {
+      return this.#text.length > 12
+        ? `${this.#text.slice(0, 12)}...`
+        : this.#text
+    }
+
+    star() {
+      this.#starred = true
+    }
+
+    // JSON.stringify() calls this automatically
+    toJSON() {
+      return { id: this.#id, text: this.#text, starred: this.#starred }
     }
   }
 
-  const rex = new Dog('Rex')
-  const fido = new Dog('Fido')
+  const note = new Note('n1', 'Read about private fields')
+  note.star()
 
-  console.log('typeof Dog:', typeof Dog) // function
-  console.log('own properties of rex:', Object.keys(rex)) // ['name']
+  console.log('note.text:', note.text)
+  console.log('note.preview:', note.preview) // Read about p...
+  console.log('note.starred:', note.starred) // true
 
-  // speak() is not copied onto each dog. Both share ONE function on
-  // Dog.prototype, and the lookup is delegated up the prototype chain.
-  console.log('rex.speak === fido.speak:', rex.speak === fido.speak) // true
+  // Getter with no setter: in strict mode, assigning throws a TypeError.
+  // (Outside strict mode it would be silently ignored.)
+  try {
+    note.starred = false
+  } catch (err) {
+    console.log('note.starred = false failed:', err.name)
+  }
+  console.log('note.starred is still:', note.starred) // true
+
+  // Private fields are invisible from outside the class body. Even
+  // writing note.#text out here is a SyntaxError.
+  console.log('Object.keys(note):', Object.keys(note)) // []
+
+  // Without toJSON(), JSON.stringify() would give '{}' here.
+  const json = JSON.stringify(note)
+  console.log('JSON.stringify(note):', json)
+
+  const copy = Note.fromJSON(JSON.parse(json))
+  console.log('copy instanceof Note:', copy instanceof Note) // true
+  console.log('copy.starred:', copy.starred) // true
+
+  // Under the hood: a class is a special function, and its methods and
+  // getters live ONCE on Note.prototype, shared by every instance
+  // through the prototype chain.
+  console.log('typeof Note:', typeof Note) // function
+  console.log('note.star === copy.star:', note.star === copy.star) // true
   console.log(
-    'Object.getPrototypeOf(rex) === Dog.prototype:',
-    Object.getPrototypeOf(rex) === Dog.prototype,
+    'Object.getPrototypeOf(note) === Note.prototype:',
+    Object.getPrototypeOf(note) === Note.prototype,
   ) // true
 }
 
@@ -301,5 +365,5 @@ classBasicsDemo()
 thisBindingDemo()
 browserComponentsDemo(inheritanceDemo())
 staticDemo()
-prototypeDemo()
+privateFieldsDemo()
 debugChallenge()

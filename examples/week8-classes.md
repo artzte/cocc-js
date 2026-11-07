@@ -2,8 +2,8 @@
 
 This guide walks through an interactive browser console demo for the Week 8 lecture: **class
 basics**, **how `this` is decided**, **inheritance with `extends` and `super`**, **components that
-render into the page**, **static members**, a quick look at **prototypes**, and a **debug
-challenge**.
+render into the page**, **static members**, **private fields, getters, and `toJSON()`** (with a
+quick look at **prototypes**), and a **debug challenge**.
 
 The full snippet is in [`week8-classes.js`](week8-classes.js).
 
@@ -24,15 +24,15 @@ The full snippet is in [`week8-classes.js`](week8-classes.js).
 
 ## What Each Demo Shows
 
-| Demo                     | Function                  | Watch for                                                                                  |
-| :----------------------- | :------------------------ | :----------------------------------------------------------------------------------------- |
-| 1. Class basics          | `classBasicsDemo()`       | Two `Counter` instances keep separate counts; `laps.count = 999` changes it (it's public)  |
-| 2. `this` and the call   | `thisBindingDemo()`       | `ada.greet()`, `ada.greet.call(grace)`, and a detached `greet()` that throws a `TypeError` |
-| 3. Inheritance           | `inheritanceDemo()`       | `Card` and `List` extend `Component`, call `super(...)`, and override `toHTML()`           |
-| 4. Browser components    | `browserComponentsDemo()` | Both components use the inherited `render(container)` to draw themselves on `about:blank`  |
-| 5. Static members        | `staticDemo()`            | `Temperature.fromCelsius()` is called on the class; instances don't have it                |
-| 6. Prototypes underneath | `prototypeDemo()`         | `typeof Dog` is `'function'`, and every dog shares one `speak` method on `Dog.prototype`   |
-| 7. Debug challenge       | `debugChallenge()`        | Clicking the button throws `TypeError: this.render is not a function`. Explain it, fix it  |
+| Demo                   | Function                  | Watch for                                                                                                               |
+| :--------------------- | :------------------------ | :---------------------------------------------------------------------------------------------------------------------- |
+| 1. Class basics        | `classBasicsDemo()`       | Two `Counter` instances keep separate counts; `laps.count = 999` changes it (it's public)                               |
+| 2. `this` and the call | `thisBindingDemo()`       | `ada.greet()`, `ada.greet.call(grace)`, and a detached `greet()` that throws a `TypeError`                              |
+| 3. Inheritance         | `inheritanceDemo()`       | `Card` and `List` extend `Component`, call `super(...)`, and override `toHTML()`                                        |
+| 4. Browser components  | `browserComponentsDemo()` | Both components use the inherited `render(container)` to draw themselves on `about:blank`                               |
+| 5. Static members      | `staticDemo()`            | `Temperature.fromCelsius()` is called on the class; instances don't have it                                             |
+| 6. Private fields      | `privateFieldsDemo()`     | Getters read `#` fields but can't assign them; `toJSON()` / `fromJSON()` round trip; methods shared on `Note.prototype` |
+| 7. Debug challenge     | `debugChallenge()`        | Clicking the button throws `TypeError: this.render is not a function`. Explain it, fix it                               |
 
 ---
 

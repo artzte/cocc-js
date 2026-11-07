@@ -28,7 +28,7 @@ Be sure to contrast this with lexical scope, which we studied in Weeks 5–7.
 ### Question 3: Keeping `this` in an Event Listener
 
 In this week's Task List assignment, the `TaskList` constructor attaches its click listener with an
-arrow function: `(event) => this.handleClick(event)`. Explain why this keeps `this` pointing at the
+arrow function: `(event) => this.#handleClick(event)`. Explain why this keeps `this` pointing at the
 `TaskList` instance when the browser calls the listener.
 
 ---

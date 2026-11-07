@@ -21,7 +21,10 @@ that use it, and how does one method know _which_ object's data to use?
    parent version with `super.method()`.
 5. **Static Members**: Methods and properties that belong to the class itself rather than to each
    instance.
-6. **Prototypes Underneath**: Methods are stored once on `ClassName.prototype` and shared by every
+6. **Private Fields and Getters**: `#` fields can only be used inside the class body. Getters let
+   outside code read them, and `toJSON()` / `static fromJSON()` convert an instance to plain data
+   and back.
+7. **Prototypes Underneath**: Methods are stored once on `ClassName.prototype` and shared by every
    instance through the prototype chain.
 
 ---
@@ -36,7 +39,10 @@ that use it, and how does one method know _which_ object's data to use?
 | **`this`**            | The object a method was called on, decided at call time                    | `task.toggle()` → `this` is `task`           |
 | **`extends`/`super`** | A child class builds on a parent; `super(...)` runs the parent constructor | `class Card extends Component`               |
 | **`static`**          | Belongs to the class, not to instances                                     | `TaskList.isValidText(text)`                 |
-| **Closure vs. class** | Closures give privacy and no `this`; classes share methods on a prototype  | Week 7's switcher vs. this week's `TaskList` |
+| **Private field**     | Only code inside the class body can read or write it                       | `#done`                                      |
+| **Getter**            | Read like a property, computed by a method; no setter means read-only      | `get done() { return this.#done }`           |
+| **`toJSON()`**        | Called automatically by `JSON.stringify()`                                 | `JSON.stringify(task)`                       |
+| **Closure vs. class** | Both can keep state private; classes share methods on a prototype          | Week 7's switcher vs. this week's `TaskList` |
 
 #### Class Example
 
@@ -66,6 +72,45 @@ console.log(score.increment()) // 11: each instance has its own `count`
 
 Compare this with last week's `createCounter()` factory function. Both bundle data with behavior.
 Here, though, `count` is a public property, and the methods find it through `this`.
+
+#### Private Fields and Getters
+
+Last week, privacy was a reason to choose a closure. Private fields give a class the same
+protection:
+
+```javascript
+class Task {
+  #text
+  #done = false
+
+  constructor(text) {
+    this.#text = text
+  }
+
+  get text() {
+    return this.#text
+  }
+
+  get done() {
+    return this.#done
+  }
+
+  toggle() {
+    this.#done = !this.#done
+  }
+
+  // JSON.stringify() calls this automatically
+  toJSON() {
+    return { text: this.#text, done: this.#done }
+  }
+}
+
+const task = new Task('Read Chapter 2')
+task.toggle()
+console.log(task.done) // true
+console.log(JSON.stringify(task)) // {"text":"Read Chapter 2","done":true}
+task.done = false // TypeError: there's a getter but no setter
+```
 
 #### Keeping `this` in an Event Listener
 
@@ -118,5 +163,8 @@ class ClickCounter {
   - [`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
   - [`extends`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)
   - [`static`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static)
+  - [Private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties)
+  - [`get`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get)
+  - [`JSON.stringify()` and `toJSON()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior)
 - **Assignment**:
   - [Week 8 Assignment: Task List with Classes](week8-assignment-task-list.md)

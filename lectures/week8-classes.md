@@ -15,15 +15,15 @@ delegation)
 
 ## Pacing & Timeline
 
-| Time              | Section                                   | Focus / Snippet Function                                                          |
-| :---------------- | :---------------------------------------- | :-------------------------------------------------------------------------------- |
-| **00:00 - 03:00** | **1. From Factories to Classes**          | Recap `createCounter()`; the same idea as a class (`classBasicsDemo`)             |
-| **03:00 - 08:00** | **2. `this` Depends on the Call**         | Implicit, default, and explicit calls; arrow and `bind` fixes (`thisBindingDemo`) |
-| **08:00 - 12:30** | **3. Inheritance with `extends`/`super`** | `Component` → `Card`, `List` (`inheritanceDemo`, `browserComponentsDemo`)         |
-| **12:30 - 14:30** | **4. Static Members**                     | `Temperature.fromCelsius()` (`staticDemo`)                                        |
-| **14:30 - 16:30** | **5. Prototypes Underneath**              | Shared methods on `Dog.prototype` (`prototypeDemo`)                               |
-| **16:30 - 18:30** | **6. Debug Challenge**                    | Lost `this` in `addEventListener` (`debugChallenge`)                              |
-| **18:30 - 20:00** | **7. Wrap-Up & Week 8 Deliverables**      | Choosing classes vs. closures vs. objects; Task List assignment                   |
+| Time              | Section                                    | Focus / Snippet Function                                                          |
+| :---------------- | :----------------------------------------- | :-------------------------------------------------------------------------------- |
+| **00:00 - 03:00** | **1. From Factories to Classes**           | Recap `createCounter()`; the same idea as a class (`classBasicsDemo`)             |
+| **03:00 - 08:00** | **2. `this` Depends on the Call**          | Implicit, default, and explicit calls; arrow and `bind` fixes (`thisBindingDemo`) |
+| **08:00 - 12:30** | **3. Inheritance with `extends`/`super`**  | `Component` → `Card`, `List` (`inheritanceDemo`, `browserComponentsDemo`)         |
+| **12:30 - 14:30** | **4. Static Members**                      | `Temperature.fromCelsius()` (`staticDemo`)                                        |
+| **14:30 - 16:30** | **5. Private Fields, Getters, `toJSON()`** | `#` fields, getters, JSON round trip, shared prototype (`privateFieldsDemo`)      |
+| **16:30 - 18:30** | **6. Debug Challenge**                     | Lost `this` in `addEventListener` (`debugChallenge`)                              |
+| **18:30 - 20:00** | **7. Wrap-Up & Week 8 Deliverables**       | Choosing classes vs. closures vs. objects; Task List assignment                   |
 
 ---
 
@@ -119,18 +119,28 @@ score.increment() // 11
 
 ---
 
-## 5. Prototypes Underneath (2 mins)
+## 5. Private Fields, Getters, and `toJSON()` (2 mins)
 
 ### Talking Points & Concept Cues
 
-- **Awareness only.** We won't write prototype code by hand.
-- `typeof Dog` is `'function'`. A class is a special kind of function.
-- `Object.keys(rex)` shows only `name`. `speak` isn't copied onto each dog. It lives once on
-  `Dog.prototype`, and `rex.speak()` finds it by **delegating** up the prototype chain.
-- That's why `this` has to be dynamic: one shared `speak` function serves every dog, and `this`
-  tells it which dog called.
-- This also explains the Week 7 memory point: class instances share one copy of each method, while
-  factory functions create new method closures for every instance.
+- **Closing the Week 7 gap**: Last week, privacy was a reason to pick closures over classes.
+  **Private fields** (`#text`, `#starred`) change that. They can only be used inside the class body;
+  even writing `note.#text` outside it is a `SyntaxError`.
+- **Getters** (`get text() { ... }`) are read like properties (`note.text`, no parentheses). With no
+  setter, outside code can read the value but not assign it. In strict mode, `note.starred = false`
+  throws a `TypeError`. The only way to change it is a method we chose to provide, such as `star()`.
+  That's POLE again.
+- **Computed getters**: `get preview()` stores nothing; it works out its value on each read. In the
+  assignment, `list.remainingCount` works the same way.
+- **`toJSON()`**: `JSON.stringify()` skips private fields, so without help it returns `'{}'`. If an
+  object has a `toJSON()` method, `JSON.stringify()` calls it automatically. `static fromJSON(data)`
+  goes the other way. Next week we'll use this pair to save tasks to `localStorage`.
+- **Prototypes, awareness only**: `typeof Note` is `'function'`. `Object.keys(note)` is `[]`, and
+  `note.star === copy.star` is `true`. Methods and getters live once on `Note.prototype`, and every
+  instance finds them by **delegating** up the prototype chain. That's why `this` has to be dynamic:
+  one shared method serves every instance, and `this` tells it which one called. It's also the Week
+  7 memory point: class instances share methods, while factory functions make new closures for each
+  instance.
 
 ---
 
@@ -146,7 +156,8 @@ score.increment() // 11
   ```javascript
   this.container.addEventListener('click', (event) => this.handleClick(event))
   ```
-- This is exactly the line you'll write in the `TaskList` constructor for this week's assignment.
+- You'll write the same line in the `TaskList` constructor for this week's assignment, calling a
+  private `this.#handleClick(event)`.
 
 ---
 

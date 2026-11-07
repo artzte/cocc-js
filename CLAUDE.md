@@ -206,7 +206,8 @@ Don't create or commit the generated `.html`, `.pdf`, or `.qti.zip` files; they 
   (`// a tie`).
 - For delegated click handlers, find the button with `event.target.closest('button')`, convert
   indices with `parseInt(button.dataset.index, 10)`, and dispatch with a `switch` on the `data-*`
-  value. Include a `default` case.
+  value. Include a `default` case. String ids, such as those from `crypto.randomUUID()`, are used
+  as-is with no `parseInt()`.
 - Call `render()` once, then attach the single delegated listener.
 - `renderApp()` doesn't return anything. Tests call `renderApp()` and then find elements with
   `document.querySelector(...)`, querying again after each click because `render()` replaces the
