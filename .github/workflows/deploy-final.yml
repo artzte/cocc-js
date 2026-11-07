@@ -60,6 +60,16 @@ jobs:
         working-directory: projects/final
         run: npm ci
 
+      - name: Run linter
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npm run lint
+
+      - name: Check code formatting
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npm run format:check
+
       - name: Run unit tests
         if: steps.check_final.outputs.exists == 'true'
         working-directory: projects/final
