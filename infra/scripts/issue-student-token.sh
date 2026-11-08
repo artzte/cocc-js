@@ -185,21 +185,24 @@ aws iam put-user-policy \
   --policy-document "$POLICY_DOCUMENT" \
   --profile "$AWS_PROFILE"
 
+EXISTING_KEYS=()
 if [[ "$ROTATE_KEYS" -eq 1 ]]; then
-  echo "==> Rotating existing access keys for '$IAM_USER'..."
-  EXISTING_KEYS="$(aws iam list-access-keys \
+  echo "==> Checking existing access keys for '$IAM_USER'..."
+  mapfile -t EXISTING_KEYS < <(aws iam list-access-keys \
     --user-name "$IAM_USER" \
     --profile "$AWS_PROFILE" \
-    --query 'AccessKeyMetadata[].AccessKeyId' \
-    --output text)"
-  for key_id in $EXISTING_KEYS; do
-    if [[ -n "$key_id" && "$key_id" != "None" ]]; then
-      aws iam delete-access-key \
-        --user-name "$IAM_USER" \
-        --access-key-id "$key_id" \
-        --profile "$AWS_PROFILE"
-      echo "    Deleted old access key: $key_id"
-    fi
+    --query 'sort_by(AccessKeyMetadata, &CreateDate)[].AccessKeyId' \
+    --output text | tr '\t' '\n' | grep -v '^$' | grep -v '^None$' || true)
+
+  # AWS IAM allows at most 2 keys per user; if 2 already exist, free the oldest slot first
+  while [[ "${#EXISTING_KEYS[@]}" -ge 2 ]]; do
+    OLDEST_KEY="${EXISTING_KEYS[0]}"
+    aws iam delete-access-key \
+      --user-name "$IAM_USER" \
+      --access-key-id "$OLDEST_KEY" \
+      --profile "$AWS_PROFILE"
+    echo "    Deleted oldest access key to free IAM slot: $OLDEST_KEY"
+    EXISTING_KEYS=("${EXISTING_KEYS[@]:1}")
   done
 fi
 
@@ -219,14 +222,6 @@ SECRET_ACCESS_KEY="$(printf '%s' "$KEY_JSON" | node -e '
   process.stdout.write(data.AccessKey.SecretAccessKey);
 ')"
 
-if [[ "$PUSH_SECRETS" -eq 1 ]]; then
-  echo "==> Setting GitHub Actions secrets on '$GH_REPO'..."
-  printf '%s' "$ACCESS_KEY_ID" | gh secret set AWS_ACCESS_KEY_ID --repo "$GH_REPO"
-  printf '%s' "$SECRET_ACCESS_KEY" | gh secret set AWS_SECRET_ACCESS_KEY --repo "$GH_REPO"
-  printf '%s' "$STUDENT_SLUG" | gh secret set STUDENT_SLUG --repo "$GH_REPO"
-  echo "    Pushed AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and STUDENT_SLUG to $GH_REPO."
-fi
-
 cat <<EOF
 
 ================================================================================
@@ -243,3 +238,22 @@ GitHub Repository Secrets:
   AWS_SECRET_ACCESS_KEY=${SECRET_ACCESS_KEY}
 ================================================================================
 EOF
+
+if [[ "$PUSH_SECRETS" -eq 1 ]]; then
+  echo "==> Setting GitHub Actions secrets on '$GH_REPO'..."
+  printf '%s' "$ACCESS_KEY_ID" | gh secret set AWS_ACCESS_KEY_ID --repo "$GH_REPO"
+  printf '%s' "$SECRET_ACCESS_KEY" | gh secret set AWS_SECRET_ACCESS_KEY --repo "$GH_REPO"
+  printf '%s' "$STUDENT_SLUG" | gh secret set STUDENT_SLUG --repo "$GH_REPO"
+  echo "    Pushed AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, and STUDENT_SLUG to $GH_REPO."
+fi
+
+if [[ "$ROTATE_KEYS" -eq 1 && "${#EXISTING_KEYS[@]}" -gt 0 ]]; then
+  echo "==> Deleting previous access key(s) for '$IAM_USER'..."
+  for key_id in "${EXISTING_KEYS[@]}"; do
+    aws iam delete-access-key \
+      --user-name "$IAM_USER" \
+      --access-key-id "$key_id" \
+      --profile "$AWS_PROFILE"
+    echo "    Deleted previous access key: $key_id"
+  done
+fi
