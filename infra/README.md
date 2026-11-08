@@ -1,37 +1,126 @@
-# CIS 133JS — Final Project Hosting Infrastructure (AWS CDK)
+# Final Project Hosting and Deployment
 
-This folder defines the AWS infrastructure that hosts student final projects (`projects/final`)
-under a shared CloudFront distribution and S3 bucket in the `artzt-cocc` AWS account
-(`081028362911`).
+For the final project, your built application in `projects/final` is deployed to a shared AWS
+hosting environment. Once deployed, your app runs at:
 
-## Deployed Resources (`us-west-2`)
+```
+https://d2zap10oyizxcd.cloudfront.net/<your-last-name>
+```
 
-- **Base URL:** `https://d2zap10oyizxcd.cloudfront.net/<student-slug>`
-- **S3 Bucket:** `cocc-cis133js-projects-081028362911` (private; served via CloudFront Origin Access
-  Control)
-- **CloudFront Distribution ID:** `ERB30548CV2DP`
-- **CloudFront Function (`viewer-request`):** `cocc-cis133js-student-spa-router`
+For example, if your repository is `phillips-cocc-js`, your app is served at
+`https://d2zap10oyizxcd.cloudfront.net/phillips`.
 
-## How Per-Student SPA Routing Works
+## Architecture and Build Workflow
 
-Each student's built application (`projects/final/dist`) is uploaded to
-`s3://cocc-cis133js-projects-081028362911/<student-slug>/`.
+```mermaid
+flowchart LR
+    subgraph GitHub ["Your GitHub Repo"]
+        Push["Push to projects/final/**\n(or click 'Run workflow')"]
+        Checks["GitHub Action\n1. npm ci\n2. npm run lint\n3. npm run format:check\n4. npm test\n5. vite build --base=/<slug>/"]
+        Push --> Checks
+    end
 
-When a browser requests a URL from CloudFront, the `cocc-cis133js-student-spa-router`
-`viewer-request` function inspects the URI:
+    subgraph AWS ["Course AWS Account (artzt-cocc)"]
+        S3["S3 Bucket\ns3://.../<slug>/\n• index.html\n• assets/*"]
+        CF["CloudFront CDN\n+ Viewer-Request Router\n(/<slug>/* -> /<slug>/index.html)"]
+        Checks -->|"aws s3 sync\n(scoped student token)"| S3
+        CF -->|"Origin Access Control"| S3
+    end
 
-1. **Static Assets (has a file extension):** Requests such as `/phillips/assets/index-abc123.js` or
-   `/phillips/style.css` pass straight through to S3.
-2. **Entry & Client-Side SPA Routes (no file extension):** Requests such as `/phillips`,
-   `/phillips/`, `/phillips/about`, or `/phillips/items/42` are rewritten internally to
-   `/phillips/index.html` so client-side routers like [Navigo](https://github.com/krasimir/navigo)
-   receive the original browser URL and render the matching view.
+    Browser["Browser\nhttps://d2zap10oyizxcd.cloudfront.net/<slug>"] --> CF
+```
 
-### Using Navigo in `projects/final`
+## Pulling the Deployment Setup into Your Repo
 
-Because the GitHub Action builds your project with `vite build --base="/<student-slug>/"`, Vite
-automatically populates `import.meta.env.BASE_URL` (`/` in local `npm start`, and `/<student-slug>/`
-when deployed). Pass that value as the root to `Navigo`:
+### 1. Fetch the latest course template updates on `main`
+
+From the root of your course repository:
+
+```bash
+git checkout main
+git status
+git fetch template
+git checkout template/main -- :/
+git commit -m "updates from course template"
+git push origin main
+```
+
+Pushing this update to `main` registers `.github/workflows/deploy-final.yml` with GitHub so the
+**Deploy Final Project** workflow appears under your repository's **Actions** tab.
+
+If you are already working on a feature branch for your final project, merge `main` into that branch
+so it has the workflow too:
+
+```bash
+git checkout final
+git merge main
+```
+
+### 2. Create or update `projects/final`
+
+If you haven't created `projects/final` yet, generate it from the starter kit as usual:
+
+```bash
+scripts/mpf.sh final
+cd projects/final
+npm install
+```
+
+If you already created `projects/final` earlier in the term, copy the updated `package.json` and
+`eslint.config.js` from `starter/` so your project has the `lint`, `format:check`, and `check`
+scripts:
+
+```bash
+cp starter/package.json starter/eslint.config.js projects/final/
+cd projects/final
+npm install
+```
+
+### 3. Run the build checks locally before pushing
+
+I added an `npm run check` script to `starter/package.json` that runs the exact same checks as the
+GitHub Action, without modifying any files:
+
+```bash
+cd projects/final
+npm run check
+```
+
+Under the hood, `npm run check` runs four steps in order:
+
+1. `npm run lint` — checks for syntax and scope problems with ESLint
+2. `npm run format:check` — checks that files are formatted with Prettier (if this fails, run
+   `npm run format` to fix them)
+3. `npm test` — runs your Vitest unit tests once
+4. `npm run build` — runs `vite build` to verify the production bundle compiles cleanly
+
+In `.github/workflows/deploy-final.yml`, I kept these four commands as separate workflow steps
+rather than calling `npm run check` so you can see right away which step failed when looking at your
+build results on GitHub.
+
+### 4. Triggering a deployment
+
+Once I've added your AWS deployment token to your repository's GitHub secrets, your project deploys
+in two ways:
+
+- **Automatically on push:** Any push (on any branch) that modifies files inside `projects/final/`
+  triggers the workflow.
+- **Manually from GitHub:** Open your repository on GitHub, click **Actions** → **Deploy Final
+  Project** → **Run workflow**, select your branch from the dropdown, and click **Run workflow**.
+
+When all checks pass, the workflow builds your project with `vite build --base="/<your-last-name>/"`
+and uploads `projects/final/dist/` to your folder in the S3 bucket.
+
+## Client-Side Routing with Navigo
+
+Because your app lives under `/<your-last-name>` rather than at the root of the domain, the
+CloudFront router function ([`infra/lib/student-hosting-stack.ts`](lib/student-hosting-stack.ts))
+rewrites any request without a file extension (such as `/phillips` or `/phillips/items/42`) to
+`/phillips/index.html`. Static files with extensions (`.js`, `.css`, `.png`, `.svg`) are served
+directly from S3.
+
+If you use [Navigo](https://github.com/krasimir/navigo) for client-side routes, pass
+`import.meta.env.BASE_URL` as the root URL:
 
 ```js
 import Navigo from 'navigo'
@@ -40,35 +129,29 @@ const router = new Navigo(import.meta.env.BASE_URL)
 
 router
   .on('/', () => {
-    // Render home view
+    // Home view
   })
   .on('/items/:id', ({ data }) => {
-    // Render item detail view for data.id
+    // Detail view for data.id
   })
   .resolve()
 ```
 
-## Instructor Commands
+Vite sets `import.meta.env.BASE_URL` to `'/'` during local development (`npm start`) and to
+`'/<your-last-name>/'` during the GitHub Action build, so your routes work in both places without
+code changes.
 
-### 1. Issue or Rotate a Student's Deployment Token
+## Exploring the Infrastructure Code
 
-Run `scripts/issue-student-token.sh` using the `artzt-cocc` AWS SSO profile. It creates an IAM user
-(`cocc-student-<slug>`) whose permissions are strictly locked to
-`s3://cocc-cis133js-projects-081028362911/<slug>/*`:
+If you're curious about how the hosting infrastructure is set up, everything is included right here
+in the repo:
 
-```bash
-# Print credentials to terminal:
-./infra/scripts/issue-student-token.sh phillips
-
-# Or create/rotate keys and push them directly to the student's GitHub repo secrets via gh CLI:
-./infra/scripts/issue-student-token.sh phillips --push-secrets --rotate
-```
-
-### 2. Update Infrastructure with CDK
-
-```bash
-cd infra
-npm install
-npm run diff
-npm run deploy
-```
+- [`.github/workflows/deploy-final.yml`](../.github/workflows/deploy-final.yml) — the GitHub Action
+  that installs dependencies, runs `lint`, `format:check`, `test`, builds with Vite, and syncs
+  `dist/` to S3.
+- [`infra/lib/student-hosting-stack.ts`](lib/student-hosting-stack.ts) — the AWS Cloud Development
+  Kit (CDK) stack that defines the S3 bucket, CloudFront CDN distribution, and the `viewer-request`
+  routing function.
+- [`infra/scripts/issue-student-token.sh`](scripts/issue-student-token.sh) — the script I run to
+  create each student's AWS IAM user with an inline security policy restricting uploads to that
+  student's `s3://.../<slug>/*` folder.

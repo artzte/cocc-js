@@ -18,18 +18,19 @@ Don't have a GitHub account? Sign up at [github.com](https://github.com) and cla
 
 ## Commands
 
-| Command                | What it does                                    |
-| ---------------------- | ----------------------------------------------- |
-| `npm run dev`          | Start the dev server at `http://localhost:5173` |
-| `npm run build`        | Build for production into `dist/`               |
-| `npm run preview`      | Preview the production build locally            |
-| `npm test`             | Run all tests once                              |
-| `npm run test:watch`   | Run tests in watch mode                         |
-| `npm run test:ui`      | Run tests with browser-based Vitest UI          |
-| `npm run lint`         | Check code for syntax and logic errors (ESLint) |
-| `npm run lint:fix`     | Auto-fix ESLint warnings/errors where safe      |
-| `npm run format`       | Format code with Prettier                       |
-| `npm run format:check` | Check code formatting with Prettier             |
+| Command                | What it does                                                   |
+| ---------------------- | -------------------------------------------------------------- |
+| `npm run dev`          | Start the dev server at `http://localhost:5173`                |
+| `npm run build`        | Build for production into `dist/`                              |
+| `npm run preview`      | Preview the production build locally                           |
+| `npm test`             | Run all tests once                                             |
+| `npm run test:watch`   | Run tests in watch mode                                        |
+| `npm run test:ui`      | Run tests with browser-based Vitest UI                         |
+| `npm run lint`         | Check code for syntax and logic errors (ESLint)                |
+| `npm run lint:fix`     | Auto-fix ESLint warnings/errors where safe                     |
+| `npm run format`       | Format code with Prettier                                      |
+| `npm run format:check` | Check code formatting with Prettier                            |
+| `npm run check`        | Run all build checks (`lint`, `format:check`, `test`, `build`) |
 
 ## Project Architecture
 
@@ -180,31 +181,27 @@ describe('my module', () => {
 Test your logic, not your DOM wiring. Pure functions that compute, transform, or validate are ideal
 test targets.
 
-## Deployment (GitHub Pages)
+## Deployment (Final Project)
 
-This repository includes automated deployment to GitHub Pages via GitHub Actions.
+When you work on your final project in `projects/final`, GitHub Actions builds and deploys your app
+to the course hosting server on AWS.
 
-### 1. One-Time Setup in GitHub
-
-1. Ensure your account is enrolled in the **GitHub Student Developer Pack** (which grants GitHub
-   Pro, allowing private repositories to publish to GitHub Pages).
-2. Go to your repository on GitHub and click **Settings** → **Pages**.
-3. Under **Build and deployment** > **Source**, select **GitHub Actions**.
-
-### 2. Automated Deployments
-
-Whenever you push to `final-project` (or `main`), the included GitHub Actions workflow builds your
-Vite application and publishes it:
+Before pushing, run all the same checks locally from `projects/final`:
 
 ```bash
-git push origin final-project
+npm run check
 ```
 
-Your live project will be accessible at:
+Whenever you push changes under `projects/final/` (on any branch), or click **Run workflow** under
+the **Actions** tab in GitHub, the workflow runs `lint`, `format:check`, `test`, and `vite build`,
+then uploads `dist/` to:
 
 ```
-https://<your-github-username>.github.io/<your-repo-name>/
+https://d2zap10oyizxcd.cloudfront.net/<your-last-name>
 ```
+
+See [`infra/README.md`](../infra/README.md) for details on how the deployment workflow and AWS
+hosting setup work.
 
 ## Stack
 
