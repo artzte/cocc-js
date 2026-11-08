@@ -1,5 +1,8 @@
 # Final Project Hosting and Deployment
 
+> **Note on AI authorship:** I used Antigravity and Gemini 4 to generate the build infrastructure
+> and deployment plans described here. Gemini 4 Argon drafted this document, and I edited it.
+
 For the final project, your built application in `projects/final` is deployed to a shared AWS
 hosting environment. Once deployed, your app runs at:
 
@@ -58,17 +61,18 @@ git merge main
 
 ### 2. Create or update `projects/final`
 
-If you haven't created `projects/final` yet, generate it from the starter kit as usual:
+If you haven't created `projects/final` yet, generate it from the starter kit using the root `npm`
+task:
 
 ```bash
-scripts/mpf.sh final
+npm run weekly:create final
 cd projects/final
 npm install
 ```
 
 If you already created `projects/final` earlier in the term, copy the updated `package.json` and
-`eslint.config.js` from `starter/` so your project has the `lint`, `format:check`, and `check`
-scripts:
+`eslint.config.js` from `starter/` so your project has the `lint`, `lint:fix`, `format:check`, and
+`check` scripts:
 
 ```bash
 cp starter/package.json starter/eslint.config.js projects/final/
@@ -88,20 +92,17 @@ npm run check
 
 Under the hood, `npm run check` runs four steps in order:
 
-1. `npm run lint` — checks for syntax and scope problems with ESLint
+1. `npm run lint` — checks for syntax and scope problems with ESLint (you can auto-fix safe lint
+   issues with `npm run lint:fix`)
 2. `npm run format:check` — checks that files are formatted with Prettier (if this fails, run
    `npm run format` to fix them)
 3. `npm test` — runs your Vitest unit tests once
 4. `npm run build` — runs `vite build` to verify the production bundle compiles cleanly
 
-In `.github/workflows/deploy-final.yml`, I kept these four commands as separate workflow steps
-rather than calling `npm run check` so you can see right away which step failed when looking at your
-build results on GitHub.
-
 ### 4. Triggering a deployment
 
-Once I've added your AWS deployment token to your repository's GitHub secrets, your project deploys
-in two ways:
+I will add all student AWS deployment tokens directly to your repositories' GitHub secrets. Once
+your token is in place, your project deploys in two ways:
 
 - **Automatically on push:** Any push (on any branch) that modifies files inside `projects/final/`
   triggers the workflow.
@@ -111,7 +112,11 @@ in two ways:
 When all checks pass, the workflow builds your project with `vite build --base="/<your-last-name>/"`
 and uploads `projects/final/dist/` to your folder in the S3 bucket.
 
-## Client-Side Routing with Navigo
+## Client-Side Routing in a Single-Page Application (SPA)
+
+In Week 10, we will discuss Single-Page Application (SPA) client-side routing and
+[Navigo](https://github.com/krasimir/navigo) as an optional aside, should you want to incorporate
+multiple views or pages in your final project.
 
 Because your app lives under `/<your-last-name>` rather than at the root of the domain, the
 CloudFront router function ([`infra/lib/student-hosting-stack.ts`](lib/student-hosting-stack.ts))
@@ -119,8 +124,7 @@ rewrites any request without a file extension (such as `/phillips` or `/phillips
 `/phillips/index.html`. Static files with extensions (`.js`, `.css`, `.png`, `.svg`) are served
 directly from S3.
 
-If you use [Navigo](https://github.com/krasimir/navigo) for client-side routes, pass
-`import.meta.env.BASE_URL` as the root URL:
+If you use Navigo for client-side routing, pass `import.meta.env.BASE_URL` as the root URL:
 
 ```js
 import Navigo from 'navigo'
