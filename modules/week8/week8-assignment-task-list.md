@@ -58,16 +58,13 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
    - `static fromJSON(data)` takes that plain object and returns a new `Task`.
    - `toHTML()` returns the HTML for one `<li>`:
      - the task text
-     - a toggle button with `data-action="toggle"` and `data-id="${this.id}"`
-     - a remove button with `data-action="remove"` and `data-id="${this.id}"`
-     - done tasks should look different, for example with a `done` class and a line through the
-       text, or a different button label
+     - a toggle button with `data-action="toggle"`
+     - a remove button with `data-action="remove"`
+     - some reference to the taskId, to be used by event handlers to target the right task
+     - completed tasks should look different from unfinished tasks
 2. **`TaskList` class**:
    - Private fields for the container and the tasks array (`#tasks = []`).
-   - `static isValidText(text)` returns `true` only when `text` has something other than spaces in
-     it.
-   - `constructor(container)` stores the container, renders once, and attaches **one** `click`
-     listener to the container.
+   - `constructor(container)` stores the container and an optional starting list of tasks
    - `get tasks()` returns a **copy** of the array (`[...this.#tasks]`), so outside code can't add
      to or remove from the real one.
    - `get remainingCount()` returns how many tasks are not done yet.
@@ -77,38 +74,33 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
      - `toggle(id)` and `remove(id)` ignore ids that don't exist
    - `toggle(id)` toggles the matching task.
    - `remove(id)` removes the matching task.
-   - Rendering writes to the container:
+   - `render()` renders the markup into the container:
      - a text input and an **Add** button (`data-action="add"`)
      - the list of tasks, built from each task's `toHTML()`
      - a count, such as `2 of 3 tasks left`
-   - Methods that only the class itself uses, like your click handler and render method, can be
-     private too (`#handleClick()`, `#render()`).
-3. **One delegated listener**:
-   - Attach it once, in the constructor, using an arrow function:
-     `(event) => this.#handleClick(event)`.
-   - In the handler, use `event.target.closest('button')`, read the id from `button.dataset.id`, and
-     `switch` on `button.dataset.action`. The ids are strings, so you don't need `parseInt()`.
+   - `attachHandlers()` sets up the event handlers
+3. The `taskList.attachHandlers` will add **one delegated listener for the buttons**, and possibly a
+   second one for the submit event for the task form.
+   - Attach them once to the container rendered by the `TaskList`, or a higher-level wrapping
+     container such as `#app`
+   - In the handler, use `event.target.closest('button')`, and from that button, get the task ID by
+     using eg `button.closest('[data-task-id'])`
 4. **`renderApp()`**:
    - Find `#app` and create a `TaskList` for it.
-   - No global variables. Every piece of state lives on a `Task` or `TaskList` instance.
+   - Attach your event listeners
 5. **Tests**:
    - Unit tests for `Task`: `toggle()`, unique ids, read-only getters, and a `toJSON()` /
      `fromJSON()` round trip.
-   - Unit tests for `TaskList`: `isValidText()`, `add()`, `toggle(id)`, `remove(id)`,
-     `remainingCount`, and the `tasks` copy, including the invalid cases.
+   - Unit tests for `TaskList`: `add()`, `toggle(id)`, `remove(id)`, `remainingCount`, and the
+     `tasks` copy, including the invalid cases.
    - DOM tests for `renderApp()` that add, toggle, and remove a task by clicking buttons.
-
-> 💡 **Testing `TaskList` without the page**: The constructor needs a container, but it doesn't have
-> to be `#app`. In a unit test, `new TaskList(document.createElement('div'))` gives you a fresh,
-> empty container each time.
 
 > 💡 **Why `toJSON()`?** `JSON.stringify()` skips private fields, so `JSON.stringify(task)` would
 > give you `'{}'`. But if an object has a `toJSON()` method, `JSON.stringify()` calls it
 > automatically and uses whatever it returns.
 
 > 💡 **`crypto.randomUUID()` and the browser**: Browsers only allow it on secure pages. `npm start`
-> (`localhost`) and GitHub Pages (`https`) both work. Opening the dev server from another device by
-> its IP address over plain `http` won't.
+> (`localhost`) works.
 
 ---
 
@@ -137,9 +129,7 @@ modify them to your own naming, exports, etc.**
 
 ```javascript
 import { beforeEach, describe, it, expect } from 'vitest'
-import { renderApp } from '../src/app.js'
-import { Task } from '../src/task.js'
-import { TaskList } from '../src/task-list.js'
+import { Task, TaskList, renderApp } from '../src/app.js'
 
 describe('Task', () => {
   it('starts not done and toggles', () => {
@@ -193,11 +183,6 @@ describe('TaskList', () => {
     list = new TaskList(document.createElement('div'))
   })
 
-  it('validates text with a static method', () => {
-    expect(TaskList.isValidText('Study'), 'normal text is valid').toBe(true)
-    expect(TaskList.isValidText('   '), 'blank text is invalid').toBe(false)
-  })
-
   it('adds tasks and ignores blank text', () => {
     list.add('Read')
     list.add('Write')
@@ -224,14 +209,31 @@ describe('TaskList', () => {
     list.remove('no-such-id')
     expect(list.tasks.length, 'unknown id is ignored').toBe(1)
   })
+
+  it('yields expected summaryText', () => {
+    const taskList = new TaskList(document.createElement('div'))
+
+    expect(taskList.summaryText).toMatch(/No tasks as of yet/)
+
+    const task = taskList.add('boo')
+    expect(taskList.summaryText).toMatch(/1 of 1 tasks/)
+
+    taskList.toggle(task.id)
+    expect(taskList.summaryText).toMatch(/No tasks left/)
+  })
 })
 
 describe('Task List DOM & Event Delegation', () => {
   let app
 
   function addTask(text) {
-    app.querySelector('#new-task').value = text
-    app.querySelector('button[data-action="add"]').click()
+    app.querySelector('#new-task input').value = text
+    // clicking a submit button fires 'submit'; form.submit() does not
+    app.querySelector('#new-task button[type="submit"]').click()
+  }
+
+  function taskCount() {
+    return app.querySelectorAll('[data-task-id]').length
   }
 
   beforeEach(() => {
@@ -240,24 +242,28 @@ describe('Task List DOM & Event Delegation', () => {
   })
 
   it('adds a task when the Add button is clicked', () => {
+    const before = taskCount()
     addTask('Buy milk')
-    expect(app.querySelectorAll('[data-test-task]').length).toBe(1)
-    expect(app.textContent).toContain('Buy milk')
+    expect(taskCount(), 'one task added').toBe(before + 1)
+    expect(app.textContent, 'new task text is shown').toContain('Buy milk')
   })
 
   it('ignores a blank task', () => {
+    const before = taskCount()
     addTask('   ')
-    expect(app.querySelectorAll('[data-test-task]').length).toBe(0)
+    expect(taskCount(), 'blank task was not addes').toBe(before)
   })
 
   it('toggles and removes a task', () => {
+    const before = taskCount()
+
     addTask('Buy milk')
 
     app.querySelector('button[data-action="toggle"]').click()
-    expect(app.querySelector('[data-test-remaining]').textContent).toContain('0 of 1')
+    expect(app.querySelector('.summary').innerText).toContain('No tasks left')
 
     app.querySelector('button[data-action="remove"]').click()
-    expect(app.querySelectorAll('[data-test-task]').length).toBe(0)
+    expect(taskCount()).toBe(before)
   })
 })
 ```
@@ -277,7 +283,7 @@ describe('Task List DOM & Event Delegation', () => {
    ```
 3. **Run the `mpf.sh` script to create your `week8` project**:
    ```bash
-   scripts/mpf.sh week8
+   npm run weekly:create week8
    ```
 4. **Stage, commit, and push the generated project files**:
    ```bash
