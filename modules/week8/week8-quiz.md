@@ -27,21 +27,19 @@ Be sure to contrast this with lexical scope, which we studied in Weeks 5–7.
 
 ### Question 3: Keeping `this` in an Event Listener
 
-In this week's Task List assignment, the `TaskList` constructor attaches its click listener with an
-arrow function: `(event) => this.#handleClick(event)`. Explain why this keeps `this` pointing at the
-`TaskList` instance when the browser calls the listener.
+In this week's Task List assignment, you create event handlers that will invoke class methods of the
+`TaskList`. How do you ensure that `this` is retained properly once the event handler is run?
 
 ---
 
 ### Question 4: `extends` and `super`
 
-Using the `Publication`, `Book`, and `BlogPost` example from
-[Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md),
-explain what the `super(...)` call does inside a child class's constructor.
+What does the `super(...)` call does inside a child class's constructor? And why must it be invoked
+prior to referring to `this` in the constructor?
 
 ---
 
 ### Question 5: Static Members
 
-Explain the difference between a **static** method (such as `TaskList.isValidText(text)` from this
-week's assignment) and an ordinary instance method (such as `list.add(text)`).
+Explain the difference between a **static** method (such as `Task.fromJSON()` and an ordinary
+instance method (such as `list.add(text)`).
