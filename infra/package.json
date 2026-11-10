@@ -1,0 +1,24 @@
+{
+  "name": "cis133js-student-hosting-infra",
+  "version": "1.0.0",
+  "description": "AWS CDK infrastructure for CIS 133JS final project hosting (S3 + CloudFront + per-student SPA routing)",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "cdk": "cdk",
+    "synth": "cdk synth --profile artzt-cocc",
+    "diff": "cdk diff --profile artzt-cocc",
+    "deploy": "cdk deploy --profile artzt-cocc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "aws-cdk": "^2.177.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.177.0",
+    "constructs": "^10.4.2"
+  }
+}

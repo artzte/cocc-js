@@ -1,0 +1,119 @@
+name: Deploy Final Project
+
+on:
+  push:
+    paths:
+      - 'projects/final/**'
+      - '.github/workflows/deploy-final.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-final
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build & Deploy Final Project
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-west-2
+      S3_BUCKET: cocc-cis133js-projects-081028362911
+      CLOUDFRONT_DOMAIN: d2zap10oyizxcd.cloudfront.net
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check for projects/final/package.json
+        id: check_final
+        run: |
+          if [ -f "projects/final/package.json" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No projects/final/package.json found; skipping deployment."
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Determine student slug
+        if: steps.check_final.outputs.exists == 'true'
+        id: slug
+        env:
+          SECRET_SLUG: ${{ secrets.STUDENT_SLUG }}
+        run: |
+          if [ -n "$SECRET_SLUG" ]; then
+            SLUG="$SECRET_SLUG"
+          else
+            REPO_NAME="${GITHUB_REPOSITORY#*/}"
+            SLUG="${REPO_NAME%-cocc-js}"
+          fi
+          SLUG="$(printf '%s' "$SLUG" | tr '[:upper:]' '[:lower:]')"
+          echo "student_slug=$SLUG" >> "$GITHUB_OUTPUT"
+          echo "Deploying to student path: /$SLUG"
+
+      - name: Set up Node.js
+        if: steps.check_final.outputs.exists == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: projects/final/package-lock.json
+
+      - name: Install dependencies
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npm ci
+
+      - name: Run linter
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npm run lint
+
+      - name: Check code formatting
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npm run format:check
+
+      - name: Run unit tests
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npm test
+
+      - name: Build final project for /${{ steps.slug.outputs.student_slug }}/
+        if: steps.check_final.outputs.exists == 'true'
+        working-directory: projects/final
+        run: npx vite build --base="/${{ steps.slug.outputs.student_slug }}/"
+
+      - name: Configure AWS credentials
+        if: steps.check_final.outputs.exists == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Sync build output to S3
+        if: steps.check_final.outputs.exists == 'true'
+        run: |
+          # Upload content-hashed bundle files under assets/ (cached long-term at CloudFront edge)
+          aws s3 sync projects/final/dist/ \
+            "s3://${S3_BUCKET}/${{ steps.slug.outputs.student_slug }}/" \
+            --exclude "*" \
+            --include "assets/*" \
+            --cache-control "public, max-age=31536000, immutable" \
+            --delete
+
+          # Upload index.html and any unhashed public/ files with no-store so updates appear immediately
+          aws s3 sync projects/final/dist/ \
+            "s3://${S3_BUCKET}/${{ steps.slug.outputs.student_slug }}/" \
+            --exclude "assets/*" \
+            --cache-control "no-cache, no-store, must-revalidate" \
+            --delete
+
+      - name: Publish deployment summary
+        if: steps.check_final.outputs.exists == 'true'
+        run: |
+          URL="https://${CLOUDFRONT_DOMAIN}/${{ steps.slug.outputs.student_slug }}"
+          echo "### Final Project Deployed" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Live URL:** [${URL}](${URL})" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **S3 Prefix:** \`s3://${S3_BUCKET}/${{ steps.slug.outputs.student_slug }}/\`" >> "$GITHUB_STEP_SUMMARY"

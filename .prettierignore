@@ -1,6 +1,7 @@
 # Dependency and build output
 node_modules/
 dist/
+infra/cdk.out/
 
 # Vendored external text
 book/
