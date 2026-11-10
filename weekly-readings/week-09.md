@@ -2,62 +2,84 @@
 
 **Sources**:
 
-- _You Don't Know JS Yet: Scope & Closures_ — Chapter 8: The Module Pattern
-- _You Don't Know JS Yet: Get Started_ — Chapter 2: Surveying JS (Modules portion)
+- [Scope & Closures (2nd Edition), Chapter 8: The Module Pattern](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch8.md)
+- [Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md)
+  ("Modules" under "How We Organize in JS")
+- MDN: [JavaScript modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)
+  and [`Window.localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 
 ---
 
 ### 1. Modularity and Encapsulation
 
 - **Encapsulation**: Bundling related data (state) and behavior (functions) serving a common
-  purpose.
+  purpose, along with controlling which details are visible to the rest of the program (POLE — the
+  Principle of Least Exposure from
+  [Scope & Closures (2nd Edition), Chapter 6: Limiting Scope Exposure](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch6.md)).
 - **Namespace (Stateless Grouping)**: Grouping functions under a single namespace object (e.g.
-  `var Utils = { ... }`) without state. Not a module.
+  `var Utils = { ... }`) without state. Useful organization, but not a module.
 - **Data Structure (Stateful Grouping)**: Bundling state and functions together publicly (e.g.
-  `var Student = { records: [...], getName() {...} }`), but without restricting access. Not a
-  module.
-- **Module (Stateful Access Control)**: Encapsulating state and methods with distinct **private**
-  (hidden implementation details) and **public** (exposed API) boundaries.
+  `var Student = { records: [...], getName() {...} }`), without restricting access to `records`. An
+  instance of a data structure, not a module.
+- **Module (Stateful Access Control)**: Encapsulating state and functions with a clear boundary
+  between **private** (hidden implementation details) and **public** (exposed API).
 
 ---
 
-### 2. Classic/Revealing Modules
+### 2. Classic / Revealing Modules
 
-- **Structure**: Created using an outer wrapper function (IIFE for singletons; factory function for
-  multiple instances).
-- **Privacy**: Leverages lexical scope to make variables and helper functions private by default.
-- **API Exposure**: Returns a public API object holding references to inner functions.
-- **State Maintenance**: The exported functions maintain access to the hidden state variables via
-  **closure** across the program's lifetime.
+- **Structure**: Created using an outer function — an IIFE when only a single instance
+  (**singleton**) is needed, or a standalone **module factory** function when multiple instances are
+  needed.
+- **Privacy**: Uses lexical scope so variables and helper functions inside the outer function are
+  private by default.
+- **API Exposure**: Returns a public API object holding references to the inner functions meant for
+  outside use.
+- **State Maintenance**: Those returned functions keep access to the hidden state variables via
+  **closure** across the lifetime of the program.
 
 ---
 
 ### 3. Node CommonJS Modules
 
 - **File-Based**: CommonJS is file-based (one module per file).
-- **Implicit Wrapping**: Node wraps module files in a hidden wrapper function
-  `Module(module, require, __dirname, ...)` making all top-level variables module-private by
-  default.
-- **Exporting**: Exposes APIs by adding properties to the `module.exports` object.
-  - _Tip_: Avoid replacing `module.exports` with a new object literal directly (can cause cyclic
-    dependency bugs). Instead, use `Object.assign(module.exports, { ... })`.
-- **Importing**: Consumed via the `require(..)` function. Returns the module's public API. CommonJS
-  modules are singletons; multiple requires load the cached module instance.
+- **Private by Default**: Top-level variables and functions in a CommonJS file live in that module's
+  scope, not the global scope.
+- **Exporting**: Exposes API members by attaching properties to `module.exports` (or copying several
+  properties onto it with `Object.assign(module.exports, { ... })`).
+- **Importing**: Loaded with `require("...")`. CommonJS modules are singletons: calling `require()`
+  multiple times returns references to the same cached module instance.
 
 ---
 
 ### 4. Modern ES Modules (ESM)
 
-- **Native Standard**: Introduced in ES6. ESMs are file-based, singletons, and run in **strict mode
-  by default** (cannot be disabled).
-- **Exports**: Exposes API members using the `export` keyword:
-  - **Named Exports**: E.g., `export { getName };` or `export function getName() {}`.
-  - **Default Export**: E.g., `export default function getName() {}` (allows consumers to import
-    without curly braces).
-- **Imports**: Consumed using the `import` keyword at the top-level scope:
-  - **Named Import**: `import { getName } from "./students.js";` (supports renaming:
-    `import { getName as getStudent }`).
-  - **Default Import**: `import getName from "./students.js";`.
-  - **Namespace Import**: `import * as Student from "./students.js";`.
-- **Instantiation**: Since ESM is a singleton, it cannot be instantiated multiple times. If multiple
-  instances are required, the ESM must export a classic module-style factory function or a class.
+- **Native Standard**: Introduced in ES6. ESMs are file-based, singletons, private by default, and
+  always run in **strict mode**.
+- **Exports** (`export` must appear at the top level of the file):
+  - **Named Exports**: `export { getName }`, `export function getName() {}`, or
+    `export class Task {}`.
+  - **Default Export**: `export default function getName() {}` (one default export per module;
+    imported without curly braces).
+- **Imports** (`import` must appear at the top level of the file):
+  - **Named Import**: `import { getName } from './students.js'` (can be renamed with `as`:
+    `import { getName as getStudentName } from './students.js'`).
+  - **Default Import**: `import getName from './students.js'`.
+  - **Namespace Import**: `import * as Student from './students.js'` (collects all exports on a
+    single object).
+- **Multiple Instances**: Because an ES module file is a singleton, creating multiple instances
+  means exporting a factory function or an ES6 `class` from the module.
+
+---
+
+### 5. Persisting State with `localStorage` (from MDN)
+
+- **String Key/Value Storage**: `localStorage.setItem(key, value)` and `localStorage.getItem(key)`
+  store and retrieve strings that survive page reloads for the current origin.
+- **Saving Objects**: Pass your array or object through `JSON.stringify(data)` before calling
+  `localStorage.setItem(key, json)`. When an object defines `toJSON()`, `JSON.stringify()` calls it
+  automatically.
+- **Loading Objects**: `localStorage.getItem(key)` returns `null` when nothing has been stored under
+  `key` yet. When a JSON string is present, `JSON.parse(raw)` returns plain objects — pass each item
+  to `Task.fromJSON(item)` to turn it back into a `Task` instance with its private fields and
+  methods intact.
