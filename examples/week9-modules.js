@@ -1,8 +1,8 @@
 // ====================================================================
 // CIS 133JS — Week 9: Modules and localStorage
 // Namespaces vs. data structures vs. modules, classic modules (IIFE
-// singleton and module factory), ES module boundaries, and persisting
-// Task instances with localStorage
+// singleton and module factory), ES module boundaries, and decoupling
+// TaskList from localStorage with registerOnChange(save)
 // ====================================================================
 
 // --------------------------------------------------------------------
@@ -136,7 +136,7 @@ function classicModuleDemo() {
     return { current, select }
   }
 
-  const tabs = createSelectionStore(['Home', 'Tasks', 'About'])
+  const tabs = createSelectionStore(['Home', 'Tasks', 'Done'])
   const filters = createSelectionStore(['All', 'Active', 'Done'])
 
   tabs.select(1)
@@ -153,13 +153,13 @@ function esModuleBoundariesDemo() {
   // In a Vite project, each file is its own ES module:
   //
   //   src/task.js      -> exports `class Task`
-  //   src/storage.js   -> keeps `STORAGE_KEY` private; exports `save`, `load`
   //   src/task-list.js -> imports `Task`; exports `class TaskList`
-  //   src/app.js       -> imports `TaskList`, `load`, `save`; exports `renderApp`
+  //   src/storage.js   -> keeps `STORAGE_KEY` private; exports `save`, `load`
+  //   src/app.js       -> imports `TaskList`, `load`, `save`; wires them together
   //
-  // Notice how `STORAGE_KEY` in `src/storage.js` is not exported. No other
-  // file can accidentally misspell the key or read raw JSON behind `storage.js`'s
-  // back — that is POLE applied at the file level.
+  // Notice that `task-list.js` does not import `storage.js`, and `storage.js`
+  // does not import `Task` or `TaskList`. Only `app.js` connects them via
+  // `taskList.registerOnChange(save)`.
 
   console.log(
     'Each ES module file is its own scope: top-level variables stay private unless exported.',
@@ -167,10 +167,10 @@ function esModuleBoundariesDemo() {
 }
 
 // --------------------------------------------------------------------
-// DEMO 4: Persisting Task Instances with localStorage
+// DEMO 4: Decoupling TaskList and localStorage with registerOnChange
 // --------------------------------------------------------------------
 function localStorageDemo() {
-  header('4. Persisting Task Instances with localStorage')
+  header('4. Decoupling TaskList and localStorage with registerOnChange')
 
   const storage = getStorage()
   const STORAGE_KEY = 'cis133js.week9.demo.tasks'
@@ -206,13 +206,40 @@ function localStorageDemo() {
       const { id, text, done } = this
       return { id, text, done }
     }
+  }
 
-    static fromJSON(taskJson) {
-      return new Task(taskJson.text, taskJson.done, taskJson.id)
+  class TaskList {
+    #tasks = []
+    #onChange = null
+
+    constructor(tasksInit = []) {
+      tasksInit.forEach((task) => this.add(task.text, task.done, task.id))
+    }
+
+    get tasks() {
+      return [...this.#tasks]
+    }
+
+    registerOnChange(callback) {
+      this.#onChange = callback
+    }
+
+    #notifyChange() {
+      this.#onChange?.(this.#tasks.map((task) => task.toJSON()))
+    }
+
+    add(taskText, done = false, id = null) {
+      const text = taskText.trim()
+      if (!text) return
+
+      const task = new Task(text, done, id)
+      this.#tasks.push(task)
+      this.#notifyChange()
+      return task
     }
   }
 
-  // Matches the `save` and `load` functions in src/storage.js
+  // Matches `save` and `load` in src/storage.js (no dependency on Task!)
   function save(tasks) {
     storage.setItem(STORAGE_KEY, JSON.stringify(tasks))
   }
@@ -221,80 +248,50 @@ function localStorageDemo() {
     const raw = storage.getItem(STORAGE_KEY)
     if (!raw) return []
 
-    return JSON.parse(raw).map((taskJson) => Task.fromJSON(taskJson))
+    return JSON.parse(raw)
   }
 
-  // Start clean, save two tasks, then load them back as real Task instances
   storage.removeItem(STORAGE_KEY)
   console.log('load() when storage is empty:', load()) // []
 
-  const first = new Task('Read Chapter 8')
-  const second = new Task('Split app.js into modules')
-  first.toggle()
+  // Wire TaskList to storage by passing `save` as a first-class function
+  const list = new TaskList(load())
+  list.registerOnChange(save)
 
-  save([first, second])
+  list.add('Read Chapter 8')
+  list.add('Split app.js into modules')
   console.log('Raw JSON in storage:', storage.getItem(STORAGE_KEY))
 
-  const restored = load()
-  console.log('restored[0] instanceof Task:', restored[0] instanceof Task) // true
-  console.log(
-    'restored[0].text, restored[0].done:',
-    restored[0].text,
-    restored[0].done,
-  )
-
-  // Because load() rebuilt each item with Task.fromJSON(), methods work:
-  restored[1].toggle()
-  console.log('After restored[1].toggle():', restored[1].done) // true
+  // Simulate a page reload by passing load() into a brand-new TaskList
+  const reloadedList = new TaskList(load())
+  console.log('reloadedList.tasks.length:', reloadedList.tasks.length) // 2
+  console.log('reloadedList.tasks[0].text:', reloadedList.tasks[0].text)
 }
 
 // --------------------------------------------------------------------
-// DEMO 5: Debug Challenge — Why Doesn't task.toggle() Work After Load?
+// DEMO 5: Debug Challenge — Passing a Function vs. Calling It
 // --------------------------------------------------------------------
-// `debugChallenge()` saves a task and loads it back, then tries to call
-// `loaded[0].toggle()`. Watch the TypeError in the console, inspect what
-// `brokenLoad()` returned, and fix `brokenLoad()` so it returns `Task`
-// instances instead of plain objects.
+// `debugChallenge()` tries to wire `save` to `taskList.registerOnChange`,
+// then adds a task. Instead of saving the new task, storage holds
+// `"undefined"` and `load()` fails! Find the bug on the
+// `registerOnChange` line and fix it.
 function debugChallenge() {
   header('5. Debug Challenge')
 
   const storage = getStorage()
   const CHALLENGE_KEY = 'cis133js.week9.challenge.tasks'
 
-  class Task {
-    #id = null
-    #text = null
-    #done = false
+  class MiniTaskList {
+    #tasks = []
+    #onChange = null
 
-    constructor(text, done = false, id = null) {
-      this.#text = text
-      this.#done = done
-      this.#id = id || crypto.randomUUID()
+    registerOnChange(callback) {
+      this.#onChange = callback
     }
 
-    get id() {
-      return this.#id
-    }
-
-    get text() {
-      return this.#text
-    }
-
-    get done() {
-      return this.#done
-    }
-
-    toggle() {
-      this.#done = !this.#done
-    }
-
-    toJSON() {
-      const { id, text, done } = this
-      return { id, text, done }
-    }
-
-    static fromJSON(taskJson) {
-      return new Task(taskJson.text, taskJson.done, taskJson.id)
+    add(text) {
+      this.#tasks.push({ id: crypto.randomUUID(), text, done: false })
+      this.#onChange?.(this.#tasks)
     }
   }
 
@@ -302,26 +299,16 @@ function debugChallenge() {
     storage.setItem(CHALLENGE_KEY, JSON.stringify(tasks))
   }
 
-  // Buggy: JSON.parse() returns plain `{ id, text, done }` objects, not Task instances!
-  function brokenLoad() {
-    const raw = storage.getItem(CHALLENGE_KEY)
-    if (!raw) return []
+  storage.removeItem(CHALLENGE_KEY)
 
-    return JSON.parse(raw)
-  }
+  const taskList = new MiniTaskList()
 
-  save([new Task('Fix brokenLoad()')])
+  // Buggy: why does this write "undefined" to storage right now and
+  // never save when taskList.add() runs?
+  taskList.registerOnChange(save())
 
-  const loaded = brokenLoad()
-  console.log('loaded[0]:', loaded[0])
-  console.log('loaded[0] instanceof Task:', loaded[0] instanceof Task)
-
-  try {
-    loaded[0].toggle()
-    console.log('Success! loaded[0].done is now:', loaded[0].done)
-  } catch (err) {
-    console.log('loaded[0].toggle() failed:', err.name, '-', err.message)
-  }
+  taskList.add('Fix registerOnChange')
+  console.log('Stored value in CHALLENGE_KEY:', storage.getItem(CHALLENGE_KEY))
 }
 
 // --------------------------------------------------------------------

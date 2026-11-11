@@ -44,8 +44,8 @@ and show how the `import` statement differs for each.
 
 ---
 
-### Question 5: Restoring Class Instances from `localStorage`
+### Question 5: Decoupling Modules with `registerOnChange`
 
-In this week's Task List assignment, loading saved tasks from `localStorage` with `JSON.parse()` is
-followed by passing each object to `Task.fromJSON()`. Why is `Task.fromJSON()` necessary instead of
-using the array returned by `JSON.parse()` directly?
+In this week's Task List assignment, `TaskList` has a `registerOnChange(callback)` method instead of
+importing `save()` directly from the storage module. How does passing `save` as a callback function
+keep your modules decoupled?

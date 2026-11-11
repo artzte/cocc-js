@@ -15,14 +15,14 @@ and
 
 ## Pacing & Timeline
 
-| Time              | Section                                        | Focus / Snippet Function                                                                    |
-| :---------------- | :--------------------------------------------- | :------------------------------------------------------------------------------------------ |
-| **00:00 - 04:00** | **1. What Makes Something a Module?**          | POLE, namespaces vs. data structures vs. modules (`namespaceAndDataStructureDemo`)          |
-| **04:00 - 08:00** | **2. Classic Modules (IIFE & Module Factory)** | Closure-backed private state and `publicAPI` (`classicModuleDemo`)                          |
-| **08:00 - 13:00** | **3. File-Based Modules: CommonJS & ESM**      | `export` / `import` variations, module scope, Vite dev vs. build (`esModuleBoundariesDemo`) |
-| **13:00 - 16:30** | **4. Persisting State with `localStorage`**    | `setItem`, `getItem`, `JSON.stringify` + `toJSON()`, `Task.fromJSON()` (`localStorageDemo`) |
-| **16:30 - 18:30** | **5. Debug Challenge**                         | Plain objects from `JSON.parse()` vs. `Task` instances (`debugChallenge`)                   |
-| **18:30 - 20:00** | **6. Wrap-Up & Week 9 Deliverables**           | Splitting Week 8 Task List into modules + Final Project test deployment                     |
+| Time              | Section                                                  | Focus / Snippet Function                                                                    |
+| :---------------- | :------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
+| **00:00 - 04:00** | **1. What Makes Something a Module?**                    | POLE, namespaces vs. data structures vs. modules (`namespaceAndDataStructureDemo`)          |
+| **04:00 - 08:00** | **2. Classic Modules (IIFE & Module Factory)**           | Closure-backed private state and `publicAPI` (`classicModuleDemo`)                          |
+| **08:00 - 13:00** | **3. File-Based Modules: CommonJS & ESM**                | `export` / `import` variations, module scope, Vite dev vs. build (`esModuleBoundariesDemo`) |
+| **13:00 - 16:30** | **4. Decoupling `localStorage` with `registerOnChange`** | `setItem`, `getItem`, passing `save` as a callback (`localStorageDemo`)                     |
+| **16:30 - 18:30** | **5. Debug Challenge**                                   | Passing a function (`save`) vs. calling it (`save()`) (`debugChallenge`)                    |
+| **18:30 - 20:00** | **6. Wrap-Up & Week 9 Deliverables**                     | Splitting Week 8 Task List into modules + Final Project test deployment                     |
 
 ---
 
@@ -121,7 +121,7 @@ Student.records // undefined
 
 ---
 
-## 4. Persisting State with `localStorage` (3.5 mins)
+## 4. Decoupling `localStorage` with `registerOnChange` (3.5 mins)
 
 ### Talking Points & Concept Cues
 
@@ -132,16 +132,21 @@ Student.records // undefined
 - Keys and values in `localStorage` are always **strings**:
   - `localStorage.setItem(key, JSON.stringify(tasks))`
   - `localStorage.getItem(key)` returns the saved JSON string, or `null` if nothing is stored yet.
-- Why Week 8's `toJSON()` and `Task.fromJSON()` pay off here:
-  - When `save(tasks)` calls `JSON.stringify(tasks)`, JavaScript automatically calls each task's
-    `toJSON()` method, producing `[{"id":"...","text":"Read","done":false}]`.
-  - When `load()` calls `JSON.parse(raw)`, it gets back plain objects — **not** `Task` instances.
-    Mapping them through `Task.fromJSON(item)` rebuilds real `Task` instances with their private
-    fields and `toggle()` / `toHTML()` methods restored.
-- **Why put `save` and `load` in their own `storage.js` module?**
-  - `STORAGE_KEY` stays private inside `storage.js`.
-  - `TaskList` (or `app.js`) doesn't need to know the key name or how `localStorage` formats strings
-    — it just calls `save(tasks)` and `load()`.
+- **How should `TaskList` and `storage.js` talk to each other?**
+  - If `TaskList` imported `save` directly from `storage.js`, `TaskList` would be hard-wired to
+    `localStorage`.
+  - Instead, we give `TaskList` a `registerOnChange(callback)` method. Whenever a task is added,
+    toggled, or removed, `TaskList` calls that callback with the array of serialized task objects
+    (`this.#tasks.map((task) => task.toJSON())`).
+  - Now `storage.js` doesn't need to know about `Task` or `TaskList`, and `task-list.js` doesn't
+    need to know about `storage.js`.
+  - `app.js` is the only file that knows about both:
+    ```javascript
+    const taskList = new TaskList(app, load())
+    taskList.registerOnChange(save)
+    ```
+  - Because functions in JavaScript are first-class values, we pass `save` itself to
+    `registerOnChange(save)`.
 
 ---
 
@@ -149,15 +154,18 @@ Student.records // undefined
 
 ### Talking Points & Concept Cues
 
-- Run `debugChallenge()` in DevTools: `TypeError: loaded[0].toggle is not a function`.
-- Look at `brokenLoad()`: it returns `JSON.parse(raw)` directly.
-- `JSON.parse()` only knows how to build plain objects, arrays, strings, numbers, and booleans. It
-  has no idea those objects used to be `Task` instances.
-- **The fix**:
+- Run `debugChallenge()` in DevTools: `localStorage` gets overwritten with `"undefined"` at startup,
+  and adding a task never saves it!
+- Look at the registration line:
   ```javascript
-  return JSON.parse(raw).map((taskJson) => Task.fromJSON(taskJson))
+  taskList.registerOnChange(save())
   ```
-- That one line is the heart of `load()` in this week's assignment.
+- Writing `save()` with parentheses **calls** `save(undefined)` immediately and passes its return
+  value (`undefined`) to `registerOnChange`.
+- **The fix**: pass the function value itself, without parentheses:
+  ```javascript
+  taskList.registerOnChange(save)
+  ```
 
 ---
 

@@ -2,7 +2,8 @@
 
 This guide walks through an interactive browser console demo for the Week 9 lecture: **namespaces
 vs. data structures**, **classic modules (singleton IIFE and module factory)**, **ES module
-boundaries**, **persisting `Task` instances with `localStorage`**, and a **debug challenge**.
+boundaries**, **decoupling `TaskList` and `localStorage` with `registerOnChange(save)`**, and a
+**debug challenge**.
 
 The full snippet is in [`week9-modules.js`](week9-modules.js).
 
@@ -28,9 +29,9 @@ The full snippet is in [`week9-modules.js`](week9-modules.js).
 | :------------------------------ | :------------------------------ | :------------------------------------------------------------------------------------------------------------ |
 | 1. Namespace vs. data structure | `namespaceAndDataStructureDemo` | `TextUtils` has functions but no state; `StudentDataStructure` has state, but outside code can wipe `records` |
 | 2. Classic modules              | `classicModuleDemo()`           | `Student.records` is `undefined` outside the IIFE; `createSelectionStore()` makes separate closures           |
-| 3. ES module boundaries         | `esModuleBoundariesDemo()`      | How splitting `app.js` into `task.js`, `storage.js`, `task-list.js`, and `app.js` hides internal details      |
-| 4. `localStorage` round trip    | `localStorageDemo()`            | `save()` calls `JSON.stringify(tasks)` (`toJSON()`); `load()` rebuilds `Task` instances with `Task.fromJSON`  |
-| 5. Debug challenge              | `debugChallenge()`              | `loaded[0].toggle()` throws `TypeError: loaded[0].toggle is not a function`. Explain it, fix `brokenLoad()`   |
+| 3. ES module boundaries         | `esModuleBoundariesDemo()`      | How `task-list.js` and `storage.js` stay independent while `app.js` wires them together                       |
+| 4. `registerOnChange(save)`     | `localStorageDemo()`            | Passing `save` as a callback to `list.registerOnChange(save)` persists serialized task objects on each change |
+| 5. Debug challenge              | `debugChallenge()`              | `taskList.registerOnChange(save())` writes `"undefined"` immediately and never saves on `add()`. Fix it       |
 
 ---
 
@@ -43,18 +44,17 @@ The full snippet is in [`week9-modules.js`](week9-modules.js).
 
 ## Debug Challenge
 
-`debugChallenge()` saves a `Task` to storage, loads it back with `brokenLoad()`, and calls
-`loaded[0].toggle()`. Instead of flipping `done` to `true`, it logs:
+`debugChallenge()` creates a `MiniTaskList`, tries to register `save` as its change callback, and
+calls `taskList.add('Fix registerOnChange')`. Instead of storing the new task's JSON array, it logs:
 
 ```text
-TypeError - loaded[0].toggle is not a function
+Stored value in CHALLENGE_KEY: undefined
 ```
 
 Before you change anything, answer these questions:
 
-1. What does `JSON.parse(raw)` return inside `brokenLoad()`?
-2. Why is `loaded[0] instanceof Task` equal to `false`?
-3. Which static method on `Task` turns a plain `{ id, text, done }` object back into a real `Task`
-   instance?
-4. How can you update `brokenLoad()` (using `.map(...)`) so every item in the returned array is a
-   `Task` instance?
+1. On the line `taskList.registerOnChange(save())`, when does `save()` run, and what argument does
+   it receive?
+2. What value does `save()` return, and what gets stored in `this.#onChange`?
+3. How do you pass the `save` function itself as a value to `registerOnChange` without calling it
+   immediately?

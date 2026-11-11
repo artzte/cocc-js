@@ -72,14 +72,15 @@
 
 ---
 
-### 5. Persisting State with `localStorage` (from MDN)
+### 5. Persisting State with `localStorage` and Callbacks (from MDN)
 
 - **String Key/Value Storage**: `localStorage.setItem(key, value)` and `localStorage.getItem(key)`
   store and retrieve strings that survive page reloads for the current origin.
-- **Saving Objects**: Pass your array or object through `JSON.stringify(data)` before calling
-  `localStorage.setItem(key, json)`. When an object defines `toJSON()`, `JSON.stringify()` calls it
-  automatically.
+- **Saving Objects**: Pass your array of serialized task objects through `JSON.stringify(tasks)`
+  before calling `localStorage.setItem(key, json)`.
 - **Loading Objects**: `localStorage.getItem(key)` returns `null` when nothing has been stored under
-  `key` yet. When a JSON string is present, `JSON.parse(raw)` returns plain objects — pass each item
-  to `Task.fromJSON(item)` to turn it back into a `Task` instance with its private fields and
-  methods intact.
+  `key` yet; otherwise `JSON.parse(raw)` returns the saved array of `{ id, text, done }` objects.
+- **Decoupling Modules with Callback Functions**: Rather than having `TaskList` import `save`
+  directly from `storage.js`, `TaskList` can expose `registerOnChange(callback)` and pass serialized
+  task objects (`task.toJSON()`) to that callback whenever the list changes. `app.js` then connects
+  the two modules with `taskList.registerOnChange(save)`.

@@ -36,12 +36,12 @@ Task List into separate modules and adding `localStorage` persistence.
 - **Vite dev vs. build**: How Vite serves native ESM during `npm start` and bundles modules during
   `npm run build`.
 
-### Part 3: Persisting State with `localStorage`
+### Part 3: Decoupled Persistence with Callbacks and `localStorage`
 
-- **`localStorage.setItem()` and `localStorage.getItem()`**: Storing and reading JSON strings by
-  key.
-- **Round-tripping class instances**: Using `JSON.stringify(tasks)` (which calls `task.toJSON()`) to
-  save, and `JSON.parse(raw).map((item) => Task.fromJSON(item))` to restore `Task` instances.
+- **Clean module boundaries with callbacks**: Why `TaskList` uses `registerOnChange(callback)`
+  instead of importing `save()` directly from `storage.js`.
+- **`localStorage.setItem()` and `localStorage.getItem()`**: Storing and reading JSON strings by key
+  inside a self-contained storage module.
 
 ---
 
@@ -56,8 +56,8 @@ By the end of this module you will be able to:
 - Use ES Module `export` and `import` statements (named, default, and namespace imports) to split a
   single-file application into focused modules.
 - Explain how module scope differs from global scope and why ES modules act as singletons.
-- Persist and rehydrate an array of class instances in the browser using `localStorage`,
-  `JSON.stringify()`, `JSON.parse()`, `toJSON()`, and `static fromJSON()`.
+- Pass a callback function (`registerOnChange(save)`) to decouple a UI/state class from a
+  `localStorage` persistence module.
 
 ---
 

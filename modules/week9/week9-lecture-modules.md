@@ -24,9 +24,9 @@ Week 8 Task List so tasks survive a page refresh.
    `export` / `import`.
 4. **ES Modules (ESM) in Practice**: File-level scope (private by default, strict mode always on,
    singleton execution), named vs. default exports, and `import` variations.
-5. **Persisting State with `localStorage`**: Saving an array of `Task` instances with
-   `localStorage.setItem(key, JSON.stringify(tasks))` and rebuilding `Task` instances from JSON with
-   `Task.fromJSON()`.
+5. **Decoupling Modules with Callback Functions and `localStorage`**: Using
+   `taskList.registerOnChange(save)` so `TaskList` and `storage.js` stay independent, while `app.js`
+   wires them together.
 
 ---
 
@@ -114,17 +114,17 @@ export default class TaskList {
 import TaskList from './task-list.js'
 ```
 
-#### Saving and Restoring `Task` Instances with `localStorage`
+#### Decoupling `TaskList` and `storage.js` with `registerOnChange`
 
-`localStorage` only stores strings. When you pass an array of `Task` instances to
-`JSON.stringify(tasks)`, JavaScript automatically calls each task's `toJSON()` method from Week 8.
-When you read that string back with `JSON.parse(raw)`, you get plain `{ id, text, done }` objects —
-pass each one through `Task.fromJSON()` so your loaded tasks are real `Task` instances again:
+If `TaskList` imported `save` directly from `storage.js`, the two modules would be tightly coupled:
+you couldn't use or test `TaskList` without touching `localStorage`.
+
+Instead, we can keep `storage.js` and `task-list.js` completely independent of each other:
+
+1. `storage.js` only knows how to save and load an array in `localStorage`:
 
 ```javascript
 // src/storage.js
-import { Task } from './task.js'
-
 const STORAGE_KEY = 'cis133js.tasks'
 
 export function save(tasks) {
@@ -135,12 +135,46 @@ export function load() {
   const raw = localStorage.getItem(STORAGE_KEY)
   if (!raw) return []
 
-  return JSON.parse(raw).map((taskJson) => Task.fromJSON(taskJson))
+  return JSON.parse(raw)
 }
 ```
 
-Notice how `STORAGE_KEY` is not exported. Only `save` and `load` are part of `storage.js`'s public
-API.
+2. `TaskList` provides `registerOnChange(callback)` and calls that function with serialized task
+   objects (`task.toJSON()`) whenever a task is added, toggled, or removed:
+
+```javascript
+// inside class TaskList (src/task-list.js)
+#onChange = null
+
+registerOnChange(callback) {
+  this.#onChange = callback
+}
+
+#notifyChange() {
+  this.#onChange?.(this.#tasks.map((task) => task.toJSON()))
+}
+```
+
+3. `app.js` is the only file that knows about both modules. Because functions are first-class values
+   in JavaScript, `app.js` passes `save` directly to `registerOnChange`:
+
+```javascript
+// src/app.js
+import { TaskList } from './task-list.js'
+import { save, load } from './storage.js'
+
+export function renderApp() {
+  const app = document.querySelector('#app')
+  const taskList = new TaskList(app, load())
+
+  taskList.registerOnChange(save)
+  taskList.render()
+  taskList.attachHandlers()
+}
+```
+
+Notice how `STORAGE_KEY` is not exported from `storage.js`, `storage.js` doesn't import `Task`, and
+`task-list.js` doesn't import `storage.js`. Each module does one job behind a minimal public API.
 
 ---
 
