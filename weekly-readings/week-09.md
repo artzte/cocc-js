@@ -28,9 +28,9 @@
 
 ### 2. Classic / Revealing Modules
 
-- **Structure**: Created using an outer function — an IIFE when only a single instance
-  (**singleton**) is needed, or a standalone **module factory** function when multiple instances are
-  needed.
+- **Structure**: Created using an outer function — an Immediately Invoked Function Expression (IIFE)
+  when only a single instance (**singleton**) is needed, or a standalone **module factory** function
+  when multiple instances are needed.
 - **Privacy**: Uses lexical scope so variables and helper functions inside the outer function are
   private by default.
 - **API Exposure**: Returns a public API object holding references to the inner functions meant for

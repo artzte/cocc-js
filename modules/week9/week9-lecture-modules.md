@@ -18,8 +18,9 @@ Week 8 Task List so tasks survive a page refresh.
 1. **What Makes Something a Module?**: Bundling state and behavior _plus_ controlling visibility
    (private implementation vs. public API). Why a stateless namespace (`Utils`) or an exposed data
    structure falls short.
-2. **Classic Modules**: Singleton IIFEs and module factories that keep variables private in an outer
-   function's scope and return a public API whose functions close over that state.
+2. **Classic Modules**: Singleton Immediately Invoked Function Expressions (IIFEs) and module
+   factories that keep variables private in an outer function's scope and return a public API whose
+   functions close over that state.
 3. **CommonJS vs. ES Modules**: How Node's `module.exports` / `require(...)` compares to modern
    `export` / `import`.
 4. **ES Modules (ESM) in Practice**: File-level scope (private by default, strict mode always on,

@@ -1,8 +1,9 @@
 // ====================================================================
 // CIS 133JS — Week 9: Modules and localStorage
-// Namespaces vs. data structures vs. modules, classic modules (IIFE
-// singleton and module factory), ES module boundaries, and decoupling
-// TaskList from localStorage with registerOnChange(save)
+// Namespaces vs. data structures vs. modules, classic modules
+// (Immediately Invoked Function Expression (IIFE) singleton and module
+// factory), ES module boundaries, and decoupling TaskList from
+// localStorage with registerOnChange(save)
 // ====================================================================
 
 // --------------------------------------------------------------------
@@ -46,6 +47,76 @@ function getStorage() {
 }
 
 // --------------------------------------------------------------------
+// Shared Task and TaskList classes
+// --------------------------------------------------------------------
+// These match the Week 9 assignment's src/task.js and src/task-list.js.
+// They are defined once here because the last two demos (4 and 5) both
+// use them.
+class Task {
+  #id = null
+  #text = null
+  #done = false
+
+  constructor(text, done = false, id = null) {
+    this.#text = text
+    this.#done = done
+    this.#id = id || crypto.randomUUID()
+  }
+
+  get id() {
+    return this.#id
+  }
+
+  get text() {
+    return this.#text
+  }
+
+  get done() {
+    return this.#done
+  }
+
+  toggle() {
+    this.#done = !this.#done
+  }
+
+  toJSON() {
+    const { id, text, done } = this
+    return { id, text, done }
+  }
+}
+
+class TaskList {
+  #tasks = []
+  #onChange = null
+
+  constructor(tasksInit = []) {
+    tasksInit.forEach((task) => this.add(task.text, task.done, task.id))
+  }
+
+  get tasks() {
+    return [...this.#tasks]
+  }
+
+  registerOnChange(callback) {
+    this.#onChange = callback
+  }
+
+  #notifyChange() {
+    this.#onChange?.(this.#tasks.map((task) => task.toJSON()))
+  }
+
+  add(taskText, done = false, id = null) {
+    const text = taskText.trim()
+    if (!text) return
+
+    const task = new Task(text, done, id)
+    this.#tasks.push(task)
+    this.#notifyChange()
+    return task
+  }
+}
+
+// --------------------------------------------------------------------
 // DEMO 1: Namespace vs. Data Structure (Not Quite Modules)
 // --------------------------------------------------------------------
 function namespaceAndDataStructureDemo() {
@@ -69,6 +140,11 @@ function namespaceAndDataStructureDemo() {
 
   // 1b. Data Structure: bundles state and methods together, but everything
   // is public. Any caller can reach in and corrupt `records`.
+  //
+  // This looks a lot like a class definition, but without an easy way to
+  // make new instances. To get a second one with its own records, you
+  // would have to copy it by hand and override `records`:
+  //   const sds = { ...StudentDataStructure, records: [...] }
   const StudentDataStructure = {
     records: [
       { id: 14, name: 'Kyle', grade: 86 },
@@ -94,12 +170,14 @@ function namespaceAndDataStructureDemo() {
 }
 
 // --------------------------------------------------------------------
-// DEMO 2: Classic Modules — Singleton IIFE and Module Factory
+// DEMO 2: Classic Modules — Singleton Immediately Invoked Function
+// Expression (IIFE) and Module Factory
 // --------------------------------------------------------------------
 function classicModuleDemo() {
   header('2. Classic Modules (Singleton IIFE & Module Factory)')
 
-  // 2a. Singleton IIFE: runs once, keeps `records` private in lexical scope,
+  // 2a. Singleton Immediately Invoked Function Expression (IIFE): the
+  // function is called right where it is defined, so it runs once, keeps `records` private in lexical scope,
   // and returns a public API whose functions close over `records`.
   const Student = (function defineStudent() {
     const records = [
@@ -172,72 +250,12 @@ function esModuleBoundariesDemo() {
 function localStorageDemo() {
   header('4. Decoupling TaskList and localStorage with registerOnChange')
 
+  // Use the browser's real localStorage when it is available, or the
+  // in-memory shim from getStorage() (top of this file) when it isn't
   const storage = getStorage()
   const STORAGE_KEY = 'cis133js.week9.demo.tasks'
 
-  class Task {
-    #id = null
-    #text = null
-    #done = false
-
-    constructor(text, done = false, id = null) {
-      this.#text = text
-      this.#done = done
-      this.#id = id || crypto.randomUUID()
-    }
-
-    get id() {
-      return this.#id
-    }
-
-    get text() {
-      return this.#text
-    }
-
-    get done() {
-      return this.#done
-    }
-
-    toggle() {
-      this.#done = !this.#done
-    }
-
-    toJSON() {
-      const { id, text, done } = this
-      return { id, text, done }
-    }
-  }
-
-  class TaskList {
-    #tasks = []
-    #onChange = null
-
-    constructor(tasksInit = []) {
-      tasksInit.forEach((task) => this.add(task.text, task.done, task.id))
-    }
-
-    get tasks() {
-      return [...this.#tasks]
-    }
-
-    registerOnChange(callback) {
-      this.#onChange = callback
-    }
-
-    #notifyChange() {
-      this.#onChange?.(this.#tasks.map((task) => task.toJSON()))
-    }
-
-    add(taskText, done = false, id = null) {
-      const text = taskText.trim()
-      if (!text) return
-
-      const task = new Task(text, done, id)
-      this.#tasks.push(task)
-      this.#notifyChange()
-      return task
-    }
-  }
+  // Task and TaskList come from the shared section at the top of this file
 
   // Matches `save` and `load` in src/storage.js (no dependency on Task!)
   function save(tasks) {
@@ -278,22 +296,9 @@ function localStorageDemo() {
 function debugChallenge() {
   header('5. Debug Challenge')
 
+  // Real localStorage, or the in-memory shim from getStorage()
   const storage = getStorage()
   const CHALLENGE_KEY = 'cis133js.week9.challenge.tasks'
-
-  class MiniTaskList {
-    #tasks = []
-    #onChange = null
-
-    registerOnChange(callback) {
-      this.#onChange = callback
-    }
-
-    add(text) {
-      this.#tasks.push({ id: crypto.randomUUID(), text, done: false })
-      this.#onChange?.(this.#tasks)
-    }
-  }
 
   function save(tasks) {
     storage.setItem(CHALLENGE_KEY, JSON.stringify(tasks))
@@ -301,7 +306,7 @@ function debugChallenge() {
 
   storage.removeItem(CHALLENGE_KEY)
 
-  const taskList = new MiniTaskList()
+  const taskList = new TaskList()
 
   // Buggy: why does this write "undefined" to storage right now and
   // never save when taskList.add() runs?

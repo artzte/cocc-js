@@ -59,7 +59,7 @@ and
   1. An outer function that runs at least once to create an inner lexical scope.
   2. At least one piece of hidden state inside that scope.
   3. At least one returned function on the public API that closes over that hidden state.
-- **Singleton (IIFE)** vs. **Module Factory**:
+- **Singleton (Immediately Invoked Function Expression, or IIFE)** vs. **Module Factory**:
   - Wrap the function in an IIFE `const Student = (function defineStudent() { ... })()` when the
     program only needs one shared instance.
   - Leave it as a normal function `function createSelectionStore(items) { ... }` when you want a

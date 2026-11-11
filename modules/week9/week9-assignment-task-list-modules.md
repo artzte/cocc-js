@@ -1,8 +1,8 @@
 ## Week 9 Assignment: Persistent Task List with Modules
 
 Because you are also setting up and verifying your **Final Project Test Deployment** this week, this
-week's programming assignment is intentionally small — about a 1-hour update to your Week 8 **Task
-List** app:
+week's programming assignment is intentionally small — hopefully just a 1-hour update to your Week 8
+**Task List** app:
 
 1. **Split `src/app.js` into separate ES modules** so `Task`, `TaskList`, your `localStorage`
    helpers, and `renderApp()` each live in their own module.

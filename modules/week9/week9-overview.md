@@ -25,8 +25,8 @@ Task List into separate modules and adding `localStorage` persistence.
 
 - **Namespaces vs. data structures vs. modules**: Why grouping functions (`Utils`) or grouping
   public data and methods falls short of a true module.
-- **Classic modules**: Singleton IIFEs and module factories that keep state private in lexical scope
-  and expose functions that close over it.
+- **Classic modules**: Singleton Immediately Invoked Function Expressions (IIFEs) and module
+  factories that keep state private in lexical scope and expose functions that close over it.
 
 ### Part 2: File-Based Modules (CommonJS & ES Modules)
 

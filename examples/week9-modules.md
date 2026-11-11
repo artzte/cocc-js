@@ -1,9 +1,9 @@
 # Week 9: Modules and `localStorage` Examples
 
 This guide walks through an interactive browser console demo for the Week 9 lecture: **namespaces
-vs. data structures**, **classic modules (singleton IIFE and module factory)**, **ES module
-boundaries**, **decoupling `TaskList` and `localStorage` with `registerOnChange(save)`**, and a
-**debug challenge**.
+vs. data structures**, **classic modules (singleton Immediately Invoked Function Expression (IIFE)
+and module factory)**, **ES module boundaries**, **decoupling `TaskList` and `localStorage` with
+`registerOnChange(save)`**, and a **debug challenge**.
 
 The full snippet is in [`week9-modules.js`](week9-modules.js).
 
@@ -44,8 +44,9 @@ The full snippet is in [`week9-modules.js`](week9-modules.js).
 
 ## Debug Challenge
 
-`debugChallenge()` creates a `MiniTaskList`, tries to register `save` as its change callback, and
-calls `taskList.add('Fix registerOnChange')`. Instead of storing the new task's JSON array, it logs:
+`debugChallenge()` creates a `TaskList` (shared with Demo 4 at the top of the snippet), tries to
+register `save` as its change callback, and calls `taskList.add('Fix registerOnChange')`. Instead of
+storing the new task's JSON array, it logs:
 
 ```text
 Stored value in CHALLENGE_KEY: undefined
