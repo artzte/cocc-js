@@ -189,11 +189,15 @@ USER_EXISTS=0
 EXISTING_KEYS=()
 if aws iam get-user --user-name "$IAM_USER" --profile "$AWS_PROFILE" >/dev/null 2>&1; then
   USER_EXISTS=1
-  mapfile -t EXISTING_KEYS < <(aws iam list-access-keys \
+  if ! RAW_KEYS="$(aws iam list-access-keys \
     --user-name "$IAM_USER" \
     --profile "$AWS_PROFILE" \
     --query 'sort_by(AccessKeyMetadata, &CreateDate)[].AccessKeyId' \
-    --output text | tr '\t' '\n' | grep -v '^$' | grep -v '^None$' || true)
+    --output text)"; then
+    echo "Error: Failed to list access keys for IAM user '$IAM_USER'." >&2
+    exit 1
+  fi
+  mapfile -t EXISTING_KEYS < <(printf '%s\n' "$RAW_KEYS" | tr '\t' '\n' | grep -v '^$' | grep -v '^None$' || true)
 fi
 
 if [[ "$ACTION_MODE" == "dry-run" ]]; then
