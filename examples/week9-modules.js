@@ -51,7 +51,8 @@ function getStorage() {
 // --------------------------------------------------------------------
 // These match the Week 9 assignment's src/task.js and src/task-list.js.
 // They are defined once here because the last two demos (4 and 5) both
-// use them.
+// use them. Neither demo needs every method; add(), toggle(), and
+// remove() are all here so you can try them in the console.
 class Task {
   #id = null
   #text = null
@@ -113,6 +114,24 @@ class TaskList {
     this.#tasks.push(task)
     this.#notifyChange()
     return task
+  }
+
+  toggle(id) {
+    const task = this.#tasks.find((task) => task.id === id)
+    // unknown id: nothing changed, so don't notify
+    if (!task) return
+
+    task.toggle()
+    this.#notifyChange()
+  }
+
+  remove(id) {
+    const index = this.#tasks.findIndex((task) => task.id === id)
+    // unknown id: nothing changed, so don't notify
+    if (index === -1) return
+
+    this.#tasks.splice(index, 1)
+    this.#notifyChange()
   }
 }
 
@@ -276,14 +295,18 @@ function localStorageDemo() {
   const list = new TaskList(load())
   list.registerOnChange(save)
 
-  list.add('Read Chapter 8')
+  const firstTask = list.add('Read Chapter 8')
   list.add('Split app.js into modules')
+
+  // toggle() changes the list too, so it also triggers save()
+  list.toggle(firstTask.id)
   console.log('Raw JSON in storage:', storage.getItem(STORAGE_KEY))
 
   // Simulate a page reload by passing load() into a brand-new TaskList
   const reloadedList = new TaskList(load())
   console.log('reloadedList.tasks.length:', reloadedList.tasks.length) // 2
   console.log('reloadedList.tasks[0].text:', reloadedList.tasks[0].text)
+  console.log('reloadedList.tasks[0].done:', reloadedList.tasks[0].done) // true
 }
 
 // --------------------------------------------------------------------
