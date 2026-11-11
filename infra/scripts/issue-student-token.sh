@@ -187,7 +187,7 @@ POLICY_NAME="Cis133jsStudentDeploy-${STUDENT_SLUG}"
 
 USER_EXISTS=0
 EXISTING_KEYS=()
-if aws iam get-user --user-name "$IAM_USER" --profile "$AWS_PROFILE" >/dev/null 2>&1; then
+if GET_USER_ERR="$(aws iam get-user --user-name "$IAM_USER" --profile "$AWS_PROFILE" 2>&1 >/dev/null)"; then
   USER_EXISTS=1
   if ! RAW_KEYS="$(aws iam list-access-keys \
     --user-name "$IAM_USER" \
@@ -198,6 +198,12 @@ if aws iam get-user --user-name "$IAM_USER" --profile "$AWS_PROFILE" >/dev/null 
     exit 1
   fi
   mapfile -t EXISTING_KEYS < <(printf '%s\n' "$RAW_KEYS" | tr '\t' '\n' | grep -v '^$' | grep -v '^None$' || true)
+elif [[ "$GET_USER_ERR" == *"NoSuchEntity"* ]]; then
+  USER_EXISTS=0
+else
+  echo "Error: Failed to inspect IAM user '$IAM_USER':" >&2
+  echo "$GET_USER_ERR" >&2
+  exit 1
 fi
 
 if [[ "$ACTION_MODE" == "dry-run" ]]; then
