@@ -9,7 +9,8 @@
     "cdk": "cdk",
     "synth": "cdk synth --profile artzt-cocc",
     "diff": "cdk diff --profile artzt-cocc",
-    "deploy": "cdk deploy --profile artzt-cocc"
+    "deploy": "cdk deploy --profile artzt-cocc",
+    "deploy:index": "./scripts/deploy-root-index.sh --deploy"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

@@ -159,3 +159,6 @@ in the repo:
 - [`infra/scripts/issue-student-token.sh`](scripts/issue-student-token.sh) — the script I run to
   create each student's AWS IAM user with an inline security policy restricting uploads to that
   student's `s3://.../<slug>/*` folder.
+- [`infra/site/index.html`](site/index.html) and
+  [`infra/scripts/deploy-root-index.sh`](scripts/deploy-root-index.sh) — the root directory page at
+  `https://d2zap10oyizxcd.cloudfront.net/` listing each final project site in alphabetical order.
