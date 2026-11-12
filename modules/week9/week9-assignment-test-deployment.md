@@ -9,8 +9,8 @@ environment:
 https://d2zap10oyizxcd.cloudfront.net/<your-last-name>
 ```
 
-For example, if your repository is `phillips-cocc-js`, your deployed app will be live at
-`https://d2zap10oyizxcd.cloudfront.net/phillips`.
+For example, if your repository is `jdoe-cocc-js`, your deployed app will be live at
+`https://d2zap10oyizxcd.cloudfront.net/jdoe`.
 
 Read the full hosting and deployment guide in [`infra/README.md`](../../infra/README.md) before
 starting.
