@@ -23,8 +23,8 @@ export class StudentHostingStack extends cdk.Stack {
 
     // 2. CloudFront viewer-request function for per-student SPA routing (e.g. Navigo)
     //    - "/" -> "/index.html"
-    //    - "/phillips/assets/app.js" (has file extension) -> served as-is from S3
-    //    - "/phillips", "/phillips/", "/phillips/items/42" (no extension) -> "/phillips/index.html"
+    //    - "/jdoe/assets/app.js" (has file extension) -> served as-is from S3
+    //    - "/jdoe", "/jdoe/", "/jdoe/items/42" (no extension) -> "/jdoe/index.html"
     const spaRouterFunction = new cloudfront.Function(
       this,
       'StudentSpaRouterFunction',
@@ -60,7 +60,7 @@ function handler(event) {
   }
 
   // Otherwise, treat it as the student's root or an SPA client-side route
-  // (e.g. /phillips, /phillips/, /phillips/about, /phillips/items/42)
+  // (e.g. /jdoe, /jdoe/, /jdoe/about, /jdoe/items/42)
   // and serve that student's index.html so routers like Navigo can handle it.
   request.uri = '/' + studentSlug + '/index.html';
   return request;
@@ -70,7 +70,29 @@ function handler(event) {
       },
     )
 
-    // 3. CloudFront distribution using Origin Access Control (OAC) to read from S3
+    // 3. Keep the class directory and every student site out of search engines.
+    //    A response header covers all files (HTML, JS, images) without each student
+    //    adding a robots meta tag. There is deliberately no robots.txt "Disallow",
+    //    because crawlers that can't fetch a page never see its noindex header.
+    const noIndexHeadersPolicy = new cloudfront.ResponseHeadersPolicy(
+      this,
+      'StudentNoIndexHeadersPolicy',
+      {
+        responseHeadersPolicyName: 'cocc-cis133js-noindex',
+        comment: 'Adds X-Robots-Tag: noindex, nofollow to every response',
+        customHeadersBehavior: {
+          customHeaders: [
+            {
+              header: 'X-Robots-Tag',
+              value: 'noindex, nofollow',
+              override: true,
+            },
+          ],
+        },
+      },
+    )
+
+    // 4. CloudFront distribution using Origin Access Control (OAC) to read from S3
     this.distribution = new cloudfront.Distribution(
       this,
       'StudentProjectsDistribution',
@@ -86,6 +108,7 @@ function handler(event) {
           allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
           compress: true,
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          responseHeadersPolicy: noIndexHeadersPolicy,
           functionAssociations: [
             {
               function: spaRouterFunction,
