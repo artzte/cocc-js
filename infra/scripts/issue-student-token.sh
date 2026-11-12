@@ -4,22 +4,27 @@
 # Each student IAM user is strictly locked to s3://<bucket>/<student-slug>/*
 # plus CloudFront invalidation on the shared distribution.
 #
+# The slug must be listed in the git-ignored student roster (infra/students.local.json).
+# The GitHub repo is read from the roster unless --repo is given.
+#
 # Usage:
-#   ./infra/scripts/issue-student-token.sh --slug <site-slug> --dry-run [--repo <owner/repo>] [--rotate]
+#   ./infra/scripts/issue-student-token.sh --slug <site-slug> --dry-run [--rotate]
 #   ./infra/scripts/issue-student-token.sh --slug <site-slug> --create-secret [--rotate]
-#   ./infra/scripts/issue-student-token.sh --slug <site-slug> --repo <owner/repo> --push-secret [--rotate]
+#   ./infra/scripts/issue-student-token.sh --slug <site-slug> --push-secret [--rotate]
 #
 # Examples:
-#   ./infra/scripts/issue-student-token.sh --slug phillips --repo mphillips0406/phillips-cocc-js --dry-run
-#   ./infra/scripts/issue-student-token.sh --slug phillips --repo mphillips0406/phillips-cocc-js --push-secret
-#   ./infra/scripts/issue-student-token.sh --slug phillips --repo mphillips0406/phillips-cocc-js --push-secret --rotate
-#   ./infra/scripts/issue-student-token.sh --slug phillips --create-secret
+#   ./infra/scripts/issue-student-token.sh --slug jdoe --dry-run
+#   ./infra/scripts/issue-student-token.sh --slug jdoe --push-secret
+#   ./infra/scripts/issue-student-token.sh --slug jdoe --push-secret --rotate
+#   ./infra/scripts/issue-student-token.sh --slug jdoe --create-secret
 
 set -euo pipefail
 
 AWS_PROFILE="${AWS_PROFILE:-artzt-cocc}"
 AWS_REGION="${AWS_REGION:-us-west-2}"
 STACK_NAME="Cis133jsStudentHostingStack"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+ROSTER_FILE="${STUDENT_ROSTER:-$SCRIPT_DIR/../students.local.json}"
 
 STUDENT_SLUG=""
 GH_REPO=""
@@ -30,20 +35,21 @@ ROTATE_KEYS=0
 usage() {
   cat <<EOF
 Usage:
-  $(basename "$0") --slug <site-slug> --dry-run [--repo <owner/repo>] [--rotate]
+  $(basename "$0") --slug <site-slug> --dry-run [--rotate]
   $(basename "$0") --slug <site-slug> --create-secret [--rotate]
-  $(basename "$0") --slug <site-slug> --repo <owner/repo> --push-secret [--rotate]
+  $(basename "$0") --slug <site-slug> --push-secret [--rotate]
 
 Required arguments:
-  --slug <site-slug>    Explicit student site slug (lowercase alphanumeric/hyphens, e.g. 'phillips')
+  --slug <site-slug>    Student site slug listed in the roster (lowercase alphanumeric/hyphens, e.g. 'jdoe')
 
 Required action flag (choose exactly one):
   --dry-run             Verify AWS stack, IAM user state, and GitHub repo access without making changes
   --create-secret       Create/update IAM user + scoped policy and mint an AWS access key (prints to stdout)
-  --push-secret         Create/update IAM user + scoped policy, mint key, and push secrets to --repo via 'gh'
+  --push-secret         Create/update IAM user + scoped policy, mint key, and push secrets to the student's repo via 'gh'
 
 Options:
-  --repo <owner/repo>   Explicit GitHub repository (required with --push-secret; optional with --dry-run)
+  --repo <owner/repo>   Override the GitHub repository from the roster (--dry-run and --push-secret only)
+  --roster <path>       Student roster JSON (default: infra/students.local.json, or \$STUDENT_ROSTER)
   --rotate              Replace existing IAM access key(s) for this student user
   -h, --help            Show this help message
 EOF
@@ -67,6 +73,15 @@ while [[ $# -gt 0 ]]; do
         exit 1
       fi
       GH_REPO="$2"
+      shift 2
+      ;;
+    --roster)
+      if [[ $# -lt 2 || -z "${2:-}" || "${2:-}" == -* ]]; then
+        echo "Error: --roster requires a <path> value." >&2
+        usage
+        exit 1
+      fi
+      ROSTER_FILE="$2"
       shift 2
       ;;
     --dry-run)
@@ -133,16 +148,17 @@ if [[ "$ACTION_COUNT" -gt 1 ]]; then
   exit 1
 fi
 
-if [[ "$ACTION_MODE" == "push-secret" && -z "$GH_REPO" ]]; then
-  echo "Error: --push-secret requires --repo <owner/repo>." >&2
-  usage
-  exit 1
-fi
+# The roster is the source of truth for who gets a token; it also supplies the repo
+node "$SCRIPT_DIR/roster.mjs" "$ROSTER_FILE" get "$STUDENT_SLUG" slug >/dev/null
 
 if [[ "$ACTION_MODE" == "create-secret" && -n "$GH_REPO" ]]; then
   echo "Error: --repo cannot be combined with --create-secret (use --push-secret to push to GitHub, or omit --repo)." >&2
   usage
   exit 1
+fi
+
+if [[ "$ACTION_MODE" != "create-secret" && -z "$GH_REPO" ]]; then
+  GH_REPO="$(node "$SCRIPT_DIR/roster.mjs" "$ROSTER_FILE" get "$STUDENT_SLUG" repo)"
 fi
 
 if [[ -n "$GH_REPO" ]]; then
