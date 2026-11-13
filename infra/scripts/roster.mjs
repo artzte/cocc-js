@@ -46,6 +46,8 @@ function loadRoster(path) {
   }
 
   const seen = new Set()
+  // repo-level secrets are per repo, so two slugs sharing a repo would overwrite each other
+  const seenRepos = new Map()
   roster.forEach((student, index) => {
     const where = `entry ${index} in '${path}'`
     if (!student || typeof student !== 'object') {
@@ -70,6 +72,13 @@ function loadRoster(path) {
         `${where} has an invalid repo '${student.repo}' (expected <owner>/<repo>).`,
       )
     }
+    const repoKey = student.repo.toLowerCase()
+    if (seenRepos.has(repoKey)) {
+      fail(
+        `${where}: repo '${student.repo}' is already used by slug '${seenRepos.get(repoKey)}'.`,
+      )
+    }
+    seenRepos.set(repoKey, student.slug)
     if (typeof student.title !== 'string' || student.title.trim() === '') {
       fail(`${where} needs a non-empty project title.`)
     }
