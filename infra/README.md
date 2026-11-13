@@ -10,8 +10,8 @@ hosting environment. Once deployed, your app runs at:
 https://d2zap10oyizxcd.cloudfront.net/<your-last-name>
 ```
 
-For example, if your repository is `phillips-cocc-js`, your app is served at
-`https://d2zap10oyizxcd.cloudfront.net/phillips`.
+For example, if your repository is `jdoe-cocc-js`, your app is served at
+`https://d2zap10oyizxcd.cloudfront.net/jdoe`.
 
 ## Architecture and Build Workflow
 
@@ -120,9 +120,9 @@ multiple views or pages in your final project.
 
 Because your app lives under `/<your-last-name>` rather than at the root of the domain, the
 CloudFront router function ([`infra/lib/student-hosting-stack.ts`](lib/student-hosting-stack.ts))
-rewrites any request without a file extension (such as `/phillips` or `/phillips/items/42`) to
-`/phillips/index.html`. Static files with extensions (`.js`, `.css`, `.png`, `.svg`) are served
-directly from S3.
+rewrites any request without a file extension (such as `/jdoe` or `/jdoe/items/42`) to
+`/jdoe/index.html`. Static files with extensions (`.js`, `.css`, `.png`, `.svg`) are served directly
+from S3.
 
 If you use Navigo for client-side routing, pass `import.meta.env.BASE_URL` as the root URL:
 
@@ -160,5 +160,12 @@ in the repo:
   create each student's AWS IAM user with an inline security policy restricting uploads to that
   student's `s3://.../<slug>/*` folder.
 - [`infra/site/index.html`](site/index.html) and
-  [`infra/scripts/deploy-root-index.sh`](scripts/deploy-root-index.sh) — the root directory page at
-  `https://d2zap10oyizxcd.cloudfront.net/` listing each final project site in alphabetical order.
+  [`infra/scripts/deploy-root-index.sh`](scripts/deploy-root-index.sh) — the template and script for
+  the root directory page at `https://d2zap10oyizxcd.cloudfront.net/`, which lists each final
+  project site in alphabetical order. The class list comes from a roster file that I keep out of the
+  repo.
+- [`infra/OPERATIONS.md`](OPERATIONS.md) — my notes for adding students, rotating keys, and cleaning
+  up at the end of the term.
+
+None of the course sites are indexed by search engines: CloudFront sends an
+`X-Robots-Tag: noindex, nofollow` header with every response.

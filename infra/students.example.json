@@ -1,0 +1,12 @@
+[
+  {
+    "slug": "artzt",
+    "repo": "instructor-gh/artzt-cocc-js",
+    "title": "Chicago Institute of Art Browser"
+  },
+  {
+    "slug": "jdoe",
+    "repo": "jdoe-gh/jdoe-cocc-js",
+    "title": "Weather Dashboard"
+  }
+]

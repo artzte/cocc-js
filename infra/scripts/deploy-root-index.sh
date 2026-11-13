@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 #
-# Deploy infra/site/index.html to the root of the CIS 133JS student hosting
-# S3 bucket (s3://<bucket>/index.html) and invalidate CloudFront for / and /index.html.
+# Render the root directory page from the infra/site/index.html template and the
+# git-ignored student roster (infra/students.local.json), upload it to the root of
+# the CIS 133JS student hosting S3 bucket (s3://<bucket>/index.html), and invalidate
+# CloudFront for / and /index.html.
+#
+# The rendered page lists student slugs, so it is written to a temporary file and
+# never saved in the repository.
 #
 # Usage:
-#   ./infra/scripts/deploy-root-index.sh --dry-run
-#   ./infra/scripts/deploy-root-index.sh --deploy
+#   ./infra/scripts/deploy-root-index.sh --dry-run [--roster <path>]
+#   ./infra/scripts/deploy-root-index.sh --deploy [--roster <path>]
 
 set -euo pipefail
 
@@ -14,20 +19,24 @@ AWS_REGION="${AWS_REGION:-us-west-2}"
 STACK_NAME="Cis133jsStudentHostingStack"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
-INDEX_FILE="$SCRIPT_DIR/../site/index.html"
+TEMPLATE_FILE="$SCRIPT_DIR/../site/index.html"
+ROSTER_FILE="${STUDENT_ROSTER:-$SCRIPT_DIR/../students.local.json}"
 
 ACTION_MODE=""
 
 usage() {
   cat <<EOF
 Usage:
-  $(basename "$0") --dry-run
-  $(basename "$0") --deploy
+  $(basename "$0") --dry-run [--roster <path>]
+  $(basename "$0") --deploy [--roster <path>]
 
 Required action flag (choose one):
-  --dry-run   Verify stack outputs and preview the upload target without modifying S3/CloudFront
-  --deploy    Upload infra/site/index.html to s3://<bucket>/index.html and invalidate CloudFront
-  -h, --help  Show this help message
+  --dry-run        Render the page, verify stack outputs, and preview the upload without modifying S3/CloudFront
+  --deploy         Render the page, upload it to s3://<bucket>/index.html, and invalidate CloudFront
+
+Options:
+  --roster <path>  Student roster JSON (default: infra/students.local.json, or \$STUDENT_ROSTER)
+  -h, --help       Show this help message
 EOF
 }
 
@@ -51,6 +60,15 @@ while [[ $# -gt 0 ]]; do
       ACTION_MODE="deploy"
       shift
       ;;
+    --roster)
+      if [[ $# -lt 2 || -z "${2:-}" || "${2:-}" == -* ]]; then
+        echo "Error: --roster requires a <path> value." >&2
+        usage
+        exit 1
+      fi
+      ROSTER_FILE="$2"
+      shift 2
+      ;;
     -h|--help)
       usage
       exit 0
@@ -69,10 +87,18 @@ if [[ -z "$ACTION_MODE" ]]; then
   exit 1
 fi
 
-if [[ ! -f "$INDEX_FILE" ]]; then
-  echo "Error: Root index file not found at '$INDEX_FILE'." >&2
+if [[ ! -f "$TEMPLATE_FILE" ]]; then
+  echo "Error: Root index template not found at '$TEMPLATE_FILE'." >&2
   exit 1
 fi
+
+INDEX_FILE="$(mktemp "${TMPDIR:-/tmp}/cis133js-root-index.XXXXXX")"
+trap 'rm -f "$INDEX_FILE"' EXIT
+
+echo "==> Rendering root index from roster '$ROSTER_FILE'..."
+node "$SCRIPT_DIR/roster.mjs" "$ROSTER_FILE" validate
+node "$SCRIPT_DIR/roster.mjs" "$ROSTER_FILE" render-index "$TEMPLATE_FILE" >"$INDEX_FILE"
+PROJECT_SLUGS="$(node "$SCRIPT_DIR/roster.mjs" "$ROSTER_FILE" slugs | tr '\n' ' ')"
 
 echo "==> Querying CloudFormation stack '$STACK_NAME' (profile: $AWS_PROFILE)..."
 STACK_OUTPUTS="$(aws cloudformation describe-stacks \
@@ -102,7 +128,9 @@ if [[ "$ACTION_MODE" == "dry-run" ]]; then
 ================================================================================
 DRY RUN — Root Index Deployment
 ================================================================================
-Source File:                 ${INDEX_FILE}
+Template:                    ${TEMPLATE_FILE}
+Roster:                      ${ROSTER_FILE}
+Listed Projects:             ${PROJECT_SLUGS}
 S3 Destination:              s3://${BUCKET_NAME}/index.html
 CloudFront Distribution ID:  ${DISTRIBUTION_ID}
 Live Root URL:               ${BASE_URL}/
@@ -111,7 +139,7 @@ EOF
   exit 0
 fi
 
-echo "==> Uploading '$INDEX_FILE' to s3://${BUCKET_NAME}/index.html..."
+echo "==> Uploading rendered index to s3://${BUCKET_NAME}/index.html..."
 aws s3 cp "$INDEX_FILE" "s3://${BUCKET_NAME}/index.html" \
   --content-type "text/html; charset=utf-8" \
   --cache-control "public, max-age=0, must-revalidate" \

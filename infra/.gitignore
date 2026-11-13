@@ -6,3 +6,6 @@ cdk.out/
 .env
 .env.*
 *.credentials.json
+
+# Student roster (names and repos); never commit to this public repo
+students.local.json
