@@ -122,7 +122,8 @@ function renderIndex(roster, templatePath) {
     )
     .join('\n')
 
-  return template.replace(markerLine, items)
+  // use a callback so "$" sequences in titles are inserted literally
+  return template.replace(markerLine, () => items)
 }
 
 const [rosterPath, command, ...args] = process.argv.slice(2)
