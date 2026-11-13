@@ -14,8 +14,10 @@
 # no access key, missing repo secrets, or repo secrets older than the newest access key.
 # --prune deletes IAM users whose slug is no longer in the roster.
 # --teardown deletes every cocc-student-* IAM user (end of term).
-# --purge-files also removes the deleted students' s3://<bucket>/<slug>/ folders, which
-# takes their sites offline. Without it, the sites stay up but can no longer be updated.
+# --purge-files also removes the deleted students' s3://<bucket>/<slug>/ folders and
+# invalidates their CloudFront paths, which takes their sites offline. Without it, the
+# sites stay up but can no longer be updated. Files are purged and the invalidation has
+# completed before any IAM user is deleted, so an interrupted run can simply be rerun.
 
 set -euo pipefail
 
@@ -246,13 +248,18 @@ if [[ "${#TARGETS[@]}" -eq 0 ]]; then
 fi
 
 BUCKET_NAME=""
+DISTRIBUTION_ID=""
 if [[ "$PURGE_FILES" -eq 1 ]]; then
-  BUCKET_NAME="$(aws cloudformation describe-stacks \
-    --stack-name "$STACK_NAME" \
-    --region "$AWS_REGION" \
-    --profile "$AWS_PROFILE" \
-    --query "Stacks[0].Outputs[?OutputKey=='BucketName'].OutputValue" \
-    --output text)"
+  get_stack_output() {
+    aws cloudformation describe-stacks \
+      --stack-name "$STACK_NAME" \
+      --region "$AWS_REGION" \
+      --profile "$AWS_PROFILE" \
+      --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" \
+      --output text
+  }
+  BUCKET_NAME="$(get_stack_output BucketName)"
+  DISTRIBUTION_ID="$(get_stack_output DistributionId)"
 fi
 
 echo
@@ -270,6 +277,32 @@ if [[ "$ASSUME_YES" -eq 0 ]]; then
     echo "Aborted; no changes made."
     exit 1
   fi
+fi
+
+# Purge files and evict CloudFront's cached copies (assets are cached for a year) before
+# touching IAM. TARGETS comes from the existing IAM users, so if this part fails, the users
+# are still there and rerunning the same command retries the purge.
+if [[ "$PURGE_FILES" -eq 1 ]]; then
+  INVALIDATION_PATHS=()
+  for slug in "${TARGETS[@]}"; do
+    echo "==> Deleting s3://${BUCKET_NAME}/${slug}/..."
+    aws s3 rm "s3://${BUCKET_NAME}/${slug}/" --recursive --region "$AWS_REGION" --profile "$AWS_PROFILE" >/dev/null
+    INVALIDATION_PATHS+=("/${slug}" "/${slug}/*")
+  done
+
+  echo "==> Invalidating CloudFront paths: ${INVALIDATION_PATHS[*]}"
+  INVALIDATION_ID="$(aws cloudfront create-invalidation \
+    --distribution-id "$DISTRIBUTION_ID" \
+    --paths "${INVALIDATION_PATHS[@]}" \
+    --profile "$AWS_PROFILE" \
+    --query 'Invalidation.Id' \
+    --output text)"
+  echo "    Waiting for invalidation $INVALIDATION_ID to complete (usually a few minutes)..."
+  aws cloudfront wait invalidation-completed \
+    --distribution-id "$DISTRIBUTION_ID" \
+    --id "$INVALIDATION_ID" \
+    --profile "$AWS_PROFILE"
+  echo "    Invalidation complete; sites are offline."
 fi
 
 for slug in "${TARGETS[@]}"; do
@@ -290,11 +323,6 @@ for slug in "${TARGETS[@]}"; do
 
   aws iam delete-user --user-name "$IAM_USER" --profile "$AWS_PROFILE"
   echo "    Deleted user $IAM_USER"
-
-  if [[ "$PURGE_FILES" -eq 1 ]]; then
-    aws s3 rm "s3://${BUCKET_NAME}/${slug}/" --recursive --region "$AWS_REGION" --profile "$AWS_PROFILE" >/dev/null
-    echo "    Deleted s3://${BUCKET_NAME}/${slug}/"
-  fi
 done
 
 echo

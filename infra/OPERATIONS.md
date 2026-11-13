@@ -95,6 +95,10 @@ This mints a new key, pushes it to the repo, and then deletes the old one.
    ./infra/scripts/roster-sync.sh --prune [--purge-files]
    ```
 
+   `--purge-files` deletes the S3 files, invalidates the student's CloudFront paths, and waits for
+   the invalidation to finish (a few minutes) before deleting any IAM user. If it fails partway,
+   rerun the same command.
+
 3. Refresh the directory page with `deploy-root-index.sh --deploy`.
 
 ## End of term
