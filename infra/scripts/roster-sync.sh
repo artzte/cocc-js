@@ -9,7 +9,9 @@
 #   ./infra/scripts/roster-sync.sh --prune [--purge-files] [--yes]
 #   ./infra/scripts/roster-sync.sh --teardown [--purge-files] [--yes]
 #
-# --provision calls issue-student-token.sh --push-secret for each roster slug with no IAM user.
+# --provision calls issue-student-token.sh --push-secret for each roster slug with no IAM user,
+# and re-issues (with --rotate) any student whose provisioning is incomplete: no inline policy,
+# no access key, missing repo secrets, or repo secrets older than the newest access key.
 # --prune deletes IAM users whose slug is no longer in the roster.
 # --teardown deletes every cocc-student-* IAM user (end of term).
 # --purge-files also removes the deleted students' s3://<bucket>/<slug>/ folders, which
@@ -38,7 +40,8 @@ Usage:
 
 Action flags (choose one):
   --report         List roster slugs, IAM users, and any differences (no changes)
-  --provision      Issue tokens (via issue-student-token.sh --push-secret) for roster slugs with no IAM user
+  --provision      Issue tokens (via issue-student-token.sh --push-secret) for roster slugs with no IAM
+                   user, and re-issue tokens (with --rotate) for incomplete ones
   --prune          Delete IAM users whose slug is not in the roster
   --teardown       Delete ALL ${USER_PREFIX}* IAM users (end of term)
 
@@ -121,11 +124,72 @@ contains() {
   return 1
 }
 
-MISSING=() # in roster, no IAM user
-EXTRA=()   # IAM user, not in roster
-for slug in "${ROSTER_SLUGS[@]}"; do
-  contains "$slug" "${IAM_SLUGS[@]}" || MISSING+=("$slug")
-done
+to_epoch() {
+  date -d "$1" +%s
+}
+
+# Prints "ok", or the reason a roster student's existing IAM user isn't fully provisioned.
+# The issuer creates the user before it attaches the policy, mints the key, and pushes the
+# secrets, so a failure partway through leaves a user that only looks provisioned.
+provisioning_status() {
+  local slug="$1"
+  local iam_user="${USER_PREFIX}${slug}"
+  local policy_name="Cis133jsStudentDeploy-${slug}"
+  local repo newest_key secrets secret_name secret_updated
+
+  if ! aws iam get-user-policy --user-name "$iam_user" --policy-name "$policy_name" \
+    --profile "$AWS_PROFILE" >/dev/null 2>&1; then
+    echo "no inline policy"
+    return
+  fi
+
+  newest_key="$(aws iam list-access-keys --user-name "$iam_user" --profile "$AWS_PROFILE" \
+    --query 'max_by(AccessKeyMetadata, &CreateDate).CreateDate' --output text)"
+  if [[ -z "$newest_key" || "$newest_key" == "None" ]]; then
+    echo "no access key"
+    return
+  fi
+
+  repo="$(node "$SCRIPT_DIR/roster.mjs" "$ROSTER_FILE" get "$slug" repo)"
+  if ! secrets="$(gh secret list --repo "$repo" --json name,updatedAt \
+    --jq '.[] | "\(.name) \(.updatedAt)"' 2>/dev/null)"; then
+    echo "cannot read secrets on $repo"
+    return
+  fi
+
+  for secret_name in AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY STUDENT_SLUG; do
+    secret_updated="$(printf '%s\n' "$secrets" | awk -v name="$secret_name" '$1 == name { print $2 }')"
+    if [[ -z "$secret_updated" ]]; then
+      echo "secret $secret_name missing on $repo"
+      return
+    fi
+    # the key secrets must have been pushed after the newest key was minted
+    if [[ "$secret_name" != "STUDENT_SLUG" && "$(to_epoch "$secret_updated")" -lt "$(to_epoch "$newest_key")" ]]; then
+      echo "secret $secret_name on $repo is older than the newest access key"
+      return
+    fi
+  done
+
+  echo "ok"
+}
+
+MISSING=()    # in roster, no IAM user
+INCOMPLETE=() # in roster, IAM user exists but provisioning didn't finish
+EXTRA=()      # IAM user, not in roster
+INCOMPLETE_REASONS=()
+if [[ "$ACTION_MODE" == "report" || "$ACTION_MODE" == "provision" ]]; then
+  for slug in "${ROSTER_SLUGS[@]}"; do
+    if ! contains "$slug" "${IAM_SLUGS[@]}"; then
+      MISSING+=("$slug")
+      continue
+    fi
+    status="$(provisioning_status "$slug")"
+    if [[ "$status" != "ok" ]]; then
+      INCOMPLETE+=("$slug")
+      INCOMPLETE_REASONS+=("  ${slug}: ${status}")
+    fi
+  done
+fi
 for slug in "${IAM_SLUGS[@]}"; do
   contains "$slug" "${ROSTER_SLUGS[@]}" || EXTRA+=("$slug")
 done
@@ -138,16 +202,21 @@ Roster vs. IAM
 Roster slugs (${#ROSTER_SLUGS[@]}):            ${ROSTER_SLUGS[*]:-<none>}
 IAM users (${#IAM_SLUGS[@]}):               ${IAM_SLUGS[*]:-<none>}
 Missing IAM user:            ${MISSING[*]:-<none>}
+Incomplete provisioning:     ${INCOMPLETE[*]:-<none>}
 Not in roster:               ${EXTRA[*]:-<none>}
 ================================================================================
 EOF
+
+if [[ "${#INCOMPLETE_REASONS[@]}" -gt 0 ]]; then
+  printf '%s\n' "Incomplete provisioning details:" "${INCOMPLETE_REASONS[@]}"
+fi
 
 if [[ "$ACTION_MODE" == "report" ]]; then
   exit 0
 fi
 
 if [[ "$ACTION_MODE" == "provision" ]]; then
-  if [[ "${#MISSING[@]}" -eq 0 ]]; then
+  if [[ "${#MISSING[@]}" -eq 0 && "${#INCOMPLETE[@]}" -eq 0 ]]; then
     echo "Nothing to provision."
     exit 0
   fi
@@ -155,6 +224,12 @@ if [[ "$ACTION_MODE" == "provision" ]]; then
     echo
     echo "==> Provisioning '$slug'..."
     STUDENT_ROSTER="$ROSTER_FILE" "$SCRIPT_DIR/issue-student-token.sh" --slug "$slug" --push-secret
+  done
+  # --rotate mints and pushes a fresh key, then deletes any key left behind by the failed run
+  for slug in "${INCOMPLETE[@]}"; do
+    echo
+    echo "==> Re-issuing incomplete '$slug'..."
+    STUDENT_ROSTER="$ROSTER_FILE" "$SCRIPT_DIR/issue-student-token.sh" --slug "$slug" --push-secret --rotate
   done
   exit 0
 fi
