@@ -255,9 +255,10 @@ describe('Task List DOM & localStorage Persistence', () => {
 
     expect(taskCount(), 'task restored from localStorage').toBe(1)
     expect(app.textContent, 'restored task text is shown').toContain('Buy milk')
-    expect(app.querySelector('.summary').innerText, 'restored task kept its done state').toContain(
-      'No tasks left',
-    )
+    expect(
+      app.querySelector('.summary').textContent,
+      'restored task kept its done state',
+    ).toContain('No tasks left')
   })
 })
 ```

@@ -260,7 +260,7 @@ describe('Task List DOM & Event Delegation', () => {
     addTask('Buy milk')
 
     app.querySelector('button[data-action="toggle"]').click()
-    expect(app.querySelector('.summary').innerText).toContain('No tasks left')
+    expect(app.querySelector('.summary').textContent).toContain('No tasks left')
 
     app.querySelector('button[data-action="remove"]').click()
     expect(taskCount()).toBe(before)
