@@ -84,6 +84,14 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
 > callback on the next line means loading existing tasks at startup won't trigger unnecessary writes
 > to `localStorage`.
 
+> 💡 **Why wrap `storage.save` in an arrow function?** If you pass `storage.save` by itself,
+> `TaskList` later calls it as a plain function, so `this` is `undefined` inside `save()`. This is
+> the same lost-`this` problem as passing `this.handleClick` to `addEventListener` in Week 8. You
+> won't see it when the page loads. The first time you add a task, you'll get
+> `TypeError: Cannot read properties of undefined (reading '#key')`, with your own private field
+> name in place of `#key`. The arrow function `(tasks) => storage.save(tasks)` calls `save()` on
+> `storage`, so `this` is set correctly.
+
 ---
 
 ### Some Helpful References
