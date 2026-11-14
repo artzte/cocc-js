@@ -4,10 +4,11 @@ Because you are also setting up and verifying your **Final Project Test Deployme
 week's programming assignment is intentionally small — hopefully just a 1-hour update to your Week 8
 **Task List** app:
 
-1. **Split `src/app.js` into separate ES modules** so `Task`, `TaskList`, a new `BrowserStorage`
-   class, and `renderApp()` each live in their own module.
-2. **Add `registerOnChange(callback)` to `TaskList`** so `TaskList` can notify outside code whenever
-   tasks change, without knowing anything about `localStorage`.
+1. **Split `src/app.js` into separate ES modules** so `Task`, `TaskList`, and a new `BrowserStorage`
+   class each live in their own module. `renderApp()` stays in `src/app.js`.
+2. **Update `TaskList`** so it can start from a list of saved tasks, and add
+   `registerOnChange(callback)` so it can notify outside code whenever tasks change, without knowing
+   anything about `localStorage`.
 3. **Persist tasks in `localStorage`** by creating a `BrowserStorage` with your storage key, passing
    `storage.load()` into `new TaskList(app, storage.load())`, and registering a callback that calls
    `storage.save(tasks)`.
@@ -26,8 +27,8 @@ There are two ideas to watch for as you refactor:
   (`task.toJSON()`). Remember the lost-`this` problem from Week 8: passing `storage.save` by itself
   detaches it from `storage`, so wrap it in an arrow function instead.
 
-Submit the URL of your pull request adding this assignment to your `projects/week9` folder in your
-repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
+Submit the URL of the pull request that adds your `projects/week9` project. Be sure to tag me,
+**artzte**, as a reviewer on your PR.
 
 ---
 
@@ -35,15 +36,22 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
 
 1. **Module organization**:
    - Start from your Week 8 Task List code in `projects/week9`.
-   - Split your code across **at least three (3) ES module files** under `src/` (for example,
-     putting `Task`, `TaskList`, your storage functions, and `renderApp()` in separate modules
-     instead of keeping everything in `src/app.js`).
+   - Move `Task`, `TaskList`, and `BrowserStorage` into their own module files under `src/`. You
+     choose the file names.
+   - Keep `renderApp()` in `src/app.js`. The page's `src/common/main.js` and the tests both import
+     it from there.
    - Keep internal details (such as markup helpers) unexported in the module that uses them.
    - Define your `localStorage` key string in `app.js` and pass it to the `BrowserStorage`
      constructor. The storage module shouldn't contain a hard-coded key.
-2. **`TaskList.registerOnChange(callback)`**:
-   - Add a `registerOnChange(callback)` method to `TaskList` that stores the callback function in a
-     private field.
+2. **`TaskList` changes**:
+   - Let the constructor take an optional second argument: an array of saved `{ id, text, done }`
+     objects, defaulting to `[]`.
+     - Rebuild each saved object into a `Task` that keeps its saved `id` and `done` state.
+       `Task.fromJSON()` is the simplest way to do this.
+     - If you use `add()` instead, pass it the saved `id` and `done` values along with the text.
+       Your `add()` has to accept all three, because an `add(text)` that only takes the text creates
+       a new task with a new `id` that isn't done.
+   - Add a `registerOnChange(callback)` method that stores the callback function in a private field.
    - Whenever `add()`, `toggle(id)`, or `remove(id)` changes the task list, call the registered
      callback (if one has been registered) with an array of plain serialized task objects:
      `this.#tasks.map((task) => task.toJSON())`.
@@ -68,6 +76,8 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
      `taskList.registerOnChange((tasks) => storage.save(tasks))`.
 5. **Tests**:
    - Update the imports in your Week 8 tests so they import from your new modules.
+   - Add a unit test verifying that a `TaskList` created with saved task objects rebuilds them as
+     `Task` instances with the same `id` and `done` state.
    - Clear `localStorage` (`localStorage.clear()`) in `beforeEach` for tests that use storage or
      `renderApp()`.
    - Add a unit test for `taskList.registerOnChange(callback)` verifying that `add()`, `toggle()`,
@@ -79,10 +89,9 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
    - Add a DOM test verifying that tasks added and toggled in one `renderApp()` call are still shown
      when `renderApp()` is called again (simulating a page reload).
 
-> 💡 **Why register the callback _after_ `new TaskList(app, storage.load())`?** Your `TaskList`
-> constructor loops over the initial tasks and calls `this.add(...)` for each one. Registering the
-> callback on the next line means loading existing tasks at startup won't trigger unnecessary writes
-> to `localStorage`.
+> 💡 **Why register the callback _after_ `new TaskList(app, storage.load())`?** Loading the saved
+> tasks isn't a change the user made, so there's nothing new to save. Registering the callback on
+> the next line means only real changes (add, toggle, remove) write to `localStorage`.
 
 > 💡 **Why wrap `storage.save` in an arrow function?** If you pass `storage.save` by itself,
 > `TaskList` later calls it as a plain function, so `this` is `undefined` inside `save()`. This is
@@ -163,6 +172,18 @@ describe('TaskList', () => {
 
     list.remove(task.id)
     expect(list.tasks.length, 'task removed').toBe(1)
+  })
+
+  it('rebuilds saved task objects passed to the constructor', () => {
+    const saved = [
+      { id: '1', text: 'Read Chapter 8', done: true },
+      { id: '2', text: 'Add storage module', done: false },
+    ]
+    const restored = new TaskList(document.createElement('div'), saved)
+
+    expect(restored.tasks[0], 'saved objects become Tasks').toBeInstanceOf(Task)
+    expect(restored.tasks[0].id, 'saved id is kept').toBe('1')
+    expect(restored.remainingCount, 'saved done state is kept').toBe(1)
   })
 
   it('passes serialized task objects to registerOnChange callback', () => {
@@ -249,9 +270,11 @@ describe('Task List DOM & localStorage Persistence', () => {
     app.querySelector('button[data-action="toggle"]').click()
     expect(taskCount(), 'one task on page').toBe(1)
 
-    // Re-render into #app as if the page were refreshed
-    app.innerHTML = ''
+    // Swap in an empty copy of #app, as if the page were refreshed. cloneNode()
+    // doesn't copy event listeners, so the old ones don't stay attached.
+    app.replaceWith(app.cloneNode(false))
     renderApp()
+    app = document.querySelector('#app')
 
     expect(taskCount(), 'task restored from localStorage').toBe(1)
     expect(app.textContent, 'restored task text is shown').toContain('Buy milk')
@@ -281,6 +304,10 @@ describe('Task List DOM & localStorage Persistence', () => {
    ```bash
    cp -R projects/week8 projects/week9
    ```
+   If your Week 8 PR hasn't been merged yet, `projects/week8` won't be on `main`. In that case,
+   create your `week9` branch from your `week8` branch instead (`git checkout week8`, then
+   `git checkout -b week9`) and then run the `cp` command above. Your Week 9 PR will also show your
+   Week 8 changes until Week 8 is merged.
 4. **Stage, commit, and push the copied project files**:
    ```bash
    git add projects/week9
@@ -305,6 +332,8 @@ describe('Task List DOM & localStorage Persistence', () => {
      ```bash
      npm run check
      ```
+   - If the format check fails, run `npm run format` to fix the formatting, then run `npm run check`
+     again.
    - Stage, commit, and push your changes.
 7. **Open a Pull Request**: Open a pull request on GitHub comparing `week9` against `main`, and
    request **artzte** as a reviewer.
