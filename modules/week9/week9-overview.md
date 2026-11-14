@@ -12,8 +12,8 @@ week we bring those ideas together:
   exposing only a deliberate public API.
 - **ES Modules (ESM)** make every `.js` file its own private module scope. Nothing leaks to the
   global scope, and files share code explicitly with `export` and `import`.
-- **`localStorage`** lets a storage module save tasks as JSON and rebuild `Task` instances when the
-  page loads again.
+- **`localStorage`** lets a `BrowserStorage` class save tasks as JSON, so `TaskList` can rebuild
+  them as `Task` instances when the page loads again.
 
 Because you are also setting up your **Final Project Test Deployment** this week, the weekly
 programming assignment is intentionally lightweight (about a 1-hour exercise): splitting your Week 8
@@ -39,9 +39,9 @@ Task List into separate modules and adding `localStorage` persistence.
 ### Part 3: Decoupled Persistence with Callbacks and `localStorage`
 
 - **Clean module boundaries with callbacks**: Why `TaskList` uses `registerOnChange(callback)`
-  instead of importing `save()` directly from `storage.js`.
+  instead of importing anything from the storage module.
 - **`localStorage.setItem()` and `localStorage.getItem()`**: Storing and reading JSON strings by key
-  inside a self-contained storage module.
+  inside a self-contained `BrowserStorage` class.
 
 ---
 
@@ -56,8 +56,8 @@ By the end of this module you will be able to:
 - Use ES Module `export` and `import` statements (named, default, and namespace imports) to split a
   single-file application into focused modules.
 - Explain how module scope differs from global scope and why ES modules act as singletons.
-- Pass a callback function (`registerOnChange(save)`) to decouple a UI/state class from a
-  `localStorage` persistence module.
+- Pass a callback function (`registerOnChange((tasks) => storage.save(tasks))`) to decouple a
+  UI/state class from a `localStorage` persistence module.
 
 ---
 
@@ -81,14 +81,14 @@ By the end of this module you will be able to:
      the Debug Challenge.
 4. **Assessment — Quiz 9**:
    - Complete [Week 9 Quiz](week9-quiz.md) on Canvas (covering namespaces vs. modules, classic
-     modules, named vs. default exports, module scope, and `localStorage` rehydration). Due
+     modules, named vs. default exports, module scope, and decoupling modules with a callback). Due
      **Monday, November 23, 2026 at 11:59 PM**.
 5. **Programming Assignment — Persistent Task List with Modules**:
-   - Create a `week9` branch, scaffold `projects/week9`, bring over your Week 8 Task List code,
-     split it into separate ES modules, and add `localStorage` persistence.
+   - Create a `week9` branch, copy your Week 8 Task List project to `projects/week9`, split it into
+     separate ES modules, and add `localStorage` persistence.
    - Complete
      [Week 9 Assignment: Persistent Task List with Modules](week9-assignment-task-list-modules.md),
-     verify with `npm start` and `npm test`, and submit your PR on GitHub to **artzte**. Due
+     verify with `npm start` and `npm run check`, and submit your PR on GitHub to **artzte**. Due
      **Monday, November 23, 2026 at 11:59 PM**.
 6. **Final Project — Test Deployment**:
    - Pull the latest course template updates, scaffold `projects/final`, update the `<title>` to
