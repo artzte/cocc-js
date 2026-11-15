@@ -54,11 +54,14 @@ Submit the URL of the pull request that adds your `projects/week9` project. Be s
    - Add a `registerOnChange(callback)` method that stores the callback function in a private field.
    - Whenever `add()`, `toggle(id)`, or `remove(id)` changes the task list, call the registered
      callback (if one has been registered) with an array of plain serialized task objects:
-     `this.#tasks.map((task) => task.toJSON())`.
+     `this.#tasks.map((task) => task.toJSON())`. Since this functionality is the same in each place,
+     DRY (don't repeat yourself) principles would suggest that a private helper function such as
+     `#notifyUpdates()` might do the trick
    - **Handle invalid situations**:
      - Ignored actions (such as calling `add('   ')` with blank text, or `toggle(id)` / `remove(id)`
        with an unknown `id`) should not call the callback.
-3. **`BrowserStorage` class**:
+3. **`BrowserStorage` class**: (**HINT: this week's lecture page has an example that you can
+   probably copy verbatim**)
    - Create a `BrowserStorage` class whose constructor takes the storage key and keeps it in a
      private field.
    - `BrowserStorage` doesn't know anything about tasks. It saves and loads any value that
