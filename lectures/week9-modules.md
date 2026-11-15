@@ -20,8 +20,8 @@ and
 | **00:00 - 04:00** | **1. What Makes Something a Module?**                    | POLE, namespaces vs. data structures vs. modules (`namespaceAndDataStructureDemo`)          |
 | **04:00 - 08:00** | **2. Classic Modules (IIFE & Module Factory)**           | Closure-backed private state and `publicAPI` (`classicModuleDemo`)                          |
 | **08:00 - 13:00** | **3. File-Based Modules: CommonJS & ESM**                | `export` / `import` variations, module scope, Vite dev vs. build (`esModuleBoundariesDemo`) |
-| **13:00 - 16:30** | **4. Decoupling `localStorage` with `registerOnChange`** | `setItem`, `getItem`, passing `save` as a callback (`localStorageDemo`)                     |
-| **16:30 - 18:30** | **5. Debug Challenge**                                   | Passing a function (`save`) vs. calling it (`save()`) (`debugChallenge`)                    |
+| **13:00 - 16:30** | **4. Decoupling `localStorage` with `registerOnChange`** | `setItem`, `getItem`, a `BrowserStorage` class, arrow callback (`localStorageDemo`)         |
+| **16:30 - 18:30** | **5. Debug Challenge**                                   | Passing `storage.save` by itself loses `this` (`debugChallenge`)                            |
 | **18:30 - 20:00** | **6. Wrap-Up & Week 9 Deliverables**                     | Splitting Week 8 Task List into modules + Final Project test deployment                     |
 
 ---
@@ -31,8 +31,10 @@ and
 ### Talking Points & Concept Cues
 
 - [Scope & Closures (2nd Edition), Chapter 8: The Module Pattern](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch8.md)
-  is the payoff of the entire _Scope & Closures_ book. Everything we learned about lexical scope,
-  the Principle of Least Exposure (POLE), and closures comes together in modules.
+  is the payoff of the entire
+  [_Scope & Closures_ (2nd Edition)](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
+  book. Everything we learned about lexical scope, the Principle of Least Exposure (POLE), and
+  closures comes together in modules.
 - **Encapsulation** has two parts:
   1. Bundling related data and functions that serve a common purpose.
   2. Controlling visibility: keeping internal details **private** and exposing only a minimal
@@ -104,13 +106,13 @@ Student.records // undefined
     shares the same module scope. When you need multiple instances of something, export a `class`
     (like `Task` or `TaskList`) or a factory function from the module.
 - **Named exports vs. default exports**:
-  - **Named export**: `export class Task { ... }` or `export function save(tasks) { ... }`. Imported
-    by matching name inside braces: `import { Task } from './task.js'` (or renamed with `as`:
-    `import { save as saveTasks } from './storage.js'`).
+  - **Named export**: `export class Task { ... }` or `export function getName(studentId) { ... }`.
+    Imported by matching name inside braces: `import { Task } from './task.js'` (or renamed with
+    `as`: `import { getName as getStudentName } from './students.js'`).
   - **Default export**: `export default class TaskList { ... }`. At most one per file; imported
     without braces: `import TaskList from './task-list.js'`.
-  - **Namespace import**: `import * as storage from './storage.js'` groups every export from that
-    file under `storage.save(...)`, `storage.load()`.
+  - **Namespace import**: `import * as students from './students.js'` groups every export from that
+    file under one name, such as `students.getName(73)`.
   - My preference in this course is **named exports**: the import site and the definition use the
     exact same name, which makes searching and refactoring much easier.
 - **How Vite handles ESM**:
@@ -132,21 +134,30 @@ Student.records // undefined
 - Keys and values in `localStorage` are always **strings**:
   - `localStorage.setItem(key, JSON.stringify(tasks))`
   - `localStorage.getItem(key)` returns the saved JSON string, or `null` if nothing is stored yet.
-- **How should `TaskList` and `storage.js` talk to each other?**
-  - If `TaskList` imported `save` directly from `storage.js`, `TaskList` would be hard-wired to
+- **A `BrowserStorage` class** wraps one key:
+  - The constructor takes the key and keeps it in a private field.
+  - `save(value)` stores `JSON.stringify(value)` under the key.
+  - `load()` returns `null` when nothing is saved, the same as `localStorage.getItem()`, and
+    otherwise returns `JSON.parse()` of the saved string.
+  - Because it doesn't know anything about tasks, it can save any value `JSON.stringify()` handles.
+- **How should `TaskList` and `BrowserStorage` talk to each other?**
+  - If `TaskList` imported the storage module directly, `TaskList` would be hard-wired to
     `localStorage`.
   - Instead, we give `TaskList` a `registerOnChange(callback)` method. Whenever a task is added,
     toggled, or removed, `TaskList` calls that callback with the array of serialized task objects
     (`this.#tasks.map((task) => task.toJSON())`).
-  - Now `storage.js` doesn't need to know about `Task` or `TaskList`, and `task-list.js` doesn't
-    need to know about `storage.js`.
-  - `app.js` is the only file that knows about both:
+  - Now `browser-storage.js` doesn't need to know about `Task` or `TaskList`, and `task-list.js`
+    doesn't need to know about `browser-storage.js`.
+  - `app.js` is the only file that knows about both, and the only file that knows the key:
     ```javascript
-    const taskList = new TaskList(app, load())
-    taskList.registerOnChange(save)
+    const storage = new BrowserStorage(STORAGE_KEY)
+    const taskList = new TaskList(app, storage.load() ?? [])
+    taskList.registerOnChange((tasks) => storage.save(tasks))
     ```
-  - Because functions in JavaScript are first-class values, we pass `save` itself to
-    `registerOnChange(save)`.
+  - `storage.load() ?? []` uses an empty array the first time the app runs, when `load()` returns
+    `null`.
+  - Because functions in JavaScript are first-class values, we can hand `registerOnChange` a
+    function. We wrap `storage.save` in an arrow function so `save()` is still called on `storage`.
 
 ---
 
@@ -154,17 +165,22 @@ Student.records // undefined
 
 ### Talking Points & Concept Cues
 
-- Run `debugChallenge()` in DevTools: `localStorage` gets overwritten with `"undefined"` at startup,
-  and adding a task never saves it!
+- Run `debugChallenge()` in DevTools: registering the callback works, but `taskList.add()` throws a
+  `TypeError` and nothing is saved.
 - Look at the registration line:
   ```javascript
-  taskList.registerOnChange(save())
+  taskList.registerOnChange(storage.save)
   ```
-- Writing `save()` with parentheses **calls** `save(undefined)` immediately and passes its return
-  value (`undefined`) to `registerOnChange`.
-- **The fix**: pass the function value itself, without parentheses:
+- `storage.save` hands over the function without its connection to `storage`. When `TaskList` calls
+  `this.#onChange?.(...)`, `this` inside `save()` is the `TaskList`, which has no `#key` field:
+  ```text
+  Cannot read private member #key from an object whose class did not declare it
+  ```
+- This is the same lost-`this` problem as passing `this.handleClick` to `addEventListener` in
+  Week 8.
+- **The fix**: wrap the call in an arrow function so `save()` is called on `storage`:
   ```javascript
-  taskList.registerOnChange(save)
+  taskList.registerOnChange((tasks) => storage.save(tasks))
   ```
 
 ---

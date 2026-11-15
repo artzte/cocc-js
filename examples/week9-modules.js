@@ -3,7 +3,7 @@
 // Namespaces vs. data structures vs. modules, classic modules
 // (Immediately Invoked Function Expression (IIFE) singleton and module
 // factory), ES module boundaries, and decoupling TaskList from
-// localStorage with registerOnChange(save)
+// localStorage with registerOnChange and a BrowserStorage class
 // ====================================================================
 
 // --------------------------------------------------------------------
@@ -47,11 +47,11 @@ function getStorage() {
 }
 
 // --------------------------------------------------------------------
-// Shared Task and TaskList classes
+// Shared Task, TaskList, and BrowserStorage classes
 // --------------------------------------------------------------------
-// These match the Week 9 assignment's src/task.js and src/task-list.js.
-// They are defined once here because the last two demos (4 and 5) both
-// use them. Neither demo needs every method; add(), toggle(), and
+// These match the Week 9 assignment's src/task.js, src/task-list.js,
+// and src/browser-storage.js. They are defined once here because the
+// last two demos (4 and 5) both use them. Neither demo needs every method; add(), toggle(), and
 // remove() are all here so you can try them in the console.
 class Task {
   #id = null
@@ -132,6 +132,35 @@ class TaskList {
 
     this.#tasks.splice(index, 1)
     this.#notifyChange()
+  }
+}
+
+// Real localStorage, or the in-memory shim from getStorage() above.
+// In src/browser-storage.js you would use localStorage directly.
+const webStorage = getStorage()
+
+class BrowserStorage {
+  #key
+
+  constructor(key) {
+    this.#key = key
+  }
+
+  save(value) {
+    webStorage.setItem(this.#key, JSON.stringify(value))
+  }
+
+  load() {
+    const json = webStorage.getItem(this.#key)
+    // nothing saved yet: return null, the same as localStorage does
+    if (json === null) return null
+
+    return JSON.parse(json)
+  }
+
+  // Only for these demos, so each run starts empty
+  clear() {
+    webStorage.removeItem(this.#key)
   }
 }
 
@@ -251,12 +280,14 @@ function esModuleBoundariesDemo() {
   //
   //   src/task.js      -> exports `class Task`
   //   src/task-list.js -> imports `Task`; exports `class TaskList`
-  //   src/storage.js   -> keeps `STORAGE_KEY` private; exports `save`, `load`
-  //   src/app.js       -> imports `TaskList`, `load`, `save`; wires them together
+  //   src/browser-storage.js -> exports `class BrowserStorage`
+  //   src/app.js             -> defines the storage key, imports `TaskList`
+  //                             and `BrowserStorage`, and wires them together
   //
-  // Notice that `task-list.js` does not import `storage.js`, and `storage.js`
-  // does not import `Task` or `TaskList`. Only `app.js` connects them via
-  // `taskList.registerOnChange(save)`.
+  // Notice that `task-list.js` does not import `browser-storage.js`, and
+  // `browser-storage.js` does not import `Task` or `TaskList`. Only `app.js`
+  // connects them via
+  // `taskList.registerOnChange((tasks) => storage.save(tasks))`.
 
   console.log(
     'Each ES module file is its own scope: top-level variables stay private unless exported.',
@@ -269,74 +300,58 @@ function esModuleBoundariesDemo() {
 function localStorageDemo() {
   header('4. Decoupling TaskList and localStorage with registerOnChange')
 
-  // Use the browser's real localStorage when it is available, or the
-  // in-memory shim from getStorage() (top of this file) when it isn't
-  const storage = getStorage()
-  const STORAGE_KEY = 'cis133js.week9.demo.tasks'
+  // Task, TaskList, and BrowserStorage come from the shared section at
+  // the top of this file. BrowserStorage has no dependency on Task!
+  const storage = new BrowserStorage('cis133js.week9.demo.tasks')
+  storage.clear()
+  console.log('storage.load() when nothing is saved:', storage.load()) // null
 
-  // Task and TaskList come from the shared section at the top of this file
-
-  // Matches `save` and `load` in src/storage.js (no dependency on Task!)
-  function save(tasks) {
-    storage.setItem(STORAGE_KEY, JSON.stringify(tasks))
-  }
-
-  function load() {
-    const raw = storage.getItem(STORAGE_KEY)
-    if (!raw) return []
-
-    return JSON.parse(raw)
-  }
-
-  storage.removeItem(STORAGE_KEY)
-  console.log('load() when storage is empty:', load()) // []
-
-  // Wire TaskList to storage by passing `save` as a first-class function
-  const list = new TaskList(load())
-  list.registerOnChange(save)
+  // load() returns null the first time, so fall back to an empty array
+  const list = new TaskList(storage.load() ?? [])
+  // The arrow function keeps `this` pointing at `storage` inside save()
+  list.registerOnChange((tasks) => storage.save(tasks))
 
   const firstTask = list.add('Read Chapter 8')
   list.add('Split app.js into modules')
 
   // toggle() changes the list too, so it also triggers save()
   list.toggle(firstTask.id)
-  console.log('Raw JSON in storage:', storage.getItem(STORAGE_KEY))
+  console.log(
+    'Raw JSON in storage:',
+    webStorage.getItem('cis133js.week9.demo.tasks'),
+  )
 
   // Simulate a page reload by passing load() into a brand-new TaskList
-  const reloadedList = new TaskList(load())
+  const reloadedList = new TaskList(storage.load() ?? [])
   console.log('reloadedList.tasks.length:', reloadedList.tasks.length) // 2
   console.log('reloadedList.tasks[0].text:', reloadedList.tasks[0].text)
   console.log('reloadedList.tasks[0].done:', reloadedList.tasks[0].done) // true
 }
 
 // --------------------------------------------------------------------
-// DEMO 5: Debug Challenge — Passing a Function vs. Calling It
+// DEMO 5: Debug Challenge — Passing a Method as a Callback
 // --------------------------------------------------------------------
-// `debugChallenge()` tries to wire `save` to `taskList.registerOnChange`,
-// then adds a task. Instead of saving the new task, storage holds
-// `"undefined"` and `load()` fails! Find the bug on the
-// `registerOnChange` line and fix it.
+// `debugChallenge()` wires `storage.save` to `taskList.registerOnChange`,
+// then adds a task. Registering works fine, but adding the task throws a
+// TypeError and nothing is saved. Find the bug on the `registerOnChange`
+// line and fix it.
 function debugChallenge() {
   header('5. Debug Challenge')
 
-  // Real localStorage, or the in-memory shim from getStorage()
-  const storage = getStorage()
-  const CHALLENGE_KEY = 'cis133js.week9.challenge.tasks'
-
-  function save(tasks) {
-    storage.setItem(CHALLENGE_KEY, JSON.stringify(tasks))
-  }
-
-  storage.removeItem(CHALLENGE_KEY)
+  const storage = new BrowserStorage('cis133js.week9.challenge.tasks')
+  storage.clear()
 
   const taskList = new TaskList()
 
-  // Buggy: why does this write "undefined" to storage right now and
-  // never save when taskList.add() runs?
-  taskList.registerOnChange(save())
+  // Buggy: why does taskList.add() throw instead of saving?
+  taskList.registerOnChange(storage.save)
 
-  taskList.add('Fix registerOnChange')
-  console.log('Stored value in CHALLENGE_KEY:', storage.getItem(CHALLENGE_KEY))
+  try {
+    taskList.add('Fix registerOnChange')
+  } catch (error) {
+    console.log('Error from taskList.add():', error.message)
+  }
+  console.log('storage.load() after adding a task:', storage.load())
 }
 
 // --------------------------------------------------------------------

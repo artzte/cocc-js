@@ -78,6 +78,9 @@ repo. Be sure to tag me, **artzte**, as a reviewer on your PR.
      - a text input and an **Add** button (`data-action="add"`)
      - the list of tasks, built from each task's `toHTML()`
      - a count, such as `2 of 3 tasks left`
+   - In `render()`, set text with `textContent` (or build it into your `innerHTML` markup), not
+     `innerText`. The test DOM (jsdom) doesn't support `innerText`, so your tests won't see text set
+     that way.
    - `attachHandlers()` sets up the event handlers
 3. The `taskList.attachHandlers` will add **one delegated listener for the buttons**, and possibly a
    second one for the submit event for the task form.
