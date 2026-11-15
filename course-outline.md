@@ -23,9 +23,10 @@ The textbook is
 [You Don't Know JS Yet (book series) - 2nd Edition)](https://github.com/getify/you-dont-know-js).
 You can read it online, or order a bound copy from the provided links on the book website.
 
-- _You Don't Know JS Yet: Get Started_, 2nd ed. — Kyle Simpson (chapters 1–3; ch4 as bridge reading)
-- _You Don't Know JS Yet: Scope & Closures_, 2nd ed. — Kyle Simpson (chapters 1–3, 5–8; appendices
-  optional)
+- [_You Don't Know JS Yet: Get Started_, 2nd ed.](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/get-started)
+  — Kyle Simpson (chapters 1–3; chapter 4 as bridge reading)
+- [_You Don't Know JS Yet: Scope & Closures_, 2nd ed.](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
+  — Kyle Simpson (chapters 1–3, 5–8; appendices optional)
 
 You will also need a computer for building software. Class lectures and demonstrations will be
 conducted on an Ubuntu laptop, using the Z shell (Zsh), Visual Studio Code, Gitkraken, and Chrome.
@@ -162,7 +163,8 @@ which follows a structured review and approval workflow during Finals Week.
 
 ### Week 1 — What Is JavaScript?
 
-**Reading**: _Get Started_ Ch1
+**Reading**:
+[Get Started (2nd Edition), Chapter 1: What Is JavaScript?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch1.md)
 
 **Topics**:
 
@@ -188,7 +190,9 @@ spec and who writes it?
 
 ### Week 2 — Values, Types, and Variables
 
-**Reading**: _Get Started_ Ch2 — Values through Declaring and Using Variables
+**Reading**:
+[Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md),
+from "Values" through "Declaring and Using Variables"
 
 **Topics**:
 
@@ -213,7 +217,9 @@ template — no hardcoded strings in the HTML. Include the type of each attribut
 
 ### Week 3 — Functions and Comparisons
 
-**Reading**: _Get Started_ Ch2 — Functions, Comparisons
+**Reading**:
+[Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md),
+the "Functions" and "Comparisons" sections
 
 **Topics**:
 
@@ -236,7 +242,11 @@ rule in the DOM.
 
 ### Week 4 — Arrays, Loops, and Iteration
 
-**Reading**: _Get Started_ Ch2 — How We Organize in JS (arrays/iteration portion); Ch3 — Iteration
+**Reading**:
+[Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md),
+"How We Organize in JS" (arrays/iteration portion);
+[Get Started (2nd Edition), Chapter 3: Digging to the Roots of JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch3.md),
+the "Iteration" section
 
 **Topics**:
 
@@ -260,11 +270,15 @@ idea, target users, core features, and the public API you plan to use.
 
 ### Week 5 — Lexical Scope
 
-**Reading**: _Scope & Closures_ Ch1 + Ch2
+**Reading**:
+[Scope & Closures (2nd Edition), Chapter 1: What's the Scope?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)
+and
+[Scope & Closures (2nd Edition), Chapter 2: Illustrating Lexical Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch2.md)
 
-_Bridge reading_: _Get Started_ Ch4 — The Bigger Picture (a short orienting chapter that previews
-the three JS pillars: scope/closures, prototypes, and types. Read it as an introduction to the scope
-unit.)
+_Bridge reading_:
+[Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)
+(a short orienting chapter that previews the three JS pillars: scope/closures, prototypes, and
+types. Read it as an introduction to the scope unit.)
 
 **Topics**:
 
@@ -285,7 +299,11 @@ into properly scoped functions — same behavior, no leaking globals.
 
 ### Week 6 — Scope Chain, Global Scope, and Variable Lifecycle
 
-**Reading**: _Scope & Closures_ Ch3, Ch4, Ch5
+**Reading**:
+[Scope & Closures (2nd Edition), Chapter 3: The Scope Chain](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch3.md),
+[Scope & Closures (2nd Edition), Chapter 4: Around the Global Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch4.md),
+and
+[Scope & Closures (2nd Edition), Chapter 5: The (Not So) Secret Lifecycle of Variables](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch5.md)
 
 **Topics**:
 
@@ -309,7 +327,10 @@ scope in the browser
 
 ### Week 7 — Closures
 
-**Reading**: _Scope & Closures_ Ch6 + Ch7
+**Reading**:
+[Scope & Closures (2nd Edition), Chapter 6: Limiting Scope Exposure](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch6.md)
+and
+[Scope & Closures (2nd Edition), Chapter 7: Using Closures](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch7.md)
 
 **Topics**:
 
@@ -337,8 +358,11 @@ data model, planned module breakdown, and the specific API endpoint(s) you will 
 
 ### Week 8 — Classes and Object-Oriented Programming
 
-**Reading**: _Get Started_ Ch2 — How We Organize in JS (classes); Ch3 — `this` Keyword, Prototypes
-(conceptual read)
+**Reading**:
+[Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md),
+"How We Organize in JS" (classes);
+[Get Started (2nd Edition), Chapter 3: Digging to the Roots of JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch3.md),
+the "`this` Keyword" and "Prototypes" sections (conceptual read)
 
 **Topics**:
 
@@ -362,7 +386,8 @@ global variables.
 
 ### Week 9 — Modules
 
-**Reading**: _Scope & Closures_ Ch8
+**Reading**:
+[Scope & Closures (2nd Edition), Chapter 8: The Module Pattern](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch8.md)
 
 **Topics**:
 
@@ -372,12 +397,13 @@ global variables.
 - How Vite handles ESM in dev (native browser ESM) vs. build (bundled)
 - CommonJS (`require`/`module.exports`): know it exists for reading Node code; write ESM
 
-**Browser Exercise**: Refactor the Week 8 task list app into at least three modules: `task.js`,
-`taskList.js`, `main.js`.
+**Browser Exercise**: Refactor the Week 8 task list app into ES modules: `Task`, `TaskList`, and a
+`BrowserStorage` class each get their own module, with `renderApp()` staying in `app.js`.
 
-**Challenge**: Add a `storage.js` module that persists tasks to `localStorage`. Export `save(tasks)`
-and `load()` functions; import and use them from `taskList.js`. Write Vitest tests for both
-functions.
+**Persistence**: `BrowserStorage` saves any JSON-serializable value under one `localStorage` key,
+and `load()` returns `null` when nothing is saved. `TaskList` gets a `registerOnChange(callback)`
+method so it never imports the storage module; `app.js` connects them with
+`taskList.registerOnChange((tasks) => storage.save(tasks))`. Write Vitest tests for both classes.
 
 **Quiz 9**: Named vs. default exports, `import` syntax variations, module scope vs. global scope,
 ESM vs. CommonJS
@@ -510,14 +536,19 @@ _No quiz this week._
 
 ## YDKJSY Chapter Coverage
 
-| Chapter                                                         | Week                                 |
-| --------------------------------------------------------------- | ------------------------------------ |
-| _Get Started_ Ch1 — What Is JavaScript?                         | 1                                    |
-| _Get Started_ Ch2 — Surveying JS                                | 2, 3, 4, 8                           |
-| _Get Started_ Ch3 — Roots of JS (Iteration, `this`, Prototypes) | 4 (Iteration), 8 (`this`/Prototypes) |
-| _Get Started_ Ch4 — The Bigger Picture                          | 5 (bridge reading)                   |
-| _Scope & Closures_ Ch1–2 — Lexical Scope                        | 5                                    |
-| _Scope & Closures_ Ch3–5 — Scope Chain, Global, Lifecycle       | 6                                    |
-| _Scope & Closures_ Ch6–7 — Limiting Scope, Closures             | 7                                    |
-| _Scope & Closures_ Ch8 — Module Pattern                         | 9                                    |
-| _S&C_ Appendices (implied scopes, named functions, TDZ details) | Optional / self-study                |
+| Chapter                                                                                                                                                                                      | Week                                 |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| [Get Started (2nd Edition), Chapter 1: What Is JavaScript?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch1.md)                                                       | 1                                    |
+| [Get Started (2nd Edition), Chapter 2: Surveying JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch2.md)                                                              | 2, 3, 4, 8                           |
+| [Get Started (2nd Edition), Chapter 3: Digging to the Roots of JS](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch3.md)                                                | 4 (Iteration), 8 (`this`/Prototypes) |
+| [Get Started (2nd Edition), Chapter 4: The Bigger Picture](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/get-started/ch4.md)                                                        | 5 (bridge reading)                   |
+| [Scope & Closures (2nd Edition), Chapter 1: What's the Scope?](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch1.md)                                                 | 5                                    |
+| [Scope & Closures (2nd Edition), Chapter 2: Illustrating Lexical Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch2.md)                                        | 5                                    |
+| [Scope & Closures (2nd Edition), Chapter 3: The Scope Chain](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch3.md)                                                   | 6                                    |
+| [Scope & Closures (2nd Edition), Chapter 4: Around the Global Scope](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch4.md)                                           | 6                                    |
+| [Scope & Closures (2nd Edition), Chapter 5: The (Not So) Secret Lifecycle of Variables](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch5.md)                        | 6                                    |
+| [Scope & Closures (2nd Edition), Chapter 6: Limiting Scope Exposure](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch6.md)                                           | 7                                    |
+| [Scope & Closures (2nd Edition), Chapter 7: Using Closures](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch7.md)                                                    | 7                                    |
+| [Scope & Closures (2nd Edition), Chapter 8: The Module Pattern](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/ch8.md)                                                | 9                                    |
+| [Scope & Closures (2nd Edition), Appendix A: Exploring Further](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/apA.md) (implied scopes, named functions, TDZ details) | Optional / self-study                |
+| [Scope & Closures (2nd Edition), Appendix B: Practice](https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/scope-closures/apB.md)                                                         | Optional / self-study                |

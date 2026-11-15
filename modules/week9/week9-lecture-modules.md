@@ -26,8 +26,8 @@ Week 8 Task List so tasks survive a page refresh.
 4. **ES Modules (ESM) in Practice**: File-level scope (private by default, strict mode always on,
    singleton execution), named vs. default exports, and `import` variations.
 5. **Decoupling Modules with Callback Functions and `localStorage`**: Using
-   `taskList.registerOnChange(save)` so `TaskList` and `storage.js` stay independent, while `app.js`
-   wires them together.
+   `taskList.registerOnChange((tasks) => storage.save(tasks))` so `TaskList` and `BrowserStorage`
+   stay independent, while `app.js` wires them together.
 
 ---
 
@@ -40,7 +40,7 @@ Week 8 Task List so tasks survive a page refresh.
 | **Classic module**        | Outer function hides state in lexical scope and returns a public API with closure | `const Student = (function() { ... return { getName } })()`  |
 | **CommonJS**              | Node's classic file-based module format                                           | `module.exports = ...` / `const x = require('./x.js')`       |
 | **ES Module (ESM)**       | Standard file-based module; private by default, strict mode, singleton            | `export class Task` / `import { Task } from './task.js'`     |
-| **Named export / import** | Exported and imported by exact identifier name (can rename with `as`)             | `export { save, load }` / `import { save, load } from ...`   |
+| **Named export / import** | Exported and imported by exact identifier name (can rename with `as`)             | `export { Task }` / `import { Task } from ...`               |
 | **Default export**        | One main export per file, imported without curly braces                           | `export default class TaskList` / `import TaskList from ...` |
 | **`localStorage`**        | Browser key-value store for strings that survive page reloads                     | `localStorage.setItem(key, JSON.stringify(tasks))`           |
 
@@ -98,12 +98,12 @@ console.log(getName(73)) // 'Suzy'
 export class Task {
   /* ... */
 }
-export function save(tasks) {
+export class BrowserStorage {
   /* ... */
 }
 
 import { Task } from './task.js'
-import { save as saveTasks } from './storage.js'
+import { BrowserStorage as TaskStorage } from './browser-storage.js'
 ```
 
 ```javascript
@@ -115,28 +115,36 @@ export default class TaskList {
 import TaskList from './task-list.js'
 ```
 
-#### Decoupling `TaskList` and `storage.js` with `registerOnChange`
+#### Decoupling `TaskList` and `BrowserStorage` with `registerOnChange`
 
-If `TaskList` imported `save` directly from `storage.js`, the two modules would be tightly coupled:
-you couldn't use or test `TaskList` without touching `localStorage`.
+If `TaskList` imported the storage module directly, the two modules would be tightly coupled: you
+couldn't use or test `TaskList` without touching `localStorage`.
 
-Instead, we can keep `storage.js` and `task-list.js` completely independent of each other:
+Instead, we can keep the storage module and `task-list.js` completely independent of each other:
 
-1. `storage.js` only knows how to save and load an array in `localStorage`:
+1. `BrowserStorage` only knows how to save and load a value under one `localStorage` key. It doesn't
+   know anything about tasks, so it works for any value `JSON.stringify()` can handle:
 
 ```javascript
-// src/storage.js
-const STORAGE_KEY = 'cis133js.tasks'
+// src/browser-storage.js
+export class BrowserStorage {
+  #key
 
-export function save(tasks) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
-}
+  constructor(key) {
+    this.#key = key
+  }
 
-export function load() {
-  const raw = localStorage.getItem(STORAGE_KEY)
-  if (!raw) return []
+  save(value) {
+    localStorage.setItem(this.#key, JSON.stringify(value))
+  }
 
-  return JSON.parse(raw)
+  load() {
+    const json = localStorage.getItem(this.#key)
+    // nothing saved yet: return null, the same as localStorage does
+    if (json === null) return null
+
+    return JSON.parse(json)
+  }
 }
 ```
 
@@ -156,26 +164,36 @@ registerOnChange(callback) {
 }
 ```
 
-3. `app.js` is the only file that knows about both modules. Because functions are first-class values
-   in JavaScript, `app.js` passes `save` directly to `registerOnChange`:
+3. `app.js` is the only file that knows about both modules, and the only file that knows the storage
+   key. Because functions are first-class values in JavaScript, `app.js` can hand a function to
+   `registerOnChange`:
 
 ```javascript
 // src/app.js
 import { TaskList } from './task-list.js'
-import { save, load } from './storage.js'
+import { BrowserStorage } from './browser-storage.js'
+
+const STORAGE_KEY = 'cis133js.tasks'
 
 export function renderApp() {
   const app = document.querySelector('#app')
-  const taskList = new TaskList(app, load())
+  const storage = new BrowserStorage(STORAGE_KEY)
+  // load() returns null the first time the app runs
+  const taskList = new TaskList(app, storage.load() ?? [])
 
-  taskList.registerOnChange(save)
+  taskList.registerOnChange((tasks) => storage.save(tasks))
   taskList.render()
   taskList.attachHandlers()
 }
 ```
 
-Notice how `STORAGE_KEY` is not exported from `storage.js`, `storage.js` doesn't import `Task`, and
-`task-list.js` doesn't import `storage.js`. Each module does one job behind a minimal public API.
+The arrow function matters. Passing `storage.save` by itself would detach the method from `storage`,
+so `this` inside `save()` wouldn't be `storage` when `TaskList` calls it. That's the same
+lost-`this` problem we saw with event handlers in Week 8.
+
+Notice how `STORAGE_KEY` lives only in `app.js`, `browser-storage.js` doesn't import `Task`, and
+`task-list.js` doesn't import `browser-storage.js`. Each module does one job behind a minimal public
+API.
 
 ---
 
@@ -198,6 +216,7 @@ Notice how `STORAGE_KEY` is not exported from `storage.js`, `storage.js` doesn't
   - [`Storage.getItem()`](https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem) and
     [`Storage.setItem()`](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem)
   - [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)
+  - [Nullish coalescing (`??`)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
 - **Assignments**:
   - [Week 9 Assignment: Persistent Task List with Modules](week9-assignment-task-list-modules.md)
   - [Final Project: Test Deployment](week9-assignment-test-deployment.md)

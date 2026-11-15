@@ -10,7 +10,7 @@ week's programming assignment is intentionally small — hopefully just a 1-hour
    `registerOnChange(callback)` so it can notify outside code whenever tasks change, without knowing
    anything about `localStorage`.
 3. **Persist tasks in `localStorage`** by creating a `BrowserStorage` with your storage key, passing
-   `storage.load()` into `new TaskList(app, storage.load())`, and registering a callback that calls
+   the saved tasks into `new TaskList(...)`, and registering a callback that calls
    `storage.save(tasks)`.
 
 There are two ideas to watch for as you refactor:
@@ -61,17 +61,21 @@ Submit the URL of the pull request that adds your `projects/week9` project. Be s
 3. **`BrowserStorage` class**:
    - Create a `BrowserStorage` class whose constructor takes the storage key and keeps it in a
      private field.
-   - Add a `save(tasks)` method:
-     - Converts the `tasks` array to a JSON string with `JSON.stringify(tasks)` and saves it with
+   - `BrowserStorage` doesn't know anything about tasks. It saves and loads any value that
+     `JSON.stringify()` can handle.
+   - Add a `save(value)` method:
+     - Converts `value` to a JSON string with `JSON.stringify(value)` and saves it with
        `localStorage.setItem()` under the key.
    - Add a `load()` method:
      - Reads the saved JSON string with `localStorage.getItem()` using the key.
-     - If nothing is stored yet (`getItem()` returns `null`), return an empty array `[]`.
-     - Otherwise, parse the JSON string with `JSON.parse()` and return the array of saved task
-       objects.
+     - If nothing is stored yet (`getItem()` returns `null`), return `null`, the same as
+       `localStorage` does.
+     - Otherwise, parse the JSON string with `JSON.parse()` and return the result.
 4. **Wiring modules together in `renderApp()`**:
    - Create a `BrowserStorage` with the key defined in `app.js`.
-   - Pass `storage.load()` as the initial tasks argument to `new TaskList(app, storage.load())`.
+   - Pass the saved tasks as the initial tasks argument to `TaskList`. Because `load()` returns
+     `null` the first time the app runs, fall back to an empty array:
+     `new TaskList(app, storage.load() ?? [])`.
    - Register a callback that saves the tasks:
      `taskList.registerOnChange((tasks) => storage.save(tasks))`.
 5. **Tests**:
@@ -83,41 +87,52 @@ Submit the URL of the pull request that adds your `projects/week9` project. Be s
    - Add a unit test for `taskList.registerOnChange(callback)` verifying that `add()`, `toggle()`,
      and `remove()` pass the serialized `{ id, text, done }` objects to the callback.
    - Add unit tests for `BrowserStorage`:
-     - `load()` returns `[]` when nothing has been saved.
-     - `save(tasks)` followed by `load()` round-trips the serialized task objects.
-     - Two `BrowserStorage` objects with different keys don't see each other's tasks.
+     - `load()` returns `null` when nothing has been saved.
+     - `save(value)` followed by `load()` round-trips the saved value.
+     - Two `BrowserStorage` objects with different keys don't see each other's values.
    - Add a DOM test verifying that tasks added and toggled in one `renderApp()` call are still shown
      when `renderApp()` is called again (simulating a page reload).
+   - Set text in the DOM with `textContent` (or build it into your `innerHTML` markup), not
+     `innerText`. The test DOM (jsdom) doesn't support `innerText`, so your tests won't see text set
+     that way.
 
-> 💡 **Why register the callback _after_ `new TaskList(app, storage.load())`?** Loading the saved
-> tasks isn't a change the user made, so there's nothing new to save. Registering the callback on
-> the next line means only real changes (add, toggle, remove) write to `localStorage`.
+> 💡 **Why register the callback _after_ `new TaskList(app, storage.load() ?? [])`?** Loading the
+> saved tasks isn't a change the user made, so there's nothing new to save. Registering the callback
+> on the next line means only real changes (add, toggle, remove) write to `localStorage`.
 
-> 💡 **Why wrap `storage.save` in an arrow function?** If you pass `storage.save` by itself,
-> `TaskList` later calls it as a plain function, so `this` is `undefined` inside `save()`. This is
-> the same lost-`this` problem as passing `this.handleClick` to `addEventListener` in Week 8. You
-> won't see it when the page loads. The first time you add a task, you'll get
-> `TypeError: Cannot read properties of undefined (reading '#key')`, with your own private field
-> name in place of `#key`. The arrow function `(tasks) => storage.save(tasks)` calls `save()` on
-> `storage`, so `this` is set correctly.
+> 💡 **Why wrap `storage.save` in an arrow function?** If you pass `storage.save` by itself, the
+> function loses its connection to `storage`. When `TaskList` calls it later, `this` inside `save()`
+> is no longer `storage`. This is the same lost-`this` problem as passing `this.handleClick` to
+> `addEventListener` in Week 8. You won't see it when the page loads. The first time you add a task,
+> you'll get a `TypeError` that mentions your private key field. The exact message depends on how
+> `TaskList` calls the callback:
+>
+> - `this.#onChange?.(...)` makes `this` the `TaskList`, so you'll see
+>   `Cannot read private member #key from an object whose class did not declare it`.
+> - Calling a plain variable, such as `const callback = this.#onChange; callback(...)`, makes `this`
+>   `undefined`, so you'll see `Cannot read properties of undefined (reading '#key')`.
+>
+> Your own private field name will appear in place of `#key`. The arrow function
+> `(tasks) => storage.save(tasks)` calls `save()` on `storage`, so `this` is set correctly.
 
 ---
 
 ### Some Helpful References
 
-| Topic                    | Documentation                                                                                                                   | Usefulness in this Assignment                                    |
-| :----------------------- | :------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------- |
-| JavaScript modules       | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)                                           | Splitting a single-file app into ES modules                      |
-| `export`                 | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)                             | Exposing `Task`, `TaskList`, `BrowserStorage`, and `renderApp`   |
-| `import`                 | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)                             | Importing classes and helpers across files in `src/` and `test/` |
-| First-class functions    | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function)                                          | Passing a callback to `taskList.registerOnChange`                |
-| Optional chaining (`?.`) | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)                   | Calling `this.#onChange?.(...)` only when a callback is set      |
-| `Window.localStorage`    | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)                                            | Browser storage that persists across page reloads                |
-| `Storage.setItem()`      | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem)                                                | Storing the JSON string in `storage.save(tasks)`                 |
-| `Storage.getItem()`      | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem)                                                | Reading the saved JSON string (or `null`) in `storage.load()`    |
-| `Storage.clear()`        | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Storage/clear)                                                  | Resetting `localStorage` between tests in `beforeEach`           |
-| `JSON.stringify()`       | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior) | Serializing task objects to a JSON string                        |
-| `JSON.parse()`           | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)                     | Parsing the stored JSON string back into an array                |
+| Topic                     | Documentation                                                                                                                   | Usefulness in this Assignment                                    |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------- |
+| JavaScript modules        | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)                                           | Splitting a single-file app into ES modules                      |
+| `export`                  | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export)                             | Exposing `Task`, `TaskList`, `BrowserStorage`, and `renderApp`   |
+| `import`                  | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import)                             | Importing classes and helpers across files in `src/` and `test/` |
+| First-class functions     | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function)                                          | Passing a callback to `taskList.registerOnChange`                |
+| Optional chaining (`?.`)  | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)                   | Calling `this.#onChange?.(...)` only when a callback is set      |
+| Nullish coalescing (`??`) | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)                  | Using `[]` when `storage.load()` returns `null`                  |
+| `Window.localStorage`     | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)                                            | Browser storage that persists across page reloads                |
+| `Storage.setItem()`       | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Storage/setItem)                                                | Storing the JSON string in `storage.save(value)`                 |
+| `Storage.getItem()`       | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Storage/getItem)                                                | Reading the saved JSON string (or `null`) in `storage.load()`    |
+| `Storage.clear()`         | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Storage/clear)                                                  | Resetting `localStorage` between tests in `beforeEach`           |
+| `JSON.stringify()`        | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior) | Serializing task objects to a JSON string                        |
+| `JSON.parse()`            | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse)                     | Parsing the stored JSON string back into an array                |
 
 ---
 
@@ -225,8 +240,8 @@ describe('BrowserStorage', () => {
     storage = new BrowserStorage('test.tasks')
   })
 
-  it('returns an empty array when nothing has been saved', () => {
-    expect(storage.load(), 'empty localStorage returns []').toEqual([])
+  it('returns null when nothing has been saved', () => {
+    expect(storage.load(), 'empty localStorage returns null').toBeNull()
   })
 
   it('saves and loads serialized task objects', () => {
@@ -243,7 +258,12 @@ describe('BrowserStorage', () => {
     const otherStorage = new BrowserStorage('test.other-tasks')
 
     storage.save([{ id: '1', text: 'Read Chapter 8', done: false }])
-    expect(otherStorage.load(), 'a different key has nothing saved').toEqual([])
+    expect(otherStorage.load(), 'a different key has nothing saved').toBeNull()
+  })
+
+  it('saves and loads values that are not arrays', () => {
+    storage.save({ theme: 'dark', fontSize: 16 })
+    expect(storage.load(), 'an object round-trips').toEqual({ theme: 'dark', fontSize: 16 })
   })
 })
 

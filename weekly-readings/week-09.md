@@ -79,8 +79,12 @@
 - **Saving Objects**: Pass your array of serialized task objects through `JSON.stringify(tasks)`
   before calling `localStorage.setItem(key, json)`.
 - **Loading Objects**: `localStorage.getItem(key)` returns `null` when nothing has been stored under
-  `key` yet; otherwise `JSON.parse(raw)` returns the saved array of `{ id, text, done }` objects.
-- **Decoupling Modules with Callback Functions**: Rather than having `TaskList` import `save`
-  directly from `storage.js`, `TaskList` can expose `registerOnChange(callback)` and pass serialized
-  task objects (`task.toJSON()`) to that callback whenever the list changes. `app.js` then connects
-  the two modules with `taskList.registerOnChange(save)`.
+  `key` yet; otherwise `JSON.parse(json)` returns the saved array of `{ id, text, done }` objects.
+- **A `BrowserStorage` Class**: Wrapping one key in a class gives you `save(value)` and `load()`
+  methods. `load()` returns `null` when nothing is saved, the same as `localStorage`, and the class
+  can store any value `JSON.stringify()` can handle, not just tasks.
+- **Decoupling Modules with Callback Functions**: Rather than having `TaskList` import the storage
+  module, `TaskList` can expose `registerOnChange(callback)` and pass serialized task objects
+  (`task.toJSON()`) to that callback whenever the list changes. `app.js` then connects the two
+  modules with `taskList.registerOnChange((tasks) => storage.save(tasks))`. The arrow function keeps
+  `save()` attached to `storage`.
