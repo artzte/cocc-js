@@ -114,12 +114,12 @@ npm install --save-dev vite vitest @vitest/ui jsdom
 
 ## Assessment
 
-| Component                           | Weight |
-| ----------------------------------- | ------ |
-| Weekly Quizzes (11 × ~10 questions) | 20%    |
-| Weekly Programming Challenges (10)  | 30%    |
-| Final Project (4 milestones)        | 40%    |
-| Participation / Discussion          | 10%    |
+| Component                         | Weight |
+| --------------------------------- | ------ |
+| Weekly Quizzes (11 × 5 questions) | 20%    |
+| Weekly Programming Challenges (9) | 30%    |
+| Final Project (4 milestones)      | 40%    |
+| Participation / Discussion        | 10%    |
 
 ---
 
@@ -137,12 +137,12 @@ which follows a structured review and approval workflow during Finals Week.
 
 ### Milestones
 
-| #   | Delivery Week          | Due Date                                                                 | Deliverable                                                                                          | Submit                                                                                                                                                |
-| --- | ---------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1   | Week 4 (starts Oct 12) | **Mon, Oct 19**                                                          | **Proposal** — app idea, target user, 3–5 core features, chosen public API                           | Pull Request with `projects/final/README.md`                                                                                                          |
-| 2   | Week 7 (starts Nov 2)  | **Mon, Nov 9**                                                           | **Design Document** — wireframes/sketches, data model, module plan, API endpoints                    | Pull Request updating `projects/final/README.md`                                                                                                      |
-| 3   | Week 9 (starts Nov 16) | **Mon, Nov 23**                                                          | **Initial Structure** — all modules stubbed, placeholder implementations, ≥1 passing test per module | Pull Request with stubbed ES modules in `src/` and Vitest test scaffold in `test/`                                                                    |
-| 4   | Week 12 (starts Dec 7) | **Mon, Dec 7 (PR)**<br>**Wed, Dec 9 (Review)**<br>**Fri, Dec 11 (Appr)** | **Final Submission** — complete, working, tested, and deployed application                           | Initial PR by Dec 7 with reviewer tagged and preview app running in deployment environment; comments returned by Dec 9; PR approval by Friday, Dec 11 |
+| #   | Delivery Week          | Due Date                                                                 | Deliverable                                                                                                                                                             | Submit                                                                                                                                                |
+| --- | ---------------------- | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Week 4 (starts Oct 12) | **Mon, Oct 19**                                                          | **Proposal** — app idea, target user, 3–5 core features, chosen public API                                                                                              | Pull Request with `projects/final/README.md`                                                                                                          |
+| 2   | Week 7 (starts Nov 2)  | **Mon, Nov 9**                                                           | **Design Document** — wireframes/sketches, data model, module plan, API endpoints                                                                                       | Pull Request updating `projects/final/README.md`                                                                                                      |
+| 3   | Week 9 (starts Nov 16) | **Mon, Nov 23**                                                          | **Initial Structure (Test Deployment)** — `projects/final` scaffolded, page title changed, initial rendering visibly different from the starter, deployed to CloudFront | Live CloudFront URL on Canvas                                                                                                                         |
+| 4   | Week 12 (starts Dec 7) | **Mon, Dec 7 (PR)**<br>**Wed, Dec 9 (Review)**<br>**Fri, Dec 11 (Appr)** | **Final Submission** — complete, working, tested, and deployed application                                                                                              | Initial PR by Dec 7 with reviewer tagged and preview app running in deployment environment; comments returned by Dec 9; PR approval by Friday, Dec 11 |
 
 ### Requirements (Final Submission)
 
@@ -408,38 +408,46 @@ method so it never imports the storage module; `app.js` connects them with
 **Quiz 9**: Named vs. default exports, `import` syntax variations, module scope vs. global scope,
 ESM vs. CommonJS
 
-**Project Milestone 3 — Initial Structure due (Monday, Nov 23)**: Pull Request with all planned
-module files created, core functions stubbed with correct signatures, and at least one passing
-Vitest test per module.
+**Project Milestone 3 — Initial Structure (Test Deployment) due (Monday, Nov 23)**: Scaffold
+`projects/final`, change the `<title>` in `index.html` to the app's name, change the initial
+rendering so the page looks different from the starter project, and confirm the app deploys to
+CloudFront. Submit the live CloudFront URL on Canvas.
 
 ---
 
-### Week 10 — Events and the DOM
+### Week 10 — Form Events and a First Look at `fetch` (Thanksgiving catch-up week)
+
+This is a catch-up week. There is **no programming assignment**, so students can use the time to
+finish any missing weekly projects. The lecture and reading are short, and Quiz 10 covers event
+handling only.
 
 **Reading**: MDN student-directed:
 
 - [Introduction to events](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events)
-- [Event reference](https://developer.mozilla.org/en-US/docs/Web/Events)
 - [HTMLElement: input event](https://developer.mozilla.org/en-US/docs/Web/API/Element/input_event)
+- [HTMLElement: change event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event)
+- [Event: preventDefault() method](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
+- [Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+  (first sections only, as a preview)
 
 **Topics**:
 
-- The event model: bubbling and capturing — what they are, which fires first
-- `addEventListener` / `removeEventListener`; the options object (`once`, `capture`, `passive`)
-- The `Event` object: `target`, `currentTarget`, `preventDefault`, `stopPropagation`
-- Event delegation — attaching one listener to a parent to handle events on dynamic children;
-  closures make delegation handlers clean
-- Forms: `submit`, `input`, `change` events; reading, validating, and resetting form data
+- `input` vs. `change`: when each one fires, and which to use for live feedback vs. a committed
+  choice
+- Reading form controls: `input.value`, `checkbox.checked`, `select.value`
+- The `submit` event, and why we listen on the `<form>` rather than the button's `click`
+- `preventDefault()` in more depth: default actions (form submission, link navigation, checkbox
+  toggling) and how it differs from `stopPropagation()`
+- Review from Week 7: bubbling, delegation, `target` vs. `currentTarget`
+- **Preview**: one `async`/`await` `fetch` call with the standard `try/catch` + `res.ok` pattern,
+  enough to start the async part of the final project. Promise states and the event loop wait for
+  Week 11.
 
-**Browser Exercise**: Implement a dynamic comment list using event delegation — one listener on the
-`<ul>` handles delete buttons on items that didn't exist when the page loaded.
+**Instructor example**: The full Art Institute of Chicago browser final project is published before
+Week 10 starts, so students have a complete example to study during the catch-up week.
 
-**Challenge**: A multi-step form wizard — three steps revealed sequentially by events, input
-validated before advancing, a summary rendered at the end. Modularize into at least `wizard.js` and
-`validation.js`.
-
-**Quiz 10**: Bubbling vs. capturing, event delegation, `target` vs. `currentTarget`,
-`preventDefault`, form events
+**Quiz 10**: `input` vs. `change`, `submit` and `preventDefault()`, `preventDefault()` vs.
+`stopPropagation()`, `target` vs. `currentTarget`
 
 ---
 
@@ -450,17 +458,23 @@ validated before advancing, a summary rendered at the end. Modularize into at le
 - [Using Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
 - [async function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)
 - [Using the Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+- [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
 
 **Topics**:
 
 - The event loop: why JS is single-threaded but non-blocking (conceptual model; enough to reason
   about async, not a deep dive)
-- Callbacks and their problems (callback hell — brief historical context)
 - Promises: pending / fulfilled / rejected states; `.then()`, `.catch()`, `.finally()`
 - `async`/`await` as syntactic sugar over Promises — the preferred pattern
-- `fetch`: making GET requests, reading the `Response` object, parsing JSON
-- Error handling: network errors vs. non-2xx responses; `try/catch` with `await`
-- Loading and error states in the DOM — always handle both
+- `fetch` and the `Response` object: `ok`, `status`, `json()`; building query strings with
+  `URLSearchParams`
+- HTTP status code classes (2xx, 3xx, 4xx, 5xx) and what each tells you
+- Error handling: network errors (`fetch` rejects) vs. error responses (`fetch` resolves with
+  `ok === false`); `try/catch` with `await`
+- Loading, empty, and error states in the DOM — always handle all three
+- Testing fetch code with a stubbed `fetch` in Vitest
+- **Instructor walkthrough**: the Art Institute of Chicago browser final project, as a model for the
+  final push
 
 **Healthy patterns emphasized**:
 
@@ -478,15 +492,14 @@ async function loadData(url) {
 }
 ```
 
-**Browser Exercise**: Fetch posts from `https://jsonplaceholder.typicode.com/posts` and render them
-as cards; show a loading indicator while fetching, show an error message if the fetch fails.
+**Challenge**: A weather search using the [Open-Meteo](https://open-meteo.com/) API (no key needed).
+The user types a place name (`input` event enables the Search button), submits the form
+(`preventDefault()`), picks one of the matching places, and sees its current weather. A units
+`<select>` (`change` event) reloads the weather in °F or °C. The app shows loading, empty, and error
+states, and Vitest tests cover the fetch logic with a stubbed `fetch`.
 
-**Challenge**: A search interface — user types a query, the app fetches results from a chosen public
-API (Open Library, PokeAPI, GitHub repos, etc.), renders results, handles empty results, and handles
-fetch errors — all with appropriate DOM feedback at each state.
-
-**Quiz 11**: Promise states, `async`/`await` syntax, `fetch` + `.ok` check, `try/catch` with async,
-event loop basics
+**Quiz 11**: Promise states, why `fetch` doesn't reject on a 404, 4xx vs. 5xx status codes, what
+`await` does while it waits, and empty results vs. errors
 
 ---
 
@@ -513,19 +526,19 @@ _No quiz this week._
 
 ### COCC Course Outcomes
 
-| Outcome (exact catalog language)                                                                               | Weeks          |
-| -------------------------------------------------------------------------------------------------------------- | -------------- |
-| Implement scripts that rely on knowledge of DOM architecture and includes methods for manipulating DOM objects | 2, 4, 8, 9, 10 |
-| Construct functions that effectively utilize variables, conditionals, loops, and arrays                        | 2, 3, 4        |
-| Generate scripts that process user input and provide meaningful output                                         | 3, 10, 11      |
-| Plan and create scripts utilizing events and event handlers that respond to user inputs                        | 10, throughout |
+| Outcome (exact catalog language)                                                                               | Weeks                 |
+| -------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Implement scripts that rely on knowledge of DOM architecture and includes methods for manipulating DOM objects | 2, 4, 8, 9, 10        |
+| Construct functions that effectively utilize variables, conditionals, loops, and arrays                        | 2, 3, 4               |
+| Generate scripts that process user input and provide meaningful output                                         | 3, 10, 11             |
+| Plan and create scripts utilizing events and event handlers that respond to user inputs                        | 7, 10, 11, throughout |
 
 ### COCC Content Outline Topics
 
 | Topic                           | Weeks                            |
 | ------------------------------- | -------------------------------- |
 | The Document Object Model (DOM) | 2, 4, 8, 9, 10                   |
-| Events and event handling       | 10, throughout                   |
+| Events and event handling       | 7, 10, 11, throughout            |
 | Variables and scope             | 2, 5, 6, 7                       |
 | Conditionals                    | 3                                |
 | Functions                       | 3                                |
