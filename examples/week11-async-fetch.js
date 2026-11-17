@@ -30,10 +30,17 @@ function header(title) {
 const SEARCH_URL = 'https://geocoding-api.open-meteo.com/v1/search'
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast'
 
-// Resolves with `value` after `ms` milliseconds
+// Resolves with `value` after `ms` milliseconds, like a request that works
 function wait(ms, value) {
   return new Promise((resolve) => {
     setTimeout(() => resolve(value), ms)
+  })
+}
+
+// Rejects with an Error after `ms` milliseconds, like a request that fails
+function failAfter(ms, message) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject(new Error(message)), ms)
   })
 }
 
@@ -70,9 +77,7 @@ function promiseStatesDemo() {
     .then((value) => console.log('fulfilled with:', value))
     .finally(() => console.log('finally runs either way (fulfilled)'))
 
-  const rejects = wait(1500).then(() => {
-    throw new Error('the forecast server is down')
-  })
+  const rejects = failAfter(1500, 'the forecast server is down')
 
   rejects
     .then(() => console.log('this never runs'))
@@ -93,8 +98,9 @@ async function asyncAwaitDemo() {
     const value = await wait(1000, 'sunny')
     console.log('awaited value:', value)
 
-    await wait(500)
-    throw new Error('the forecast server is down')
+    // a rejected Promise makes await throw, so we land in catch
+    await failAfter(500, 'the forecast server is down')
+    console.log('this never runs')
   } catch (error) {
     console.log('caught:', error.message)
   } finally {
@@ -145,7 +151,44 @@ async function statusCodesDemo() {
 }
 
 // --------------------------------------------------------------------
-// 5. The healthy pattern, with loading, empty, and error states
+// 5. The same request, chained and awaited
+// Both versions do exactly the same thing. Each .then() returns a new
+// Promise, so the next .then() waits for it; await does the same
+// waiting, but reads top to bottom.
+// --------------------------------------------------------------------
+function chainedDemo() {
+  header('5a. A Promise chain')
+  return fetch(`${SEARCH_URL}?name=Bend&count=1`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      // returning a Promise makes the next .then() wait for it
+      return response.json()
+    })
+    .then((data) => console.log('chained:', data.results[0].name))
+    .catch((error) => console.log('chained failed:', error.message))
+    .finally(() => console.log('chained: done'))
+}
+
+async function awaitedDemo() {
+  header('5b. The same request with await')
+  try {
+    const response = await fetch(`${SEARCH_URL}?name=Bend&count=1`)
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+    const data = await response.json()
+    console.log('awaited:', data.results[0].name)
+  } catch (error) {
+    console.log('awaited failed:', error.message)
+  } finally {
+    console.log('awaited: done')
+  }
+}
+
+// --------------------------------------------------------------------
+// 6. The healthy pattern, with loading, empty, and error states
 // Try searchDemo('Bend') and searchDemo('zzqqxx'). To see the error
 // case, turn on DevTools' Network > Offline throttling and search again.
 // --------------------------------------------------------------------
@@ -158,8 +201,10 @@ async function fetchJson(url) {
 }
 
 async function searchDemo(query = 'Bend') {
-  header(`5. Searching for "${query}"`)
+  header(`6. Searching for "${query}"`)
   const params = new URLSearchParams({ name: query, count: '5' })
+  // In the template string below, JavaScript calls params.toString(),
+  // which turns the object into a query string: name=Bend&count=5
 
   console.log('loading: Searching…')
   try {
@@ -169,6 +214,8 @@ async function searchDemo(query = 'Bend') {
       console.log(`empty: No places match "${query}".`)
       return
     }
+    // console.table() prints an array of objects as a table, with one
+    // row per object and one column per property
     console.table(
       data.results.map((place) => ({ name: place.name, region: place.admin1 })),
     )
@@ -178,12 +225,12 @@ async function searchDemo(query = 'Bend') {
 }
 
 // --------------------------------------------------------------------
-// 6. Debug Challenge
+// 7. Debug Challenge
 // This function always reports "HTTP undefined", even for a search
 // that works. Why? Fix it.
 // --------------------------------------------------------------------
 async function debugChallenge() {
-  header('6. Debug Challenge')
+  header('7. Debug Challenge')
   try {
     const response = fetch(`${SEARCH_URL}?name=Bend&count=1`)
     if (!response.ok) {
@@ -198,5 +245,6 @@ async function debugChallenge() {
 
 console.log(
   'Week 11 demos loaded. Run one at a time: eventLoopDemo(), promiseStatesDemo(),',
-  "asyncAwaitDemo(), statusCodesDemo(), searchDemo('Bend'), debugChallenge()",
+  "asyncAwaitDemo(), statusCodesDemo(), chainedDemo(), awaitedDemo(), searchDemo('Bend'),",
+  'debugChallenge()',
 )

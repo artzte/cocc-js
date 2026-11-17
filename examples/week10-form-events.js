@@ -199,6 +199,11 @@ async function loadJson(url) {
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`)
     }
+    // json() returns a Promise too. Awaiting it here keeps a body that
+    // isn't valid JSON inside this try, so it gets logged below like any
+    // other failure. Without the await, that error would skip the catch
+    // and go straight to the caller. Either way the caller sees an error,
+    // because the catch re-throws.
     return await response.json()
   } catch (error) {
     console.error('fetch failed:', error.message)
@@ -213,6 +218,8 @@ async function fetchPreviewDemo() {
     'https://geocoding-api.open-meteo.com/v1/search?name=Bend&count=5&language=en&format=json'
   const data = await loadJson(searchUrl)
   console.log('Places named Bend:')
+  // console.table() prints an array of objects as a table, with one row
+  // per object and one column per property
   console.table(
     data.results.map((place) => ({
       name: place.name,
@@ -233,29 +240,7 @@ async function fetchPreviewDemo() {
   }
 }
 
-// --------------------------------------------------------------------
-// 6. Debug Challenge
-// This character counter is supposed to update as you type, but it
-// only updates after you click away from the text area. Why? Fix it.
-// --------------------------------------------------------------------
-function debugChallenge() {
-  header('6. Debug Challenge')
-  const demo = showDemo(`
-    <label>Comment<br /><textarea name="comment" rows="3" cols="40"></textarea></label>
-    <p class="count">0 / 140</p>
-  `)
-
-  const textarea = demo.querySelector('textarea')
-  const count = demo.querySelector('.count')
-
-  textarea.addEventListener('change', () => {
-    count.textContent = `${textarea.value.length} / 140`
-  })
-
-  console.log('Type in the comment box. When does the count update?')
-}
-
 console.log(
   'Week 10 demos loaded. Run one at a time: inputVsChangeDemo(), submitDemo(),',
-  'preventVsStopDemo(), targetVsCurrentTargetDemo(), fetchPreviewDemo(), debugChallenge()',
+  'preventVsStopDemo(), targetVsCurrentTargetDemo(), fetchPreviewDemo()',
 )

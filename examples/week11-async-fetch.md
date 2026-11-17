@@ -1,8 +1,8 @@
 # Week 11: Async JavaScript, Promises, and `fetch` Examples
 
 This guide walks through an interactive DevTools demo for the Week 11 lecture: **the event loop**,
-**Promise states**, **`async`/`await`**, **HTTP status codes and `response.ok`**, **loading, empty,
-and error states**, and a **debug challenge**.
+**Promise states**, **`async`/`await`**, **HTTP status codes and `response.ok`**, **Promise chains
+vs. `await`**, **loading, empty, and error states**, and a **debug challenge**.
 
 The full snippet is in [`week11-async-fetch.js`](week11-async-fetch.js). The `fetch` demos call the
 [Open-Meteo](https://open-meteo.com/) API, which doesn't need an API key.
@@ -27,14 +27,15 @@ The full snippet is in [`week11-async-fetch.js`](week11-async-fetch.js). The `fe
 
 ## What Each Demo Shows
 
-| Demo                         | Function              | Watch for                                                                                                                                                             |
-| :--------------------------- | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1. The event loop            | `eventLoopDemo()`     | The lines print A, B, C, D: synchronous code first, then the promise callback, then the timer, even with a 0 ms delay                                                 |
-| 2. Promise states            | `promiseStatesDemo()` | The first Promise logs as `<pending>`; one fulfills and one rejects, and `finally` runs for both                                                                      |
-| 3. `async`/`await`           | `asyncAwaitDemo()`    | The same flow as demo 2 with `try/catch/finally`; `getTemperature()` returns a Promise, and `await` unwraps it                                                        |
-| 4. Status codes              | `statusCodesDemo()`   | The good search is `200` and `ok`; the bad latitude is `400` and the bad path is another non-2xx status, but `fetch` resolves for both; only the unknown host rejects |
-| 5. Loading, empty, and error | `searchDemo(query)`   | `searchDemo('Bend')` logs a table and `searchDemo('zzqqxx')` hits the empty case. Set **Network** throttling to **Offline** and search again to see the error case    |
-| 6. Debug challenge           | `debugChallenge()`    | Every search fails with `HTTP undefined`, even one that should work. Fix it                                                                                           |
+| Demo                         | Function                         | Watch for                                                                                                                                                             |
+| :--------------------------- | :------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. The event loop            | `eventLoopDemo()`                | The lines print A, B, C, D: synchronous code first, then the promise callback, then the timer, even with a 0 ms delay                                                 |
+| 2. Promise states            | `promiseStatesDemo()`            | The first Promise logs as `<pending>`; one fulfills and one rejects, and `finally` runs for both                                                                      |
+| 3. `async`/`await`           | `asyncAwaitDemo()`               | The same flow as demo 2 with `try/catch/finally`; `getTemperature()` returns a Promise, and `await` unwraps it                                                        |
+| 4. Status codes              | `statusCodesDemo()`              | The good search is `200` and `ok`; the bad latitude is `400` and the bad path is another non-2xx status, but `fetch` resolves for both; only the unknown host rejects |
+| 5. Chained vs. awaited       | `chainedDemo()`, `awaitedDemo()` | The same request written as a `.then()` chain and with `await`; both log `Bend` and then `done`                                                                       |
+| 6. Loading, empty, and error | `searchDemo(query)`              | `searchDemo('Bend')` logs a table and `searchDemo('zzqqxx')` hits the empty case. Set **Network** throttling to **Offline** and search again to see the error case    |
+| 7. Debug challenge           | `debugChallenge()`               | Every search fails with `HTTP undefined`, even one that should work. Fix it                                                                                           |
 
 ---
 

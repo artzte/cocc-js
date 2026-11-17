@@ -60,6 +60,8 @@ export const weatherCodes = {
 // Sample geocoding response for ?name=Bend (trimmed to three results).
 // Each result has more fields than shown here (elevation, timezone,
 // population, and so on). These are the ones the assignment uses.
+// Load this URL in your browser to see the full response:
+// https://geocoding-api.open-meteo.com/v1/search?name=Bend&count=10&language=en&format=json
 // --------------------------------------------------------------------
 export const bendSearchResponse = {
   results: [
@@ -99,6 +101,8 @@ export const bendSearchResponse = {
 // --------------------------------------------------------------------
 // Sample geocoding response when nothing matches. Watch out: there is
 // no `results` property at all, not even an empty array.
+// Load this URL in your browser to see the full response:
+// https://geocoding-api.open-meteo.com/v1/search?name=zzqqxx&count=10&language=en&format=json
 // --------------------------------------------------------------------
 export const emptySearchResponse = {
   generationtime_ms: 0.31,
@@ -106,6 +110,9 @@ export const emptySearchResponse = {
 
 // --------------------------------------------------------------------
 // Sample forecast response for Bend, Oregon in Fahrenheit and mph.
+// Load this URL in your browser to see the full response (with today's
+// weather instead of these sample numbers):
+// https://api.open-meteo.com/v1/forecast?latitude=44.05817&longitude=-121.31531&current=temperature_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph
 // --------------------------------------------------------------------
 export const bendForecastResponse = {
   latitude: 44.05817,
@@ -133,6 +140,8 @@ export const bendForecastResponse = {
 
 // --------------------------------------------------------------------
 // The same forecast in Celsius (temperature_unit=celsius).
+// Load this URL in your browser to see the full response:
+// https://api.open-meteo.com/v1/forecast?latitude=44.05817&longitude=-121.31531&current=temperature_2m,weather_code,wind_speed_10m&temperature_unit=celsius&wind_speed_unit=mph
 // --------------------------------------------------------------------
 export const bendForecastCelsiusResponse = {
   ...bendForecastResponse,
@@ -146,6 +155,8 @@ export const bendForecastCelsiusResponse = {
 // --------------------------------------------------------------------
 // Sample error body. Open-Meteo answers a bad request (such as a
 // latitude of 999) with HTTP status 400 and a JSON body like this one.
+// Load this URL in your browser to see the full response:
+// https://api.open-meteo.com/v1/forecast?latitude=999&longitude=-121.31531&current=temperature_2m
 // --------------------------------------------------------------------
 export const badRequestResponse = {
   error: true,

@@ -38,9 +38,10 @@ this week goes straight into it.
 - **Status code classes**: 2xx, 3xx, 4xx, and 5xx, and what each one tells you.
 - **Network errors vs. error responses**: when `fetch` rejects and when it fulfills with
   `ok === false`.
-- **Loading, empty, and error states**: what the user sees in each case.
-- **Testing**: faking `fetch` in Vitest with `vi.stubGlobal()`, and waiting for async DOM updates
-  with `vi.waitFor()`.
+- **Loading, empty, and error states**: what the user sees in each case, and ignoring input while a
+  request is running.
+- **Testing**: stubs and spies, replacing `fetch` with a stub in Vitest with `vi.stubGlobal()`, and
+  waiting for async DOM updates with `vi.waitFor()`.
 
 ---
 

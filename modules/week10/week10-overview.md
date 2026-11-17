@@ -1,8 +1,8 @@
 ## Overview of Week 10: Form Events and a First Look at `fetch`
 
-This is Thanksgiving week, and it's a **catch-up week**. There is no programming assignment. If
-you're behind on any weekly projects, this is the time to finish them and get your pull requests in.
-The lecture and reading are short, and there's one quiz.
+Week 10 is a **catch-up week**. There is no programming assignment. If you're behind on any weekly
+projects, this is the time to finish them and get your pull requests in. The lecture and reading are
+short, and there's one quiz.
 
 The topic is the events that forms produce. We've handled `click` events since Week 2 and switched
 to event delegation in Week 7. This week we add:
@@ -74,8 +74,7 @@ By the end of this module you will be able to:
    - [Lecture Guide: Form Events and a First Look at `fetch`](../../lectures/week10-form-events.md)
 4. **Hands-On Practice & Code Exploration**:
    - Run the [Week 10 Form Events DevTools Snippet](../../examples/week10-form-events.md)
-     ([`examples/week10-form-events.js`](../../examples/week10-form-events.js)) in Chrome DevTools
-     and solve the Debug Challenge.
+     ([`examples/week10-form-events.js`](../../examples/week10-form-events.js)) in Chrome DevTools.
 5. **Final Project Example**:
    - Look through my Art Institute of Chicago browser final project, especially how it splits its
      code into modules and where its `fetch` calls live.

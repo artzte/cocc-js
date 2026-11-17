@@ -11,7 +11,7 @@ preview of
 [`modules/week10/week10-lecture-form-events.md`](../modules/week10/week10-lecture-form-events.md)  
 **Format**: Interactive Lecture & Chrome DevTools Snippet Walkthrough
 ([`examples/week10-form-events.js`](../examples/week10-form-events.js))  
-**Duration**: ~18 Minutes  
+**Duration**: ~17 Minutes  
 **Prereq Context**: Week 7 (event delegation, `data-*` attributes, `closest('button')`) and Week 9
 (the Task List's `submit` handler)
 
@@ -25,9 +25,8 @@ preview of
 | **01:30 - 05:30** | **2. `input` vs. `change`**                       | When each fires; reading `value` / `checked` (`inputVsChangeDemo`)    |
 | **05:30 - 10:00** | **3. `submit` and `preventDefault()`**            | Listening on the form; default actions; `FormData` (`submitDemo`)     |
 | **10:00 - 12:30** | **4. `preventDefault()` vs. `stopPropagation()`** | Two different jobs (`preventVsStopDemo`, `targetVsCurrentTargetDemo`) |
-| **12:30 - 14:00** | **5. Debug Challenge**                            | A character counter that uses the wrong event (`debugChallenge`)      |
-| **14:00 - 17:00** | **6. Preview: A First `fetch` Call**              | `async`/`await`, `response.ok`, `try/catch` (`fetchPreviewDemo`)      |
-| **17:00 - 18:00** | **7. Wrap-Up & Week 10 Deliverables**             | Quiz 10; what's coming in Week 11                                     |
+| **12:30 - 15:30** | **5. Preview: A First `fetch` Call**              | `async`/`await`, `response.ok`, `try/catch` (`fetchPreviewDemo`)      |
+| **15:30 - 16:30** | **6. Wrap-Up & Week 10 Deliverables**             | Quiz 10; what's coming in Week 11                                     |
 
 ---
 
@@ -35,8 +34,8 @@ preview of
 
 ### Talking Points & Concept Cues
 
-- It's Thanksgiving week. There's **no programming assignment**. A lot of you have weekly projects
-  that aren't in yet, so please use this week to finish them and open those pull requests.
+- Week 10 is a catch-up week. There's **no programming assignment**. A lot of you have weekly
+  projects that aren't in yet, so please use this week to finish them and open those pull requests.
 - There is a **quiz** (Quiz 10), and it only covers event handling.
 - My own final project, the Art Institute of Chicago browser, is published. Look through it this
   week if you have time, especially how it's split into modules. I'll walk through it in Week 11.
@@ -111,23 +110,7 @@ demo.addEventListener('input', (event) => {
 
 ---
 
-## 5. Debug Challenge (1.5 mins)
-
-### Talking Points & Concept Cues
-
-- Run `debugChallenge()` and type in the comment box. The count stays at `0 / 140` until you click
-  away.
-- Ask: which event is the listener waiting for, and when does that event fire for a text area?
-- **The fix**: change `'change'` to `'input'`:
-  ```javascript
-  textarea.addEventListener('input', () => {
-    count.textContent = `${textarea.value.length} / 140`
-  })
-  ```
-
----
-
-## 6. Preview: A First `fetch` Call (3 mins)
+## 5. Preview: A First `fetch` Call (3 mins)
 
 ### Talking Points & Concept Cues
 
@@ -164,7 +147,7 @@ async function loadJson(url) {
 
 ---
 
-## 7. Wrap-Up & Week 10 Deliverables (1 min)
+## 6. Wrap-Up & Week 10 Deliverables (1 min)
 
 ### Talking Points & Concept Cues
 

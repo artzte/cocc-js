@@ -81,7 +81,11 @@ the `fetch` preview)
     there's no status code.
 - **Network error vs. error response** is the most important distinction this week, and it's on the
   quiz. That's why every `fetch` is followed by `if (!response.ok)`.
-- Show `URLSearchParams` for building query strings: `San José` gets encoded for us.
+- Show `URLSearchParams`: fill in a plain object with the parameters, and its `toString()` method
+  builds the query string. A template string calls `toString()` for us.
+- Run `chainedDemo()` and then `awaitedDemo()`. They make the same request. Each `.then()` returns a
+  new Promise, so returning `response.json()` makes the next `.then()` wait for the body. `await`
+  does the same waiting, but reads top to bottom, which is why I prefer it.
 
 ---
 
@@ -99,6 +103,10 @@ the `fetch` preview)
 - Point out the Open-Meteo quirk: no `results` property at all when nothing matches. Turn that into
   an empty array right after the `fetch`, so the rendering code only deals with arrays.
 - An error message should leave the form usable so the user can try again.
+- **Ignore input while loading**: if the user submits again or clicks another place mid-request, two
+  requests race and whichever finishes last wins. Keep an `isLoading` flag and return early from
+  listeners while it's `true`. A `loading` class on `#app` with `pointer-events: none` shows the app
+  is busy and blocks the mouse, but keep the flag, because Enter can still submit the form.
 
 ---
 
@@ -152,15 +160,21 @@ the `fetch` preview)
   weeks:
   - `input` enables **Search** once there are two characters.
   - `submit` with `preventDefault()` runs the search.
-  - A delegated `click` picks a place and loads its weather.
-  - `change` on the units select reloads the weather in °F or °C.
+  - Each place is a link whose `href` is its forecast URL. A delegated `click` calls
+    `preventDefault()`, so instead of navigating to the JSON, we fetch `link.href` and render it.
+  - Forecasts are cached in a `Map` keyed by URL, so clicking the same place again doesn't fetch.
+  - `change` on the units select rebuilds the links and reloads the weather in °F or °C.
+  - While a request is loading, submits, clicks, and units changes are ignored.
 - **Don't rebuild the form on each event.** Re-rendering the text field on every `input` event loses
-  focus after each keystroke. Render the page once and update only the status, results, and weather
-  areas.
+  focus after each keystroke. Render the page once, keep references to the elements you need, and
+  change them directly: `searchButton.disabled = true`, `resultsList.innerHTML = ...`.
 - The fixtures file has the API URLs, weather code descriptions, sample responses, and a
   `fakeResponse()` helper.
-- Testing: `vi.stubGlobal('fetch', vi.fn(...))` to fake `fetch`, `vi.unstubAllGlobals()` in
-  `afterEach`, and `await vi.waitFor(...)` for DOM updates that happen after an `await`.
+- Testing: a **stub** is a stand-in that returns canned data, and a **spy** records its calls.
+  `vi.fn()` is both. `vi.stubGlobal('fetch', vi.fn(...))` swaps in the stub, `vi.unstubAllGlobals()`
+  in `afterEach` puts the real `fetch` back, and `await vi.waitFor(...)` waits for DOM updates that
+  happen after an `await`. Mention [Sinon.js](https://sinonjs.org/), the standalone stub and spy
+  library you'll see in a lot of existing projects.
 - **Key Takeaways**:
   1. `await` pauses one function, not the page.
   2. `fetch` rejects only on network errors. Always check `response.ok`.

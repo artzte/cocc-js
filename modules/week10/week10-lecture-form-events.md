@@ -56,6 +56,8 @@ My rule of thumb: use `input` when the page should react **while** the user is t
 when it should react **once** to a finished choice.
 
 ```javascript
+// the <form> element and the controls inside it
+const form = document.querySelector('#search-form')
 const queryInput = form.querySelector('input[name="query"]')
 const searchButton = form.querySelector('button[type="submit"]')
 const unitsSelect = form.querySelector('select[name="units"]')
@@ -77,8 +79,8 @@ unitsSelect.addEventListener('change', () => {
   number fields with `Number(element.value)`.
 - Checkboxes: `element.checked`, which is a boolean. A checkbox's `value` doesn't change when you
   check it.
-- A whole form: `new FormData(form)`, then `data.get('fieldName')`. This uses each control's `name`
-  attribute.
+- A whole form: `new FormData(form)`, where `form` is the `<form>` element, then
+  `data.get('fieldName')`. This uses each control's `name` attribute.
 
 ---
 
@@ -192,9 +194,11 @@ console.log(data.results[0].name) // 'Bend'
 
 There are three things to notice now. We'll go into each one in Week 11.
 
-1. **`response.ok`**: `fetch` doesn't throw an error when the server answers with 404 Not Found or
-   500 Internal Server Error. It gives you a `Response` with `ok` set to `false`. If you don't check
-   it, you'll try to use an error page as if it were data.
+1. **`response.ok`**: `fetch` doesn't throw an error when the server answers with an error status,
+   such as 404 Not Found, 422 Unprocessable Content (the server understood the request, but the data
+   you sent doesn't make sense, like an end date before the start date), or 500 Internal Server
+   Error. It gives you a `Response` with `ok` set to `false`. If you don't check it, you'll try to
+   use an error page as if it were data.
 2. **Two `await`s**: one for the response to arrive, and one for `response.json()` to read and parse
    the body.
 3. **`try/catch`**: if the network is down or the host name is wrong, `fetch` itself throws. The

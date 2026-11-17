@@ -21,8 +21,9 @@ with `fetch`.
 2. **Promises**: Pending, fulfilled, and rejected; `.then()`, `.catch()`, and `.finally()`.
 3. **`async`/`await`**: The same Promises, written so they read top to bottom.
 4. **`fetch` and HTTP**: The `Response` object, status codes, and why a 404 doesn't throw.
-5. **Loading, empty, and error states**: What the user sees while waiting and when things go wrong.
-6. **Testing `fetch` code**: Replacing `fetch` with a fake in Vitest.
+5. **Loading, empty, and error states**: What the user sees while waiting and when things go wrong,
+   and ignoring input while a request is running.
+6. **Testing `fetch` code**: Stubs and spies; replacing `fetch` with a stub in Vitest.
 7. **Walkthrough**: My Art Institute of Chicago browser.
 
 ---
@@ -115,12 +116,12 @@ When `fetch` fulfills, you get a `Response` object. The three properties we use 
 
 The first digit of a status code tells you what kind of answer it is:
 
-| Class   | Meaning                       | Examples                                                    | Retry?              |
-| :------ | :---------------------------- | :---------------------------------------------------------- | :------------------ |
-| **2xx** | Success                       | `200 OK`                                                    | —                   |
-| **3xx** | Redirect                      | `301`, `304` (the browser follows these)                    | —                   |
-| **4xx** | Problem with **your request** | `400 Bad Request`, `404 Not Found`, `429 Too Many Requests` | No, fix the request |
-| **5xx** | Problem on the **server**     | `500 Internal Server Error`, `503 Service Unavailable`      | Maybe later         |
+| Class   | Meaning                       | Examples                                                                                 | Retry?              |
+| :------ | :---------------------------- | :--------------------------------------------------------------------------------------- | :------------------ |
+| **2xx** | Success                       | `200 OK`                                                                                 | —                   |
+| **3xx** | Redirect                      | `301`, `304` (the browser follows these)                                                 | —                   |
+| **4xx** | Problem with **your request** | `400 Bad Request`, `404 Not Found`, `422 Unprocessable Content`, `429 Too Many Requests` | No, fix the request |
+| **5xx** | Problem on the **server**     | `500 Internal Server Error`, `503 Service Unavailable`                                   | Maybe later         |
 
 #### Network errors vs. error responses
 
@@ -136,14 +137,17 @@ tries to use an error message as if it were data.
 
 #### Query strings
 
-APIs take their options in the URL's query string. Build it with `URLSearchParams` instead of gluing
-strings together, so spaces and accented characters are encoded for you:
+APIs take their options in the URL's query string. Rather than gluing strings together, fill in a
+plain object with the parameters and hand it to `URLSearchParams`. Its `toString()` method turns the
+object into the query string part of the URL. A template string calls `toString()` for you:
 
 ```javascript
-const params = new URLSearchParams({ name: 'San José', count: '10' })
+const params = new URLSearchParams({ name: 'Bend', count: '10' })
 const url = `https://geocoding-api.open-meteo.com/v1/search?${params}`
-// ...search?name=San+Jos%C3%A9&count=10
+// ...search?name=Bend&count=10
 ```
+
+As a bonus, `toString()` also encodes characters that aren't allowed in a URL, such as spaces.
 
 ---
 
@@ -172,6 +176,37 @@ async function runSearch(query) {
 }
 ```
 
+#### Ignoring input while loading
+
+While a request is running, the user can still click and type. If they submit the form again, or
+click a different place, you end up with two requests racing each other, and whichever finishes last
+wins. The simple fix is to ignore input until the current request finishes:
+
+```javascript
+let isLoading = false
+
+function setLoading(loading, message = '') {
+  isLoading = loading
+  app.classList.toggle('loading', loading) // style it to look busy
+  status.textContent = message
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault()
+  // a request is already running
+  if (isLoading) {
+    return
+  }
+  runSearch(queryInput.value.trim())
+})
+```
+
+A CSS rule such as `.loading { pointer-events: none; opacity: 0.6; }` shows the user the app is busy
+and blocks mouse clicks. Keep the `isLoading` check anyway, because pressing Enter in the text field
+can still submit the form.
+
+#### Empty results
+
 APIs don't always say "nothing found" the way you'd expect. Open-Meteo's geocoding search leaves out
 the `results` property entirely when nothing matches. Turn that into an empty array in one place,
 right after the `fetch`, so the rest of your code only has to deal with arrays.
@@ -181,7 +216,16 @@ right after the `fetch`, so the rest of your code only has to deal with arrays.
 ### Testing `fetch` Code
 
 Tests shouldn't call the real API. It's slow, it can be down, and its data changes. Instead, replace
-`fetch` with a fake that returns sample data:
+`fetch` with a **stub**: a stand-in function that returns canned sample data instead of doing the
+real work. Stubs are one kind of **test double**, a general name for fakes that stand in for real
+code in tests. A **spy** is a related kind that records how it was called, so a test can check, for
+example, how many times `fetch` ran.
+
+Vitest has these built in. `vi.fn()` creates a function that is both a stub (you give it the fake
+behavior) and a spy (it records its calls in `.mock.calls`), and `vi.stubGlobal()` swaps it in for
+the real `fetch`. Outside of Vitest, the classic standalone library for this is
+[Sinon.js](https://sinonjs.org/), which works with any test runner, and you'll see it in a lot of
+existing JavaScript projects.
 
 ```javascript
 import { afterEach, it, expect, vi } from 'vitest'
@@ -234,13 +278,14 @@ need the same healthy habits.
 
 ### Resources & References
 
-| Topic                      | Documentation                                                                                               | Usefulness this week                             |
-| :------------------------- | :---------------------------------------------------------------------------------------------------------- | :----------------------------------------------- |
-| Using Promises             | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)                | Promise states and chaining                      |
-| `async function`           | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) | `async`/`await` syntax and behavior              |
-| Using the Fetch API        | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)                      | Requests, responses, and error handling          |
-| `Response`                 | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)                                   | `ok`, `status`, and `json()`                     |
-| HTTP response status codes | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)                          | What each status code means                      |
-| `URLSearchParams`          | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)                            | Building query strings                           |
-| The event loop             | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)           | How queued callbacks run (optional, deeper dive) |
-| `vi` utilities             | [Vitest Docs](https://vitest.dev/api/vi.html)                                                               | `vi.stubGlobal()`, `vi.fn()`, and `vi.waitFor()` |
+| Topic                      | Documentation                                                                                               | Usefulness this week                                |
+| :------------------------- | :---------------------------------------------------------------------------------------------------------- | :-------------------------------------------------- |
+| Using Promises             | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)                | Promise states and chaining                         |
+| `async function`           | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function) | `async`/`await` syntax and behavior                 |
+| Using the Fetch API        | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)                      | Requests, responses, and error handling             |
+| `Response`                 | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/Response)                                   | `ok`, `status`, and `json()`                        |
+| HTTP response status codes | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)                          | What each status code means                         |
+| `URLSearchParams`          | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)                            | Building query strings                              |
+| The event loop             | [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)           | How queued callbacks run (optional, deeper dive)    |
+| `vi` utilities             | [Vitest Docs](https://vitest.dev/api/vi.html)                                                               | `vi.stubGlobal()`, `vi.fn()`, and `vi.waitFor()`    |
+| Sinon.js                   | [Sinon.js Docs](https://sinonjs.org/)                                                                       | A standalone library for stubs and spies (optional) |

@@ -415,7 +415,7 @@ CloudFront. Submit the live CloudFront URL on Canvas.
 
 ---
 
-### Week 10 — Form Events and a First Look at `fetch` (Thanksgiving catch-up week)
+### Week 10 — Form Events and a First Look at `fetch` (catch-up week)
 
 This is a catch-up week. There is **no programming assignment**, so students can use the time to
 finish any missing weekly projects. The lecture and reading are short, and Quiz 10 covers event
@@ -471,8 +471,10 @@ Week 10 starts, so students have a complete example to study during the catch-up
 - HTTP status code classes (2xx, 3xx, 4xx, 5xx) and what each tells you
 - Error handling: network errors (`fetch` rejects) vs. error responses (`fetch` resolves with
   `ok === false`); `try/catch` with `await`
-- Loading, empty, and error states in the DOM — always handle all three
-- Testing fetch code with a stubbed `fetch` in Vitest
+- Loading, empty, and error states in the DOM — always handle all three; ignore new input while a
+  request is running
+- Testing fetch code with stubs and spies (`vi.fn()`, `vi.stubGlobal()`); Sinon.js mentioned as the
+  standalone alternative
 - **Instructor walkthrough**: the Art Institute of Chicago browser final project, as a model for the
   final push
 
@@ -493,10 +495,12 @@ async function loadData(url) {
 ```
 
 **Challenge**: A weather search using the [Open-Meteo](https://open-meteo.com/) API (no key needed).
-The user types a place name (`input` event enables the Search button), submits the form
-(`preventDefault()`), picks one of the matching places, and sees its current weather. A units
+The user types a place name (`input` event enables the Search button) and submits the form
+(`preventDefault()`). Each matching place is a link to its forecast URL; clicking one calls
+`preventDefault()` and loads the forecast in the page, caching it in a `Map` keyed by URL. A units
 `<select>` (`change` event) reloads the weather in °F or °C. The app shows loading, empty, and error
-states, and Vitest tests cover the fetch logic with a stubbed `fetch`.
+states and ignores input while loading, and Vitest tests cover the fetch logic with a stubbed
+`fetch`.
 
 **Quiz 11**: Promise states, why `fetch` doesn't reject on a 404, 4xx vs. 5xx status codes, what
 `await` does while it waits, and empty results vs. errors

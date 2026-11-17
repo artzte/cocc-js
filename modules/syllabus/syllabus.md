@@ -123,7 +123,7 @@ Additionally, you will need the following in order to complete this course:
   `extends`/`super`, static members
 - **Week 9 — Modules** — ES Modules (`import`/`export`), module scope, Vite and ESM, `localStorage`
   persistence; _Project Milestone 3 (Initial Structure) due_
-- **Week 10 — Form Events (Thanksgiving catch-up week)** — `input` and `change` events, `submit` and
+- **Week 10 — Form Events (catch-up week)** — `input` and `change` events, `submit` and
   `preventDefault()`, a first look at `fetch`; no programming assignment, so you can catch up on
   missing weekly projects
 - **Week 11 — Async JavaScript** — Event loop, Promises, `async`/`await`, `fetch`, HTTP status

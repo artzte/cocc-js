@@ -64,9 +64,11 @@ A `Promise` is an object standing in for a value that isn't available yet.
   request the browser blocks (for example, by CORS). In those cases there's no response at all.
 - **`fetch` does not reject on HTTP error status codes.** A 404 or 500 is still a response, so the
   Promise fulfills with a `Response` whose `ok` is `false` and whose `status` holds the code.
-- **Query strings**: build them with `URLSearchParams`, which encodes spaces and special characters
-  for you: `new URLSearchParams({ name: 'San José', count: '10' }).toString()` gives
-  `name=San+Jos%C3%A9&count=10`.
+- **Query strings**: fill in a plain object with the parameters and pass it to `URLSearchParams`.
+  Its `toString()` method builds the query string part of the URL (and encodes characters such as
+  spaces): `new URLSearchParams({ name: 'Bend', count: '10' }).toString()` gives
+  `name=Bend&count=10`. A template string such as `` `${SEARCH_URL}?${params}` `` calls `toString()`
+  for you.
 
 ---
 
@@ -74,14 +76,16 @@ A `Promise` is an object standing in for a value that isn't available yet.
 
 Every HTTP response has a three-digit status code. The first digit tells you the class:
 
-| Class | Meaning                                                       | Examples                                                                                         |
-| :---- | :------------------------------------------------------------ | :----------------------------------------------------------------------------------------------- |
-| 2xx   | **Success**: the request worked                               | `200 OK`, `201 Created`, `204 No Content`                                                        |
-| 3xx   | **Redirection**: the resource is somewhere else               | `301 Moved Permanently`, `304 Not Modified` (the browser handles these for you)                  |
-| 4xx   | **Client error**: something is wrong with the request         | `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found`, `429 Too Many Requests` |
-| 5xx   | **Server error**: the server failed to handle a valid request | `500 Internal Server Error`, `502 Bad Gateway`, `503 Service Unavailable`                        |
+| Class | Meaning                                                       | Examples                                                                                                                      |
+| :---- | :------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------- |
+| 2xx   | **Success**: the request worked                               | `200 OK`, `201 Created`, `204 No Content`                                                                                     |
+| 3xx   | **Redirection**: the resource is somewhere else               | `301 Moved Permanently`, `304 Not Modified` (the browser handles these for you)                                               |
+| 4xx   | **Client error**: something is wrong with the request         | `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found`, `422 Unprocessable Content`, `429 Too Many Requests` |
+| 5xx   | **Server error**: the server failed to handle a valid request | `500 Internal Server Error`, `502 Bad Gateway`, `503 Service Unavailable`                                                     |
 
 - `response.ok` is `true` exactly when the status is in the 200–299 range.
+- `422 Unprocessable Content` means the server understood the request, but the data you sent doesn't
+  make sense (for example, an end date before the start date).
 - A 4xx usually means **your** request needs fixing (a typo in the URL, a bad parameter, a missing
   API key). Retrying the same request won't help.
 - A 5xx means the **server** had a problem. The same request might work if you try again later.
@@ -100,6 +104,9 @@ Every HTTP response has a three-digit status code. The first digit tells you the
   1. **Loading**: show a message or spinner while the request is pending.
   2. **Empty**: the request worked but returned nothing. Tell the user, but don't call it an error.
   3. **Error**: the request failed. Show a message, and let the user try again.
+- **Ignore input while loading**: while a request is running, ignore new submits and clicks (an
+  `isLoading` flag checked at the top of each listener is enough), so two requests don't race each
+  other.
 
 #### Healthy async pattern
 
