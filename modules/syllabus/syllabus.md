@@ -123,10 +123,11 @@ Additionally, you will need the following in order to complete this course:
   `extends`/`super`, static members
 - **Week 9 — Modules** — ES Modules (`import`/`export`), module scope, Vite and ESM, `localStorage`
   persistence; _Project Milestone 3 (Initial Structure) due_
-- **Week 10 — Events and the DOM** — Event bubbling/capturing, `addEventListener`, event delegation,
-  form events
-- **Week 11 — Async JavaScript** — Event loop, Promises, `async`/`await`, `fetch`, error and loading
-  state handling
+- **Week 10 — Form Events (catch-up week)** — `input` and `change` events, `submit` and
+  `preventDefault()`, a first look at `fetch`; no programming assignment, so you can catch up on
+  missing weekly projects
+- **Week 11 — Async JavaScript** — Event loop, Promises, `async`/`await`, `fetch`, HTTP status
+  codes, loading, empty, and error states
 - **Week 12 — Final Project** — Demo, code review, deployment; _Project Milestone 4 (Final
   Submission) due_
 
@@ -136,7 +137,7 @@ Additionally, you will need the following in order to complete this course:
 - The final project is due in phases, on Monday at midnight following the referenced week
   - Week 4: Proposal
   - Week 7: Design document
-  - Week 9: Initial structure
+  - Week 9: Initial structure (test deployment)
   - Week 12: Final submission
 
 ### Final Exam Date and Time
