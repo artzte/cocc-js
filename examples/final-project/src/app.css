@@ -1,0 +1,203 @@
+#app.loading {
+  form,
+  .art-gallery-results,
+  .art-gallery-detail {
+    pointer-events: none;
+    opacity: 80%;
+
+    button {
+      background-color: color-mix(in oklch, var(--color-surface), white 20%);
+      color: color-mix(in oklch, var(--color-text), white 20%);
+    }
+  }
+}
+
+#art-gallery {
+  h1 {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+
+    > * {
+      display: block;
+    }
+
+    a {
+      font-size: 60%;
+      text-decoration: none;
+    }
+  }
+
+  form {
+    display: flex;
+    gap: 8px;
+    input,
+    button {
+      display: block;
+    }
+    input {
+      background: white;
+    }
+  }
+
+  .art-gallery-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 24px 0;
+
+    .art-gallery-results-item {
+      text-align: center;
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 12px;
+      cursor: pointer;
+      text-decoration: none;
+
+      img {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+#art-gallery-detail {
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    a {
+      display: block;
+      font-size: 80%;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+  }
+
+  .maker {
+    margin-top: 0;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  /* gallery-style frame: the image sits centered on a matte panel */
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0;
+    padding: clamp(16px, 4vw, 48px);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+
+    img {
+      display: block;
+      max-width: 100%;
+      /* keep tall portraits from pushing the text off screen */
+      max-height: 70vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow:
+        0 2px 4px rgb(0 0 0 / 0.15),
+        0 12px 32px rgb(0 0 0 / 0.2);
+    }
+  }
+
+  .info,
+  .history {
+    max-width: 70ch;
+    line-height: 1.6;
+  }
+
+  .history {
+    color: var(--color-text-muted);
+  }
+}
+
+/* not-found page, modelled on the V&A's own 404: an object image beside a short message */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 64px;
+
+  @media (min-width: 600px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .not-found-image {
+    display: block;
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: contain;
+  }
+
+  .not-found-copy {
+    max-width: 300px;
+
+    h2 {
+      margin: 0 0 16px;
+      font-weight: 500;
+    }
+  }
+
+  /* the V&A's mint-green button with a small CSS triangle as the arrow */
+  .not-found-button {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 24px;
+    padding: 10px 19px 8px;
+    border-radius: 2px;
+    background-color: #50e3c2;
+    color: #1d1e20;
+    text-decoration: none;
+
+    &::after {
+      content: '';
+      margin-left: 7px;
+      border: 5px solid transparent;
+      border-left-color: currentColor;
+      border-right-width: 0;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: #24dcb3;
+      color: #1d1e20;
+    }
+  }
+
+  .whoops-status {
+    margin: 0 0 8px;
+    font-weight: 500;
+  }
+
+  /* error bodies can be long (even a whole HTML page), so clamp to a few lines */
+  .whoops-detail {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    margin: 0 0 24px;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .not-found-attribution {
+    display: block;
+    margin: 4px 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--color-text-muted);
+  }
+}
