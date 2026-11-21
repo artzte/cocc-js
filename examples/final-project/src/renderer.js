@@ -202,7 +202,7 @@ export class NotFoundRenderer extends Renderer {
   }
 }
 
-// Builds the whoops view from an error thrown by fetchJson (see buildError in api.js).
+// Builds the whoops view from an error thrown by fetchJson (see buildError in wrapped-fetch.js).
 // HTTP failures carry status, message (statusText) and body (parsed JSON or raw text).
 // Network failures from fetch itself are a plain TypeError with only a message.
 export function buildErrorHtml(error, homeUrl) {
