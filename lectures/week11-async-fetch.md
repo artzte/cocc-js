@@ -18,15 +18,15 @@ the `fetch` preview)
 
 ## Pacing & Timeline
 
-| Time              | Section                                              | Focus / Snippet Function                                                             |
-| :---------------- | :--------------------------------------------------- | :----------------------------------------------------------------------------------- |
-| **00:00 - 03:00** | **1. The Event Loop**                                | Why the page doesn't freeze; A, B, C, D ordering (`eventLoopDemo`)                   |
-| **03:00 - 07:00** | **2. Promises and `async`/`await`**                  | States, `.then/.catch/.finally`, `try/catch` (`promiseStatesDemo`, `asyncAwaitDemo`) |
-| **07:00 - 12:00** | **3. `fetch` and HTTP Status Codes**                 | `Response`, status classes, network errors vs. error responses (`statusCodesDemo`)   |
-| **12:00 - 15:00** | **4. Loading, Empty, and Error States**              | The four states of a data screen (`searchDemo`)                                      |
-| **15:00 - 16:30** | **5. Debug Challenge**                               | A missing `await` gives `HTTP undefined` (`debugChallenge`)                          |
-| **16:30 - 27:00** | **6. Walkthrough: Art Institute of Chicago Browser** | My final project as a model for the final push                                       |
-| **27:00 - 30:00** | **7. The Weather Search Assignment & Wrap-Up**       | Tying events and `fetch` together; testing with a fake `fetch`; deliverables         |
+| Time              | Section                                        | Focus / Snippet Function                                                             |
+| :---------------- | :--------------------------------------------- | :----------------------------------------------------------------------------------- |
+| **00:00 - 03:00** | **1. The Event Loop**                          | Why the page doesn't freeze; A, B, C, D ordering (`eventLoopDemo`)                   |
+| **03:00 - 07:00** | **2. Promises and `async`/`await`**            | States, `.then/.catch/.finally`, `try/catch` (`promiseStatesDemo`, `asyncAwaitDemo`) |
+| **07:00 - 12:00** | **3. `fetch` and HTTP Status Codes**           | `Response`, status classes, network errors vs. error responses (`statusCodesDemo`)   |
+| **12:00 - 15:00** | **4. Loading, Empty, and Error States**        | The four states of a data screen (`searchDemo`)                                      |
+| **15:00 - 16:30** | **5. Debug Challenge**                         | A missing `await` gives `HTTP undefined` (`debugChallenge`)                          |
+| **16:30 - 27:00** | **6. Walkthrough: V&A Art Browser**            | My final project as a model for the final push                                       |
+| **27:00 - 30:00** | **7. The Weather Search Assignment & Wrap-Up** | Tying events and `fetch` together; testing with a fake `fetch`; deliverables         |
 
 ---
 
@@ -127,26 +127,46 @@ the `fetch` preview)
 
 ---
 
-## 6. Walkthrough: Art Institute of Chicago Browser (10.5 mins)
+## 6. Walkthrough: V&A Art Browser (10.5 mins)
 
 ### Talking Points & Concept Cues
 
 - This is my own final project, built to the same requirements as yours. It was published before
-  Week 10 so you've had a chance to look through it.
-- Open the repo and walk through:
-  - **Module layout**: which module owns the API calls, and how the rest of the app only sees plain
-    objects. Count the modules against the ≥4 requirement.
-  - **The API module**: the base URL, query strings built with `URLSearchParams`, and a single
-    `fetchJson()`-style helper that checks `response.ok`.
-  - **Simplifying results**: the [Art Institute of Chicago API](https://api.artic.edu/docs/) returns
-    a lot of fields. Show where they get trimmed down to what the UI needs, and how image URLs are
-    built from `image_id`.
-  - **Events**: the search form (`submit` + `preventDefault()`), any `input`/`change` controls, and
-    the delegated `click` listener. Count interactions against the ≥3 requirement.
-  - **The class**: point out the ES6 class and why it was a good fit.
-  - **UI states**: loading, empty, and error messages.
-  - **Tests**: how the tests fake `fetch` and import sample responses, so they never call the live
-    API.
+  Week 10 so you've had a chance to look through it. The code is in
+  [`examples/final-project`](../examples/final-project/README.md).
+- Start with the [README](../examples/final-project/README.md): the wireframe photo, the four user
+  actions, and the module breakdown. This is what your design doc should look like.
+- Open the code and walk through:
+  - **Module layout**: six modules under `src/`, plus the HTML templates in `src/markup/`. Only
+    [`wrapped-fetch.js`](../examples/final-project/src/wrapped-fetch.js) calls `fetch`, and only
+    [`api.js`](../examples/final-project/src/api.js) knows the V&A's URLs and field names. Count the
+    modules against the ≥4 requirement.
+  - **`fetchJson()`**: query strings added with `url.searchParams.set()` (`url.searchParams` is a
+    `URLSearchParams`), the `response.ok` check, and `buildError()`, which attaches `status` and the
+    parsed body to the `Error`. Show a real V&A error body: a bad object id gives
+    `404 {"detail":"Not Found"}`, and `page_size=abc` gives a `422` whose `detail` explains which
+    parameter is wrong. Then show where `buildErrorHtml()` in
+    [`renderer.js`](../examples/final-project/src/renderer.js) displays it.
+  - **Simplifying results**: the [V&A API](https://developers.vam.ac.uk/) returns a lot of fields.
+    Show `buildSearchResult()` and `buildDetailResult()` in `api.js`: search records already include
+    a thumbnail URL, and the full-size image URL is built from the record's image `assetRef`. Point
+    out the optional chaining (`?.`) for fields some records leave out, and the filter that drops
+    results with nothing to show.
+  - **Caching**: the private `#searchCache` and `#detailCache` `Map`s. Same idea as the forecast
+    cache in the Weather Search, and a failed request isn't cached.
+  - **Events**: the search form (`submit` + `preventDefault()` in `MainRenderer.bind()`), the
+    **Reset** button, and result and back links handled by the delegated `click` listener in
+    [`app.js`](../examples/final-project/src/app.js). Count interactions against the ≥3 requirement.
+  - **The URL as state**: Navigo routes `/?search=` and `/art/:id` to renderers, so every page can
+    be bookmarked or reloaded.
+  - **The classes**: `VamApiService` keeps its caches private; the `Renderer` base class and its
+    `MainRenderer`, `DetailRenderer`, and `NotFoundRenderer` subclasses share `render()`.
+  - **UI states**: the `loading` class and `#loading` flag set before the `await` and cleared in
+    `finally`; "Nothing found by that name"; the "Whoops" error view; the not-found page.
+  - **Tests**: each layer stubs the one below it. `wrapped-fetch.test.js` stubs `fetch` with
+    `vi.stubGlobal()`, `api.test.js` mocks `fetchJson()` with `vi.mock()`, and `renderer.test.js`
+    spies on `VamApiService` and uses a promise the test resolves itself to check the loading state.
+    None of them call the live API.
   - **Deployment**: the live CloudFront URL and the passing `npm run check`.
 - Close with: your project doesn't need to look like mine, but it needs the same habits.
 

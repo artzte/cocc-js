@@ -24,6 +24,12 @@ There are three ideas to watch for:
   error. An empty result isn't an error, and the user should be able to tell them apart. While
   something is loading, the app ignores new searches and clicks.
 
+My [final project](../../examples/final-project/README.md) uses the same patterns in a bigger app: a
+`Map` cache in [`src/api.js`](../../examples/final-project/src/api.js), and the loading flag and
+class in `MainRenderer.search()` in
+[`src/renderer.js`](../../examples/final-project/src/renderer.js). Look there if you get stuck on
+either one.
+
 Submit the URL of the pull request that adds your `projects/week11` project. Be sure to tag me,
 **artzte**, as a reviewer on your PR.
 

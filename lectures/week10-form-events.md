@@ -37,8 +37,9 @@ preview of
 - Week 10 is a catch-up week. There's **no programming assignment**. A lot of you have weekly
   projects that aren't in yet, so please use this week to finish them and open those pull requests.
 - There is a **quiz** (Quiz 10), and it only covers event handling.
-- My own final project, the Art Institute of Chicago browser, is published. Look through it this
-  week if you have time, especially how it's split into modules. I'll walk through it in Week 11.
+- My own final project, the [V&A Art Browser](../examples/final-project/README.md), is published.
+  Look through it this week if you have time, especially how it's split into modules. I'll walk
+  through it in Week 11, and today I'll point out its form handling as we go.
 
 ---
 
@@ -89,6 +90,10 @@ demo.addEventListener('input', (event) => {
 - `new FormData(form)` reads every field by its `name` attribute. Handy for bigger forms; for one or
   two fields, reading `.value` directly is fine.
 - Click the link at the bottom: `preventDefault()` on a link's `click` cancels the navigation.
+- **Final project tie-in**: open `MainRenderer.bind()` in
+  [`examples/final-project/src/renderer.js`](../examples/final-project/src/renderer.js). It's the
+  same pattern: `submit` on the form, `preventDefault()` first, then `FormData`. It also ignores a
+  submit while a search is loading, because Enter still submits when CSS has blocked the mouse.
 
 ---
 
@@ -107,6 +112,11 @@ demo.addEventListener('input', (event) => {
 - Quick review with `targetVsCurrentTargetDemo()`: click the bold city name, then the state name.
   `target` changes between `STRONG` and `BUTTON`; `currentTarget` is always the `<ul>`. That's why
   we call `event.target.closest('button')`.
+- **Final project tie-in**: show the delegated listener in
+  [`examples/final-project/src/app.js`](../examples/final-project/src/app.js). It finds a button or
+  a link with `closest()`, switches on `data-action`, and calls `preventDefault()` only after a
+  `case` handled the click. The `default` case returns first, so the header's link to the V&A site,
+  which has no `data-action`, still navigates.
 
 ---
 
@@ -127,6 +137,10 @@ demo.addEventListener('input', (event) => {
   3. `await response.json()` reads and parses the body. Second `await`.
   4. `try/catch` handles both a network failure and our own `throw`.
 - Suggest pasting `loadJson()` into a snippet and trying it with your own final project API's URL.
+  Show my first spike at the V&A API,
+  [`examples/final-project/notes/vam-fetch-example.js`](../examples/final-project/notes/vam-fetch-example.js),
+  and point out that it skips `response.ok`. The finished `fetchJson()` in
+  [`src/wrapped-fetch.js`](../examples/final-project/src/wrapped-fetch.js) adds it.
 
 ### Code Demo: `loadJson()`
 
@@ -160,4 +174,4 @@ async function loadJson(url) {
   - Catch up on any missing weekly projects.
 - **Coming in Week 11**: Promises, the event loop, HTTP status codes, and a weather search
   assignment that uses `input`, `change`, `submit`, and `fetch` together. I'll also walk through my
-  Art Institute of Chicago browser.
+  V&A Art Browser.

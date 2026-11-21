@@ -6,8 +6,9 @@ about writing code that **waits** without freezing the page: Promises, `async`/`
 
 Last week's preview showed one `fetch` call. This week we look at what's going on underneath it, at
 the HTTP status codes a server can send back, and at the states every data-loading screen has to
-handle. I'll also walk through my own final project, an Art Institute of Chicago browser, as an
-example of how a complete app organizes its `fetch` code.
+handle. I'll also walk through my own final project, a
+[Victoria and Albert Museum Art Browser](../../examples/final-project/README.md), as an example of
+how a complete app organizes its `fetch` code.
 
 The assignment, a Weather Search, puts last week's `input`, `change`, and `submit` events together
 with `fetch`.
@@ -24,7 +25,7 @@ with `fetch`.
 5. **Loading, empty, and error states**: What the user sees while waiting and when things go wrong,
    and ignoring input while a request is running.
 6. **Testing `fetch` code**: Stubs and spies; replacing `fetch` with a stub in Vitest.
-7. **Walkthrough**: My Art Institute of Chicago browser.
+7. **Walkthrough**: My V&A Art Browser.
 
 ---
 
@@ -203,7 +204,10 @@ form.addEventListener('submit', (event) => {
 
 A CSS rule such as `.loading { pointer-events: none; opacity: 0.6; }` shows the user the app is busy
 and blocks mouse clicks. Keep the `isLoading` check anyway, because pressing Enter in the text field
-can still submit the form.
+can still submit the form. My final project does exactly this: see `MainRenderer.search()` in
+[`src/renderer.js`](../../examples/final-project/src/renderer.js), which sets the flag and the class
+before the `await` and clears both in a `finally`, and the `#app.loading` rule in
+[`src/app.css`](../../examples/final-project/src/app.css).
 
 #### Empty results
 
@@ -259,17 +263,39 @@ await vi.waitFor(() => {
 
 ---
 
-### Walkthrough: My Art Institute of Chicago Browser
+### Walkthrough: My V&A Art Browser
 
 In the lecture video I walk through my own final project, a browser for the
-[Art Institute of Chicago API](https://api.artic.edu/docs/). Things to look for as you read through
-its code:
+[Victoria and Albert Museum API](https://developers.vam.ac.uk/). The code is in
+[`examples/final-project`](../../examples/final-project/README.md); start with the README, which has
+the wireframe, the features, and the module breakdown. Things to look for as you read through it:
 
-- How the modules are split up, and which one is the only module that calls `fetch`.
-- How search results are turned into simpler objects right after they arrive, before any rendering
-  code sees them.
-- Where the loading, empty, and error states are handled.
-- How the tests fake `fetch` so they don't depend on the live API.
+- **One module calls `fetch`.** `fetchJson()` in
+  [`src/wrapped-fetch.js`](../../examples/final-project/src/wrapped-fetch.js) is the only place
+  `fetch` appears. It adds the query string with `url.searchParams` (a `URLSearchParams` that every
+  `URL` object has), checks `response.ok`, and otherwise returns the parsed JSON.
+- **Errors carry more than a message.** When `ok` is `false`, `buildError()` throws an `Error` with
+  the `status` and the response body attached. The V&A, like many APIs, explains a 4xx in a JSON
+  body, so the error page can show the reason, not just the number.
+- **Results are simplified right away.** The V&A sends back a lot of fields. `VamApiService` in
+  [`src/api.js`](../../examples/final-project/src/api.js) maps each record to a small object such as
+  `{ title, id, imageId, thumbnailUrl, maker }` before any rendering code sees it, and drops records
+  that are missing something the page needs.
+- **Results are cached in a `Map`**, keyed by the search text, so going back to a search doesn't
+  fetch it again. It's the same idea as the forecast cache in this week's assignment.
+- **Loading, empty, and error states.** `MainRenderer.search()` in
+  [`src/renderer.js`](../../examples/final-project/src/renderer.js) adds the `loading` class and
+  ignores new searches until the request finishes, shows "Nothing found by that name" for an empty
+  result, and shows the error view (`buildErrorHtml()`) when the request fails, with the search form
+  still usable.
+- **Tests never call the live API.** Each layer's tests stub the layer below it:
+  - [`test/wrapped-fetch.test.js`](../../examples/final-project/test/wrapped-fetch.test.js) replaces
+    `fetch` with `vi.stubGlobal()`, the same way the assignment does.
+  - [`test/api.test.js`](../../examples/final-project/test/api.test.js) replaces `fetchJson()` with
+    `vi.mock()`, since it already has its own tests.
+  - [`test/renderer.test.js`](../../examples/final-project/test/renderer.test.js) spies on
+    `VamApiService` methods and resolves them with plain records, including one that waits so the
+    test can check the page while it's still loading.
 
 Use it as a model for your own final push. Your project doesn't need to look like mine, but it does
 need the same healthy habits.

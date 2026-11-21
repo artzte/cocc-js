@@ -20,7 +20,8 @@ Week 11.
    does if we don't cancel it.
 4. **`preventDefault()` vs. `stopPropagation()`**: Two different jobs that are easy to mix up.
 5. **Review: `target` vs. `currentTarget`** in a delegated listener.
-6. **Preview: a first `fetch` call** with `async`/`await`, `try/catch`, and `response.ok`.
+6. **In my final project**: the same `submit` and `click` handling in a complete app.
+7. **Preview: a first `fetch` call** with `async`/`await`, `try/catch`, and `response.ok`.
 
 ---
 
@@ -165,6 +166,73 @@ resultsList.addEventListener('click', (event) => {
 
 ---
 
+### Form Events in My Final Project
+
+My [V&A Art Browser](../../examples/final-project/README.md) uses two of this week's patterns.
+
+#### The search form
+
+The search box and **Find** button are in a `<form>`, so the listener is on `submit`, and pressing
+Enter works the same as clicking **Find**. It's in `MainRenderer.bind()` in
+[`src/renderer.js`](../../examples/final-project/src/renderer.js):
+
+```javascript
+this.el.addEventListener('submit', (event) => {
+  event.preventDefault()
+
+  // CSS blocks the mouse while loading, but Enter in the input still submits
+  if (this.#loading) return
+
+  const form = event.target.closest('form')
+  const params = new FormData(form)
+  const url = MainRenderer.buildUrl(params.get('search').trim())
+
+  nav.navigate(routerPath(url))
+})
+```
+
+`preventDefault()` comes first, before anything that could throw. The form's values come from
+`FormData`, using the input's `name="search"`.
+
+#### Links that don't leave the page
+
+The search results and the **back** link are ordinary `<a href>` elements, so they work in a new tab
+and can be bookmarked. When one is clicked in the app, though, the app shows the new page itself
+instead of letting the browser load it. One delegated listener on `#app` in
+[`src/app.js`](../../examples/final-project/src/app.js) handles them:
+
+```javascript
+element.addEventListener('click', (event) => {
+  const target = event.target.closest('button') || event.target.closest('a')
+
+  switch (target?.dataset.action) {
+    case 'reset':
+      mainRenderer.clear()
+      break
+
+    case 'route': {
+      const url = new URL(target.href)
+      const routerUrl = url.pathname + url.search
+
+      nav.navigate(routerPath(routerUrl))
+      break
+    }
+
+    default:
+      return
+  }
+  event.preventDefault()
+})
+```
+
+Notice where `preventDefault()` is. It runs only after a `case` has handled the click. Any other
+click returns early in the `default` case, so the browser's default action still happens. That's how
+the 🔗 link to the V&A's own site, which has no `data-action`, still navigates normally.
+
+The app doesn't need `input` or `change`; the Week 11 Weather Search uses both.
+
+---
+
 ### Preview: A First `fetch` Call
 
 This section isn't on Quiz 10. It's here so you can start on the API part of your final project
@@ -205,8 +273,12 @@ There are three things to notice now. We'll go into each one in Week 11.
    `catch` handles that and your own `throw` for a bad status.
 
 To try it on your final project's API, paste `loadJson()` into a DevTools snippet and call it with
-one of your API's URLs. You can also look at my Art Institute of Chicago browser final project to
-see how a complete app organizes its `fetch` calls.
+one of your API's URLs. That's how I started mine. My first look at the V&A API was the
+[`notes/vam-fetch-example.js`](../../examples/final-project/notes/vam-fetch-example.js) snippet: one
+search, logged to the console. It skips the `response.ok` check, which is fine for a quick look but
+not for the finished app. Compare it with `fetchJson()` in
+[`src/wrapped-fetch.js`](../../examples/final-project/src/wrapped-fetch.js), which checks `ok` and
+throws an error carrying the status.
 
 ---
 
