@@ -189,19 +189,20 @@ All APIs listed below:
 
 ## 3. Art, Culture, Books & Museums
 
-### Art Institute of Chicago API
+### Victoria and Albert Museum (V&A) Collections API
 
 - **Official Documentation**:
-  [Art Institute of Chicago Public API Guide](https://api.artic.edu/docs/ 'Visit the Art Institute of Chicago API documentation')
+  [V&A Collections API Documentation](https://developers.vam.ac.uk/ 'Visit the Victoria and Albert Museum API documentation')
 - **Authentication**: None required | **CORS**: Enabled
 - **Sample Endpoint URL**:
   ```
-  https://api.artic.edu/api/v1/artworks?limit=12
+  https://api.vam.ac.uk/v2/objects/search?q=teapot&page_size=12
   ```
-- **Data Provided**: Tens of thousands of public-domain artworks with title, artist details, medium,
-  date, exhibition history, and high-resolution image identifiers.
-- **Project Ideas**: Virtual art gallery, searchable museum collection, artwork-of-the-day display
-  with artist bios.
+- **Data Provided**: Over a million objects in the V&A's art and design collections, with title,
+  maker, date, place, thumbnail images, and full-size images through the V&A's image server. A
+  detail endpoint adds descriptions and object histories.
+- **Project Ideas**: Virtual art gallery, searchable museum collection, design-history timeline. My
+  own [final project example](../../examples/final-project/README.md) is a V&A browser.
 
 ### The Metropolitan Museum of Art Collection API
 
