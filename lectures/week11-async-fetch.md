@@ -159,6 +159,11 @@ the `fetch` preview)
     [`app.js`](../examples/final-project/src/app.js). Count interactions against the ≥3 requirement.
   - **The URL as state**: Navigo routes `/?search=` and `/art/:id` to renderers, so every page can
     be bookmarked or reloaded.
+  - **Libraries**: Navigo is the one library in the project. It reads the URL, calls the matching
+    route handler, and handles the browser's Back and Forward buttons. Students may use a library
+    like that too. The expectation is that rendering and handling user interactions are their own
+    vanilla JS. In my app, the templates and renderers, the `submit` listener, and the delegated
+    `click` listener are all mine; my click handler calls `nav.navigate()` itself.
   - **The classes**: `VamApiService` keeps its caches private; the `Renderer` base class and its
     `MainRenderer`, `DetailRenderer`, and `NotFoundRenderer` subclasses share `render()`.
   - **UI states**: the `loading` class and `#loading` flag set before the `await` and cleared in

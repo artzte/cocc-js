@@ -297,6 +297,12 @@ the wireframe, the features, and the module breakdown. Things to look for as you
     `VamApiService` methods and resolves them with plain records, including one that waits so the
     test can check the page while it's still loading.
 
+One more thing you'll notice: I use one library, [Navigo](https://github.com/krasimir/navigo), for
+routing. It reads the URL, calls the function for the matching page, and handles the browser's Back
+and Forward buttons. You're welcome to use a library like that in your project, too. The only
+expectation is that rendering and handling user interactions are your own vanilla JS. In my app,
+building the HTML, the `submit` listener, and the delegated `click` listener are all my own code.
+
 Use it as a model for your own final push. Your project doesn't need to look like mine, but it does
 need the same healthy habits.
 

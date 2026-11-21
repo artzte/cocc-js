@@ -146,7 +146,8 @@ which follows a structured review and approval workflow during Finals Week.
 
 ### Requirements (Final Submission)
 
-- Vanilla JS — no UI frameworks
+- Vanilla JS — no UI frameworks. Small libraries for other jobs, such as a router, are fine, but
+  rendering and handling user interactions must be your own vanilla JS
 - ES Modules — at minimum 4 modules with clear separation of concerns
 - At least one `fetch` call to a real public API
 - Event-driven UI with at least 3 distinct user interactions
