@@ -22,7 +22,7 @@ to:
 3. Connect front-end interfaces to live network resources via asynchronous HTTP APIs (`fetch`).
 4. Write robust automated unit test suites (using Vitest) that verify business logic independently
    of the DOM.
-5. Deploy a functioning, accessible web application to public cloud infrastructure (GitHub Pages).
+5. Deploy a functioning, accessible web application to public cloud infrastructure (AWS CloudFront).
 
 For these reasons, **CIS-133JS does not administer a traditional in-class or proctored written final
 exam**. Instead, **your staged Final Project serves as the comprehensive Final Exam for the

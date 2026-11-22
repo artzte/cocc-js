@@ -39,8 +39,9 @@ satisfy by Week 12:
 - **ES6 Class**: At least **one (1) ES6 `class`** modeling a key entity or stateful service in your
   application.
 - **Public API Integration**: Consumes at least one real, public Application Programming Interface
-  (API) via asynchronous `fetch()`, handling loading spinners, error states, and response parsing
-  safely.
+  (API) via asynchronous `fetch()`, handling error states and response parsing safely. The app must
+  account for loading in some way, so the user isn't confused by a pending request and overlapping
+  requests can't race (for example, ignore new input while a request is loading).
 - **Interactive UI**: An event-driven interface featuring at least **three (3) distinct user
   interactions** (such as live search filtering, category dropdowns, favorites toggling, sorting,
   modal detail popups, or pagination).

@@ -146,8 +146,8 @@ Following is a full list of books and chapters.
 - Four milestones: proposal (wk 4), design doc (wk 7), initial structure (wk 9), final submission
   (wk 12)
 - Requirements: vanilla JS, ≥4 ES modules, ≥1 `fetch` call to a real public API, ≥3 user
-  interactions, ≥1 ES6 class, Vitest tests for all non-DOM logic, deployed to GitHub Pages or
-  Netlify
+  interactions, loading accounted for in some way, ≥1 ES6 class, Vitest tests for all non-DOM logic,
+  deployed to the course CloudFront hosting by the GitHub Actions workflow
 
 ## Authoring Conventions for Weekly Content
 
