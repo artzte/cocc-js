@@ -42,7 +42,7 @@ Within these environments, we will use the following technologies to build softw
 | **jsdom**            | Lets Vitest test DOM-touching code                                              |
 | **Node.js / npm**    | Package management and running scripts                                          |
 | **Git + GitHub**     | Version control and project submission; all work submitted as GitHub repo links |
-| **GitHub Pages**     | Free static hosting for deployed projects (built-in Vite support)               |
+| **AWS CloudFront**   | Course hosting; a GitHub Actions workflow deploys each student's final project  |
 | **Browser DevTools** | Primary debugging environment                                                   |
 | **MDN Web Docs**     | Reference for all DOM/HTML5 APIs                                                |
 
@@ -151,10 +151,13 @@ which follows a structured review and approval workflow during Finals Week.
 - ES Modules — at minimum 4 modules with clear separation of concerns
 - At least one `fetch` call to a real public API
 - Event-driven UI with at least 3 distinct user interactions
+- Accounts for loading in some way, so the user isn't confused by a pending request and overlapping
+  async requests can't race (for example, ignore new input while a request is loading)
 - At least one ES6 class
 - Vitest unit tests covering all non-DOM logic
 - Runs via `npm run dev`, `npm run build`, `npm run test`
-- Deployed to GitHub Pages or Netlify (Vite's `npm run build` output drops directly into either)
+- Deployed to the course CloudFront hosting by the GitHub Actions workflow
+  (`https://d2zap10oyizxcd.cloudfront.net/<your-last-name>`)
 
 ---
 
