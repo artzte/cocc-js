@@ -16,8 +16,11 @@ There's also a short **preview of `fetch`**. It isn't on the quiz, but it's enou
 API part of your final project. We'll cover `fetch`, Promises, and `async`/`await` properly in Week
 11, and the Week 11 assignment uses both this week's events and `fetch`.
 
-My own final project, an Art Institute of Chicago browser, is published for you to look at. It's a
-complete example of what the final submission should look like, and I'll walk through it in Week 11.
+My own final project, a
+[Victoria and Albert Museum Art Browser](../../examples/final-project/README.md), is published for
+you to look at. It's a complete example of what the final submission should look like, and I'll walk
+through it in Week 11. Its search form and its delegated click listener use this week's `submit` and
+`preventDefault()` material, and the lecture points to both.
 
 ---
 
@@ -76,8 +79,10 @@ By the end of this module you will be able to:
    - Run the [Week 10 Form Events DevTools Snippet](../../examples/week10-form-events.md)
      ([`examples/week10-form-events.js`](../../examples/week10-form-events.js)) in Chrome DevTools.
 5. **Final Project Example**:
-   - Look through my Art Institute of Chicago browser final project, especially how it splits its
-     code into modules and where its `fetch` calls live.
+   - Look through my [V&A Art Browser](../../examples/final-project/README.md), especially how it
+     splits its code into modules and where its `fetch` calls live. Start with the README, then
+     [`src/app.js`](../../examples/final-project/src/app.js) and
+     [`src/api.js`](../../examples/final-project/src/api.js).
 6. **Assessment — Quiz 10**:
    - Complete [Week 10 Quiz](week10-quiz.md) on Canvas (covering `input` vs. `change`, `submit`,
      `preventDefault()`, `stopPropagation()`, and `target` vs. `currentTarget`). Due **Monday,

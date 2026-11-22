@@ -15,9 +15,10 @@ previewed a single `fetch` call. This week we go underneath that call:
   A 404 or a 500 doesn't make `fetch` throw.
 
 The assignment, a **Weather Search**, combines last week's events with this week's `fetch`. I'll
-also walk through my own final project, an Art Institute of Chicago browser, as a model for your
-final push. Your final project needs at least one `fetch` call to a real public API, so everything
-this week goes straight into it.
+also walk through my own final project, a
+[Victoria and Albert Museum Art Browser](../../examples/final-project/README.md), as a model for
+your final push. Your final project needs at least one `fetch` call to a real public API, so
+everything this week goes straight into it.
 
 ---
 
@@ -74,8 +75,9 @@ By the end of this module you will be able to:
      ([`examples/week11-async-fetch.js`](../../examples/week11-async-fetch.js)) in Chrome DevTools
      and solve the Debug Challenge.
 4. **Final Project Example**:
-   - Follow along with my walkthrough of the Art Institute of Chicago browser, and compare how it
-     handles `fetch` with your own plan.
+   - Follow along with my walkthrough of the
+     [V&A Art Browser](../../examples/final-project/README.md), and compare how it handles `fetch`
+     with your own plan. The lecture lists the files to look at.
 5. **Assessment — Quiz 11**:
    - Complete [Week 11 Quiz](week11-quiz.md) on Canvas (covering Promise states, `fetch` and
      `response.ok`, 4xx vs. 5xx status codes, the event loop, and empty results vs. errors). Due

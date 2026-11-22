@@ -146,7 +146,8 @@ which follows a structured review and approval workflow during Finals Week.
 
 ### Requirements (Final Submission)
 
-- Vanilla JS — no UI frameworks
+- Vanilla JS — no UI frameworks. Small libraries for other jobs, such as a router, are fine, but
+  rendering and handling user interactions must be your own vanilla JS
 - ES Modules — at minimum 4 modules with clear separation of concerns
 - At least one `fetch` call to a real public API
 - Event-driven UI with at least 3 distinct user interactions
@@ -443,8 +444,9 @@ handling only.
   enough to start the async part of the final project. Promise states and the event loop wait for
   Week 11.
 
-**Instructor example**: The full Art Institute of Chicago browser final project is published before
-Week 10 starts, so students have a complete example to study during the catch-up week.
+**Instructor example**: The full Victoria and Albert Museum Art Browser final project
+([`examples/final-project`](examples/final-project/README.md)) is published before Week 10 starts,
+so students have a complete example to study during the catch-up week.
 
 **Quiz 10**: `input` vs. `change`, `submit` and `preventDefault()`, `preventDefault()` vs.
 `stopPropagation()`, `target` vs. `currentTarget`
@@ -475,8 +477,7 @@ Week 10 starts, so students have a complete example to study during the catch-up
   request is running
 - Testing fetch code with stubs and spies (`vi.fn()`, `vi.stubGlobal()`); Sinon.js mentioned as the
   standalone alternative
-- **Instructor walkthrough**: the Art Institute of Chicago browser final project, as a model for the
-  final push
+- **Instructor walkthrough**: the V&A Art Browser final project, as a model for the final push
 
 **Healthy patterns emphasized**:
 
