@@ -16,9 +16,9 @@
 // 6. Paste this code into the editor.
 // 7. Press Ctrl+S (Cmd+S) to save, and Ctrl+Enter (Cmd+Enter) to run.
 //
-// Running the snippet defines the demo functions. Call them one at a
-// time from the Console, for example: inputVsChangeDemo()
-// Each demo puts a small form on the page for you to try.
+// Each demo adds its own labeled box to the page. Set
+// breakpoints inside the listeners, then interact with the forms.
+// Running the snippet again replaces the boxes (and their listeners).
 // --------------------------------------------------------------------
 
 function header(title) {
@@ -28,9 +28,9 @@ function header(title) {
   )
 }
 
-// Replaces the demo area with fresh markup and returns it
-function showDemo(markup) {
-  let demo = document.querySelector('#week10-demo')
+// Adds (or replaces) one demo's box on the page and returns it
+function showDemo(id, title, markup) {
+  let demo = document.querySelector(`#${id}`)
   if (demo) {
     // replacing the element also throws away the old demo's listeners
     const fresh = demo.cloneNode(false)
@@ -38,12 +38,12 @@ function showDemo(markup) {
     demo = fresh
   } else {
     demo = document.createElement('section')
-    demo.id = 'week10-demo'
+    demo.id = id
     demo.style.cssText =
       'font: 16px sans-serif; padding: 1rem; border: 2px solid #10b981; margin: 1rem;'
-    document.body.prepend(demo)
+    document.body.append(demo)
   }
-  demo.innerHTML = markup
+  demo.innerHTML = `<h2 style="margin-top: 0; font-size: 1rem;">${title}</h2>${markup}`
   return demo
 }
 
@@ -54,7 +54,10 @@ function showDemo(markup) {
 // --------------------------------------------------------------------
 function inputVsChangeDemo() {
   header('1. input vs. change')
-  const demo = showDemo(`
+  const demo = showDemo(
+    'week10-input-vs-change',
+    '1. input vs. change',
+    `
     <label>Name <input name="name" /></label>
     <label>Units
       <select name="units">
@@ -63,7 +66,8 @@ function inputVsChangeDemo() {
       </select>
     </label>
     <label><input type="checkbox" name="alerts" /> Weather alerts</label>
-  `)
+  `,
+  )
 
   // Both events bubble, so one listener of each kind on the demo
   // container hears every control inside it.
@@ -95,7 +99,10 @@ function inputVsChangeDemo() {
 // --------------------------------------------------------------------
 function submitDemo() {
   header('2. submit and preventDefault()')
-  const demo = showDemo(`
+  const demo = showDemo(
+    'week10-submit',
+    '2. submit and preventDefault()',
+    `
     <form id="city-form">
       <label>City <input name="city" required /></label>
       <label>Units
@@ -107,7 +114,8 @@ function submitDemo() {
       <button type="submit">Search</button>
     </form>
     <p><a href="https://developer.mozilla.org/">A link that won't navigate</a></p>
-  `)
+  `,
+  )
 
   const form = demo.querySelector('#city-form')
   form.addEventListener('submit', (event) => {
@@ -136,7 +144,10 @@ function submitDemo() {
 // --------------------------------------------------------------------
 function preventVsStopDemo() {
   header('3. preventDefault() vs. stopPropagation()')
-  const demo = showDemo(`
+  const demo = showDemo(
+    'week10-prevent-vs-stop',
+    '3. preventDefault() vs. stopPropagation()',
+    `
     <div id="outer" style="padding: 1rem; background: #ecfdf5;">
       outer div
       <p><a id="prevent" href="https://developer.mozilla.org/">preventDefault() link</a></p>
@@ -144,7 +155,8 @@ function preventVsStopDemo() {
         stopPropagation() link (opens a new tab)
       </a></p>
     </div>
-  `)
+  `,
+  )
 
   demo.querySelector('#outer').addEventListener('click', (event) => {
     console.log(`outer div heard a click that started on #${event.target.id}`)
@@ -166,12 +178,16 @@ function preventVsStopDemo() {
 // --------------------------------------------------------------------
 function targetVsCurrentTargetDemo() {
   header('4. target vs. currentTarget')
-  const demo = showDemo(`
+  const demo = showDemo(
+    'week10-target-vs-current-target',
+    '4. target vs. currentTarget',
+    `
     <ul id="cities">
       <li><button type="button" data-city="Bend"><strong>Bend</strong>, Oregon</button></li>
       <li><button type="button" data-city="Chicago"><strong>Chicago</strong>, Illinois</button></li>
     </ul>
-  `)
+  `,
+  )
 
   demo.querySelector('#cities').addEventListener('click', (event) => {
     const button = event.target.closest('button')
@@ -240,7 +256,11 @@ async function fetchPreviewDemo() {
   }
 }
 
-console.log(
-  'Week 10 demos loaded. Run one at a time: inputVsChangeDemo(), submitDemo(),',
-  'preventVsStopDemo(), targetVsCurrentTargetDemo(), fetchPreviewDemo()',
-)
+// --------------------------------------------------------------------
+// Run all demos
+// --------------------------------------------------------------------
+inputVsChangeDemo()
+submitDemo()
+preventVsStopDemo()
+targetVsCurrentTargetDemo()
+fetchPreviewDemo()

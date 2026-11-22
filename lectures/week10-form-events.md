@@ -47,7 +47,7 @@ preview of
 
 ### Talking Points & Concept Cues
 
-- Run `inputVsChangeDemo()`. Type `Bend` into the Name field, then click away. Point out four
+- In the `inputVsChangeDemo()` box, type `Bend` into the Name field, then click away. Point out four
   `input` lines and one `change` line.
 - Then change the select and toggle the checkbox. Both events fire right away, because there's
   nothing to "finish typing."
@@ -77,14 +77,15 @@ demo.addEventListener('input', (event) => {
 
 - I've used `event.preventDefault()` in earlier lectures (the Week 3 forms, the Task List's add
   form) without saying much about it. Today we look at what it actually does.
-- Run `submitDemo()`. Submit once with the button and once by pressing Enter in the City field. Both
-  fire **one** `submit` event on the form. A `click` listener on the button would miss the Enter
-  key, so we always listen for `submit` on the `<form>`.
+- In the `submitDemo()` box, submit once with the button and once by pressing Enter in the City
+  field. Both fire **one** `submit` event on the form. A `click` listener on the button would miss
+  the Enter key, so we always listen for `submit` on the `<form>`.
 - **Default actions**: the browser does some things on its own. A form sends its data and loads a
   new page (with no `action` attribute, that means reloading this page). A link navigates. A
   checkbox toggles.
-- Comment out the `preventDefault()` line and submit again: the page reloads, and the console log
-  and all our JavaScript state are gone. That's what happens in an app without it.
+- Comment out the `preventDefault()` line and run the snippet again, then submit: the page reloads,
+  and the console log, the demo boxes, and all our JavaScript state are gone. That's what happens in
+  an app without it.
 - Call `preventDefault()` **first** in the handler. If something later in the handler throws, the
   page doesn't reload and take the error message with it.
 - `new FormData(form)` reads every field by its `name` attribute. Handy for bigger forms; for one or
@@ -101,7 +102,7 @@ demo.addEventListener('input', (event) => {
 
 ### Talking Points & Concept Cues
 
-- Run `preventVsStopDemo()` and click each link.
+- In the `preventVsStopDemo()` box, click each link.
   - `#prevent`: no navigation, but the outer `<div>` still logs the click. The event kept bubbling.
   - `#stop`: the new tab opens, but the outer `<div>` hears nothing. The default action still
     happened.
@@ -127,8 +128,8 @@ demo.addEventListener('input', (event) => {
 - This part **isn't on Quiz 10**. It's here so you can start on your final project's API this week
   if you want to. Week 11 covers it properly, and the Week 11 assignment combines today's events
   with `fetch`.
-- Run `fetchPreviewDemo()`. The first call logs a table of places named Bend from the Open-Meteo
-  geocoding API.
+- Look at the `fetchPreviewDemo()` output. The first call logs a table of places named Bend from the
+  Open-Meteo geocoding API.
 - Walk through `loadJson()`:
   1. `await fetch(url)` waits for the response to arrive.
   2. `if (!response.ok) throw ...`: `fetch` does **not** throw for a 404 or 500. Point out the
