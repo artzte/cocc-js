@@ -166,8 +166,9 @@ the `fetch` preview)
     `click` listener are all mine; my click handler calls `nav.navigate()` itself.
   - **The classes**: `VamApiService` keeps its caches private; the `Renderer` base class and its
     `MainRenderer`, `DetailRenderer`, and `NotFoundRenderer` subclasses share `render()`.
-  - **UI states**: the `loading` class and `#loading` flag set before the `await` and cleared in
-    `finally`; "Nothing found by that name"; the "Whoops" error view; the not-found page.
+  - **UI states**: the `loading` class and `#loading` flag set before the `await` and cleared when
+    it finishes, with an older search dropped if a newer one started (the back button can do that);
+    "Nothing found by that name"; the "Whoops" error view; the not-found page.
   - **Tests**: each layer stubs the one below it. `wrapped-fetch.test.js` stubs `fetch` with
     `vi.stubGlobal()`, `api.test.js` mocks `fetchJson()` with `vi.mock()`, and `renderer.test.js`
     spies on `VamApiService` and uses a promise the test resolves itself to check the loading state.
