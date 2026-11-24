@@ -37,7 +37,7 @@
       display: block;
     }
     input {
-      background: white;
+      background-color: var(--color-surface);
     }
   }
 
