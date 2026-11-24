@@ -13,17 +13,18 @@
 }
 
 #art-gallery {
-  h1 {
+  .gallery-header {
     display: flex;
     gap: 14px;
     align-items: center;
+    margin-bottom: 0.5em;
 
-    > * {
-      display: block;
+    h1 {
+      margin: 0;
     }
 
     a {
-      font-size: 60%;
+      font-size: 1.2rem;
       text-decoration: none;
     }
   }
@@ -65,14 +66,19 @@
 }
 
 #art-gallery-detail {
-  h2 {
+  .detail-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 0.5em;
+
+    h2 {
+      margin: 0;
+    }
 
     a {
       display: block;
-      font-size: 80%;
+      font-size: 1.2rem;
       text-decoration: none;
       white-space: nowrap;
     }

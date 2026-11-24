@@ -1,7 +1,7 @@
 {
-  "name": "cis133js-starter",
+  "name": "vam-art-browser",
   "version": "1.0.0",
-  "description": "Starter kit for CIS 133JS — Introduction to JavaScript",
+  "description": "Browse and search the Victoria and Albert Museum collection",
   "type": "module",
   "scripts": {
     "start": "vite",

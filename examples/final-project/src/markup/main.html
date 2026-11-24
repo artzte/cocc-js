@@ -1,12 +1,17 @@
 <div id="art-gallery">
-  <h1>
-    <div>Victoria and Albert Museum</div>
-    <a href="https://www.vam.ac.uk/">🔗</a>
-  </h1>
-  <form id="search">
+  <header class="gallery-header">
+    <h1>Victoria and Albert Museum</h1>
+    <a
+      href="https://www.vam.ac.uk/"
+      aria-label="Victoria and Albert Museum website"
+      >🔗</a
+    >
+  </header>
+  <form id="search" role="search">
     <input
       type="text"
       name="search"
+      aria-label="Search the collection"
       placeholder="Search..."
       value="{{searchText}}"
     />

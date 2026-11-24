@@ -149,6 +149,15 @@ describe('VamApiService.buildDetailResult', () => {
     expect(result.title, 'no titles').toBeUndefined()
     expect(result.maker, 'no makers').toBeUndefined()
     expect(result.imageId, 'no images').toBeUndefined()
+    expect(result.imageUrl, 'no image URL').toBeUndefined()
+  })
+
+  it('does not throw when the response has no meta', () => {
+    const result = VamApiService.buildDetailResult({
+      record: { systemNumber: 'O1' },
+    })
+
+    expect(result.imageUrl).toBeUndefined()
   })
 })
 

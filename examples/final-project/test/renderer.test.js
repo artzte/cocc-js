@@ -174,6 +174,28 @@ describe('MainRenderer', () => {
       ).toHaveLength(1)
     })
 
+    it('shows the latest search when an older one finishes after it', async () => {
+      const older = deferred()
+      const newer = deferred()
+      searchSpy.mockReturnValueOnce(older.promise)
+      searchSpy.mockReturnValueOnce(newer.promise)
+
+      // e.g. the back button pressed while the first search is still loading
+      renderer.render({ searchText: 'teapot' })
+      renderer.render({ searchText: 'vase' })
+
+      newer.resolve([{ ...record, title: 'Vase' }])
+      await flush()
+      older.resolve([record])
+      await flush()
+
+      expect(searchSpy, 'both searches ran').toHaveBeenCalledTimes(2)
+      expect(results().querySelector('h3').textContent, 'latest wins').toBe(
+        'Vase',
+      )
+      expect(app.classList.contains('loading'), 'done loading').toBe(false)
+    })
+
     it('clears the input and results when rendered with an empty searchText', async () => {
       renderer.render({ searchText: 'teapot' })
       await flush()
@@ -273,7 +295,9 @@ describe('DetailRenderer', () => {
     await renderer.render({ id: 'O1', search: 'teapot' })
 
     expect(detailSpy).toHaveBeenCalledWith('O1')
-    expect(app.querySelector('h2 div').textContent, 'title').toBe('Teapot')
+    expect(app.querySelector('.detail-header h2').textContent, 'title').toBe(
+      'Teapot',
+    )
     expect(app.querySelector('.maker').textContent, 'maker').toBe(
       'Josiah Wedgwood',
     )
@@ -293,10 +317,27 @@ describe('DetailRenderer', () => {
     expect(app.querySelector('.maker').textContent).toBe('Maker unspecified')
   })
 
+  it('leaves out the image and blank fields instead of showing broken or unknown values', async () => {
+    detailSpy.mockResolvedValue({
+      id: 'O1',
+      title: undefined,
+      imageUrl: undefined,
+    })
+
+    await renderer.render({ id: 'O1', search: '' })
+
+    expect(app.querySelector('.detail-header h2').textContent, 'title').toBe(
+      'Untitled',
+    )
+    expect(app.querySelector('.image'), 'no image').toBeNull()
+    expect(app.querySelector('.info').textContent, 'description').toBe('')
+    expect(app.querySelector('.history').textContent, 'history').toBe('')
+  })
+
   it('points the back link at the home URL with the search term preserved', async () => {
     await renderer.render({ id: 'O1', search: 'blue vase' })
 
-    expect(app.querySelector('h2 a').getAttribute('href')).toBe(
+    expect(app.querySelector('.detail-header a').getAttribute('href')).toBe(
       '/?search=blue%20vase',
     )
   })

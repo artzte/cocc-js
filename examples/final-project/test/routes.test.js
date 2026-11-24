@@ -77,7 +77,7 @@ describe('routing', () => {
     await startAt('/art/O1')
 
     expect(detailSpy).toHaveBeenCalledWith('O1')
-    expect(app().querySelector('#art-gallery-detail h2 div').textContent).toBe(
+    expect(app().querySelector('#art-gallery-detail h2').textContent).toBe(
       'Teapot',
     )
   })
@@ -86,7 +86,9 @@ describe('routing', () => {
     await startAt('/art/O1?search=monet')
 
     expect(
-      app().querySelector('#art-gallery-detail h2 a').getAttribute('href'),
+      app()
+        .querySelector('#art-gallery-detail .detail-header a')
+        .getAttribute('href'),
     ).toBe('/?search=monet')
   })
 
@@ -99,7 +101,7 @@ describe('routing', () => {
   it('returns to the search results when the detail back link is clicked', async () => {
     await startAt('/art/O1?search=monet')
 
-    app().querySelector('#art-gallery-detail h2 a').click()
+    app().querySelector('#art-gallery-detail .detail-header a').click()
     await flush()
 
     expect(window.location.pathname + window.location.search, 'url').toBe(

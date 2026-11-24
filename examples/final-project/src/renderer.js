@@ -10,8 +10,8 @@ import resultHtml from './markup/result.html?raw'
 
 import './app.css'
 
-const hostName = window.location.host
-const rootPath = /local/.test(hostName) ? '/' : '/artzt/'
+// '/' for npm start and the tests; '/artzt/' when the deploy workflow builds with --base
+const rootPath = import.meta.env.BASE_URL
 
 export const nav = new NaviGo(rootPath)
 
@@ -52,6 +52,9 @@ export class MainRenderer extends Renderer {
   #api = new VamApiService()
 
   #loading = false
+
+  // the most recent search; a slower, older request must not overwrite its results
+  #currentSearch = null
 
   static buildUrl(search = '') {
     return search
@@ -120,27 +123,29 @@ export class MainRenderer extends Renderer {
     })
   }
 
+  // The form ignores new searches while one is loading, but the browser's back and forward
+  // buttons can still start another one. The latest search wins; older ones are dropped.
   async search(searchText) {
-    if (this.#loading) return
-
     const resultsContainer = this.el.querySelector('.art-gallery-results')
 
+    this.#currentSearch = searchText
     this.el.classList.add('loading')
     this.#loading = true
 
+    let html
     try {
       const results = await this.#api.search(searchText)
-
-      resultsContainer.innerHTML = MainRenderer.buildSearchResults(
-        results,
-        searchText,
-      )
+      html = MainRenderer.buildSearchResults(results, searchText)
     } catch (error) {
-      resultsContainer.innerHTML = buildErrorHtml(error, rootPath)
-    } finally {
-      this.el.classList.remove('loading')
-      this.#loading = false
+      html = buildErrorHtml(error, rootPath)
     }
+
+    // a newer search started while this one was loading
+    if (searchText !== this.#currentSearch) return
+
+    resultsContainer.innerHTML = html
+    this.el.classList.remove('loading')
+    this.#loading = false
   }
 
   // Navigo skips the '/' handler when the URL is already '/', so clear the page here too
@@ -172,11 +177,20 @@ export class DetailRenderer extends Renderer {
     try {
       const result = await this.#api.detail(id)
 
+      // blanks instead of the template's 'unknown' for fields a record leaves out
       this.el.innerHTML = render(detailHtml, {
         ...result,
+        title: result.title || 'Untitled',
         maker: result.maker || 'Maker unspecified',
+        description: result.description || '',
+        history: result.history || '',
         homeUrl,
       })
+
+      // some records have no image; show the text without a broken image
+      if (!result.imageUrl) {
+        this.el.querySelector('.image').remove()
+      }
     } catch (error) {
       this.el.innerHTML = buildErrorHtml(error, homeUrl)
     } finally {

@@ -37,13 +37,15 @@ export class VamApiService {
       record.artistMakerOrganisations?.[0] ||
       {}
 
-    const imageId = meta.images?._images_meta?.[0]?.assetRef
+    const imageId = meta?.images?._images_meta?.[0]?.assetRef
 
     return {
       title: record.titles?.[0]?.title,
       id: record.systemNumber,
       imageId,
-      imageUrl: `https://framemark.vam.ac.uk/collections/${imageId}/full/full/0/default.jpg`,
+      imageUrl: imageId
+        ? `https://framemark.vam.ac.uk/collections/${imageId}/full/full/0/default.jpg`
+        : undefined,
       maker: maker.name?.text,
       history: record.objectHistory,
       description: record.briefDescription,
